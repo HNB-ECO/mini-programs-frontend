@@ -1,0 +1,43 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/price-diff/price-diff",
+        "pages/order/order",
+        "pages/profile/profile",
+        "pages/comment/comment",
+        "pages/order-confirm/order-confirm",
+        "pages/search/search",
+        "pages/classify/classify",
+        "pages/coupon/coupon",
+        "pages/order-detail/detail",
+        "pages/paint-detail/paint-detail"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#fff",
+        "navigationBarTitleText": "画你",
+        "navigationBarTextStyle": "black",
+        "backgroundColor": "#f6f6f6",
+        "navigationStyle": "custom"
+    },
+    "tabBar": {
+        "color": "#999999",
+        "selectedColor": "#333333",
+        "backgroundColor": "#ffffff",
+        "list": [{
+            "text": "首页",
+            "pagePath": "pages/index/index",
+            "iconPath": "./images/index_g.png",
+            "selectedIconPath": "./images/index_b.png"
+        }, {
+            "text": "我的",
+            "pagePath": "pages/profile/profile",
+            "iconPath": "./images/mine_g.png",
+            "selectedIconPath": "./images/mine_b.png"
+        }]
+    },
+    "networkTimeout": {
+        "request": 5000,
+        "downloadFile": 10000
+    }
+}

@@ -1,0 +1,64 @@
+<!--index.wxml-->
+<import src="../template/template.wxml" />
+
+<navbar bg-color="{{ navbarBgColor }}" index-page="{{ indexPage }}" />  
+
+<template is="blank" wx:if="{{!paintList.length}}"></template>
+
+<view class="container bg-default">
+    <scroll-view class="classify-nav" style='background-color:{{ navbarBgColor }};' scroll-x scroll-into-view='{{ scrollIntoView }}' scroll-with-animation='true'>
+        <view class="nav-item {{ selectTab == index ? (selectTab == 0 ? 'item-select-first' : 'item-select') : (selectTab == 0 ? 'item-first' : '')}} {{ selectTab == 0 ? '' : '' }}" style='{{ index == 0 ? "margin-left:60rpx;" : "" }}' wx:for="{{navList}}" bindtap="selectTab" id='{{ "to" + index }}'  data-name='{{ item.name }}' data-index="{{index}}">
+            {{item.name}}
+        </view>
+    </scroll-view>
+    <scroll-view class="classify-content" scroll-y="true" bindscrolltolower="handleLoadMore" bindscroll="handleScroll" lower-threshold="100" scroll-into-view="{{pageTop}}">
+        <view class="more-paint" id="pageTop">
+            <view class="item" style="width:{{windowWidth-60}}px;" wx:for="{{paintList}}" bindtap="paintDetail" data-id="{{item.prod.id}}">
+                <view class='browse-num'>{{ item.prod.viewCount }}人浏览了</view>
+                <image src="{{item.prod.imageUrls+getImgMid}}" alt="" mode="aspectFill" style="height:{{windowWidth-60}}px" />
+                <view class="tit">
+                    {{item.prod.content}}
+                </view>
+                <view class="price">
+                    ¥{{item.minPrice||0}}
+                    <text class='painttag' style='color:{{ formatNavbarColor[item.prod.prodStyle] }}'>#{{ item.prod.prodStyle }}</text>
+                </view>
+            </view>
+        </view>
+        <view style="clear:both;height:30rpx;background:none"></view>
+    </scroll-view>
+</view>
+
+<template is="gotopbtn" data="{{ gotopHidden }}"></template>
+
+<template is="toast" data="{{showTips,tipsInfo}}"></template>
+
+<!-- <scroll-view scroll-y class="index-scroll" bindscrolltolower="handleLoadMore" lower-threshold="200">
+    <view class="container bg-default">
+        <view class="index-top">
+            <image src="../../images/background@2x.png" alt="" mode="aspectFill" class="bg" />
+            <view class="content">
+                <image src="../../images/honey@2x.png" alt="" class="logo" />
+                <view class="tit">春风十里 不如画你</view>
+                <view class="input-con input-con-re" bindtap="search">
+                    <image src="../../images/search@2x.png" alt="" /> 搜索画作
+                </view>
+            </view>
+        </view>
+        <view class="index-nav">
+            <block class="nav-item" wx:for="{{navList}}" wx:for-index="index" wx:for-item="item" wx:key="index">
+                <view class="nav-item" bindtap="toPage" data-index="{{index}}">
+                    <image src="{{'../../images/'+item.img}}" alt="" mode="aspectFill" />
+                    <view>{{item.name}}</view>
+                    <button open-type="contact" wx:if="{{index==2}}"></button>
+                </view>
+            </block>
+        </view>
+        <view class="recommend" style="padding-bottom:0">
+            <view class="tit">
+                为你推荐
+            </view>
+        </view>
+        <template is="product" data="{{recommendList,getImgMid}}"></template>
+    </view>
+</scroll-view> -->

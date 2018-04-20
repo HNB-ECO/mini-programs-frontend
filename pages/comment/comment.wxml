@@ -1,0 +1,39 @@
+<import src="../template/template.wxml" />
+<view class="container">
+    <view class="star">
+        <view wx:for="{{[1,2,3,4,5]}}" class="img">
+            <image src="{{index<=comment.score?'../../images/star@2x.png':'../../images/star-nor@2x.png'}}" alt="" bindtap="chooseStar" data-index="{{index}}" />
+        </view>
+        <view class="des" wx:for="{{starDes}}" wx:if="{{comment.score==index}}">
+            {{item}}
+        </view>
+    </view>
+    <view class="bg-default"></view>
+    <view class="content">
+        <textarea name="content" placeholder="输入评价内容" placeholder-style="color:#BFBFBF" bindinput="setContent">
+
+        </textarea>
+    </view>
+    <view class="upload">
+        <view class="img-33" style="width:{{windowWidth/3-7}}px;height:{{windowWidth/3-7}}px;padding:5px;" wx:for="{{uploadImgArr}}" >
+            <image src="{{item}}" alt="" class="pic" mode="aspectFill"/>
+            <icon type="cancel" size="20" catchtap="delImg" data-index="{{index}}"/>
+        </view>
+        <view class="img-33" style="width:{{windowWidth/3-7}}px;height:{{windowWidth/3-7}}px;padding:5px;" wx:if="{{uploadImgLength<9}}" >
+            <image src="../../images/add-pic@2x.png" alt="" class="pic" bindtap="chooseImg" mode="aspectFill"/>
+        </view>
+    </view>
+    <view class="bottom">
+        <image src="{{comment.isAnonymous?'../../images/checked@2x.png':'../../images/check@2x.png'}}" class="checked" bindtap="anonymousToggle" /> 匿名
+        <view class="right">
+            你写的评论会以匿名的形式展现
+        </view>
+    </view>
+    <button class="btn-update" bindtap="commentUpdate">
+        提交评价
+    </button>
+    <view style="height:300px"></view>
+</view>
+<template is="toast" data="{{showTips,tipsInfo}}">
+
+</template>

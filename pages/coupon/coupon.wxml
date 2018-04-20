@@ -1,0 +1,47 @@
+<import src="../template/template.wxml" />
+<template is="blank" wx:if="{{!couponList.length}}"></template>
+<view class="container bg-default">
+    <view class="no-coupon" wx:if="{{pageType!='profile'}}">
+        不使用优惠券
+        <image src="{{useCoupon?'../../images/check@2x.png':'../../images/checked@2x.png'}}" alt=""  bindtap="couponToggle"/>
+    </view>
+    <view class="tit" wx:if="{{pageType!='profile'}}">
+        有<text>{{couponLen}}</text>个优惠券可用
+    </view>
+    <view class="search-con" wx:if="{{pageType=='profile'}}">
+        <view class="left">
+            <view>
+                <input type="text" placeholder="请输入优惠券号" placeholder-style="color:#ccc" confirm-type="" bindconfirm="couponActive" value="{{couponCode}}" bindinput="setCouponCode"/>
+            </view>
+            <icon class="clear-icon" bindtap="searchClear" type="clear" size="18" color="#999999" wx:if="{{clearIconShow}}"/>
+        </view>
+        <view class="right" bindtap="couponActive">
+            激活
+        </view>
+    </view>
+    <view class="coupon-item-con" wx:for="{{couponList}}">
+        <view class="coupon-item {{item.canUse?'':'unuseable'}}">
+            <view class="left">
+                <view wx:if="{{item.standardValue}}" class="ms"><text>￥</text>{{item.value}}</view>
+                <text wx:if="{{!item.standardValue}}">免单券</text>
+                <view wx:if="{{!item.standardValue}}">无门槛</view>
+                <view wx:if="{{item.standardValue}}">满{{item.standardValue}}可用</view>
+            </view>
+            <view class="right">
+                <view class="number">{{item.code}}</view>
+                <view class="date">{{item.endTime}}到期</view>
+                <view class="date-left">剩余{{item.dateDiff}}天</view>
+            </view>
+            <image src="{{item.isSelected?'../../images/checked@2x.png':'../../images/check@2x.png'}}" alt="" bindtap="chooseCoupon" data-idx="{{index}}" wx:if="{{pageType!='profile'}}"/>
+        </view>
+        <!-- <view wx:if="{{!item.canUse}}" class="reason">
+            不可用原因
+            <view>未满80元</view>
+            <text class="left"></text>
+            <text class="right"></text>
+        </view> -->
+    </view>
+</view>
+<template is="toast" data="{{showTips,tipsInfo}}">
+
+</template>

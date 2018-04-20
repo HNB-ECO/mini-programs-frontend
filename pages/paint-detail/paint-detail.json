@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "画作详情",
+  "usingComponents": {
+    "navbar": "../template/navbar/navbar"
+  }
+}

@@ -1,0 +1,49 @@
+<import src="../template/template.wxml" />
+<template is="blank" wx:if="{{!recommendList.length&&searchResult}}"></template>
+    <scroll-view scroll-y="true" bindscrolltolower="handleLoadMore" lower-threshold="300" style="height:100%;">
+        <view class="search-con">
+            <view class="left">
+                <image src="../../images/search-small@2x.png" alt="" />
+                <view>
+                    <input type="text" placeholder="搜索画作" placeholder-style="color:#ccc" confirm-type="search" bindconfirm="searching" value="{{key}}" bindinput="closeIcon"/>
+                </view>
+                 <icon class="clear-icon" bindtap="searchClear" type="clear" size="18" color="#999999" wx:if="{{clearIconShow}}"/>
+            </view>
+            <view class="right" bindtap="back">
+                取消
+            </view>
+        </view>
+        <veiw wx:if="{{!searchResult}}">
+            <view class="search-tab">
+                <view class="tit">
+                    历史搜索
+                    <view class="item-note" bindtap="clearSearchHistory">
+                        清除
+                    </view>
+                </view>
+                <view class="tabs-con">
+                    <view class="tabs-item" wx:for="{{historyList}}" bindtap="tipSearch" data-content="{{item}}">
+                        {{item}}
+                    </view>
+                </view>
+            </view>
+            <view class="search-tab">
+                <view class="tit">
+                    热门搜索
+                    <!-- <view class="item-note">
+                    热门搜索
+                </view> -->
+                </view>
+                <view class="tabs-con">
+                    <view class="tabs-item" wx:for="{{hotTips}}" bindtap="tipSearch" data-content="{{item.name}}">
+                        {{item.name}}
+                    </view>
+                </view>
+            </view>
+        </veiw>
+
+        <template is="product" data="{{recommendList,getImgMid}}" wx:if="{{searchResult}}"></template>
+    </scroll-view>
+<template is="toast" data="{{showTips,tipsInfo}}">
+
+</template>

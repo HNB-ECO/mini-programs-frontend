@@ -1,0 +1,67 @@
+<!--pages/order-detail/detail.wxml  订单详情页面-->
+<view class='order-attach'>
+    <view class='header'>
+        <view class='title' wx:if="{{orderInfo.status==1}}">等待买家支付...</view>
+        <view class='title' wx:if="{{orderInfo.status==2}}">等待画师接单...</view>
+        <view class='title' wx:if="{{orderInfo.status==3 && !orderInfo.completeImageBig}}">画师正在奋笔疾书中...</view>
+        <view class='title' wx:if="{{orderInfo.status==3 && orderInfo.completeImageBig}}">您的订单已完成，请及时确认...</view>
+        <view class='title' wx:if="{{orderInfo.status==4}}">感谢您在画你定制肖像，欢迎您再次光临！</view>
+        <view class='title' wx:if="{{orderInfo.status==5}}">感谢您在画你定制肖像，欢迎您再次光临！</view>
+        <!-- <view class='time'>{{orderInfo.consumeTime}}</view> -->
+    </view>
+    <view class='body'>
+        <view>
+            <text class='text'>状态：</text>
+            <text wx:if="{{orderInfo.status==1}}">待支付</text>
+            <text wx:if="{{orderInfo.status==2}}">待接单</text>
+            <text wx:if="{{orderInfo.status==3}}">待确认</text>
+            <text wx:if="{{orderInfo.status==4}}">待评价</text>
+            <text wx:if="{{orderInfo.status==5}}">已评价</text>
+        </view>
+        <view wx:if="{{orderInfo.status==2||orderInfo.status==3}}">
+            <text class='text'>预计完成时间倒计时：</text>
+            <text class='day' wx:if="{{orderInfo.status==2}}">{{orderInfo.expectedDays}}天</text>
+            <text class='day' wx:if="{{orderInfo.status==3}}">{{time}}</text>
+        </view>
+        <view>
+            <text class='text'>订单编号：</text> {{orderInfo.tradeNo}}
+        </view>
+        <view>
+            <text class='text'>下单时间：</text> {{orderInfo.consumeTime}}
+        </view>
+        <button class='btn btn-green' wx:if="{{orderInfo.status==1}}" bindtap="pay">微信支付</button>
+        <button class='btn btn-default' wx:if="{{orderInfo.status==2||orderInfo.status==3&&!orderInfo.completeImageBig}}" open-type="contact">联系客服</button>
+        <view class="btn-group" wx:if="{{orderInfo.status==3 && orderInfo.completeImageBig}}">
+            <button class='btn btn-default' open-type="contact">联系客服</button>
+            <button class='btn btn-full' bindtap="preview">查看大图</button>
+            <button class='btn btn-full' bindtap="orderReceipt">确认收货</button>
+        </view>
+        <button class='btn btn-default' wx:if="{{orderInfo.status==4}}" bindtap="comment">立即评价</button>
+        <!-- <button class='btn btn-default' wx:if="{{orderInfo.status==1||orderInfo.status==5}}">删除订单</button> -->
+    </view>
+</view>
+
+<view class='order-detail'>
+    <view class='body' bindtap="paintDetail" data-paintid="{{orderInfo.contentId}}" >
+        <image src='{{orderInfo.sourceImageUrl+getImgMid}}' class='img'  />
+        <view class='info'>
+            <view class='title'>画师：{{orderInfo.artistProfile.nickname}}
+            </view>
+            <view class='attach'>{{orderInfo.size.name}}，{{orderInfo.paintStyle.name}}，人数x{{orderInfo.numOfPeople}}</view>
+            <view class='price'>¥ {{orderInfo.originalUnitPrice * orderInfo.numOfPeople * (orderInfo.discount / 10)}}</view>
+        </view>
+    </view>
+    <view class='price-detail'>
+        <view class='left half'>商品总额</view>
+        <view class='half right'>¥{{orderInfo.originalUnitPrice * orderInfo.numOfPeople * (orderInfo.discount / 10)}}</view>
+        <view class='half left'>加急催稿</view>
+        <view class='half right'>+￥{{orderInfo.isQuick?orderInfo.expressPrice:0}}</view>
+        <view class='half left'>优惠</view>
+        <view class='half right'>-￥{{orderInfo.couponPrice}}</view>
+    </view>
+    <view class='price-total'>
+        实付金额
+        <text class='total'>￥{{orderInfo.price}}</text>
+    </view>
+    <button class='btn btn-default' wx:if="{{orderInfo.status==3&&!orderInfo.priceDifference}}" bindtap="diffPrice" data-paintid="{{orderInfo.contentId}}">补差价</button>
+</view>

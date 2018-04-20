@@ -1,0 +1,58 @@
+<import src="../template/template.wxml" />
+<view class="container bg-default">
+    <view class="tp-tit">
+        收货人：{{order.contactor}} {{order.phone}}
+    </view>
+    <view class="order-detail">
+        <image src="{{paint.imageUrls+getImgMid}}" alt="" mode="aspectFill" />
+        <view class="right">
+            <view class="des">
+                画师：{{paint.artistProfile.nickname}}
+            </view>
+            <view class="options">{{order.paintSizeName}}，{{order.paintStyleName||paint.prodStyle}}，人数x{{order.numOfPeople}}</view>
+            <view class="price">¥{{order.paintPrice}}</view>
+        </view>
+    </view>
+    <view class="item-contain">
+        <view class="more-item">
+            给画家留言
+            <view class="item-input">
+                <input type="text" placeholder="选填：你想对画家说的话..." placeholder-style="color:#ccc" value="{{order.leaveMessage}}" bindblur="setFrom" data-name="leaveMessage"/>
+            </view>
+        </view>
+        <view class="more-item relative">
+            <image src="../../images/urgent@2x.png" alt="" class="img-left"/>
+            <view class="top">
+                加急催稿
+                <text class="day">(预计提前3天完成)</text>
+                <text class="price">+￥{{paintPrice.quickPrice}}</text>
+            </view>
+            <view class="bottom">购买加急催稿，我们会第一时间通知画师为您作画。</view>
+            <switch bindchange="quickChange" color="#8597FD" />
+        </view>
+        <view class="more-item relative" bindtap="chooseCoupon">
+            <image src="../../images/coupon@2x.png" alt="" class="img-left"/>
+            优惠券
+            <view class="item-note">
+                <text wx:if="{{order.couponId&&order.couponType&&paintPrice.use}}">-￥{{order.couponMinus}}</text>
+                <text wx:if="{{order.couponId&&!order.couponType}}">免单券</text>
+                <image src="../../images/right.png" alt="" class="right-icon" />
+            </view>
+        </view>
+        <view class="total">
+            实付金额
+            <!-- <text class="price" wx:if="{{!(order.couponId&&!order.couponType)}}">￥{{order.paintPrice+(order.isQuick?paintPrice.quickPrice:0)-(order.couponId?order.couponMinus:0)}}</text>
+            <text class="price" wx:if="{{order.couponId&&!order.couponType}}">￥0</text> -->
+            <text class="pirce">￥{{paintPrice.totalPrice}}</text>
+        </view>
+    </view>
+
+</view>
+<view class="draw-footer">
+    <view class="order-confirm" bindtap="orderConfirm">
+        确认支付
+    </view>
+</view>
+<template is="toast" data="{{showTips,tipsInfo}}">
+
+</template>

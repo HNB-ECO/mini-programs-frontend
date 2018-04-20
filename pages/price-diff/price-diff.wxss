@@ -1,0 +1,82 @@
+page {
+    height: 100%;
+    position: relative;
+}
+
+view, text {
+    color: #333;
+}
+.diff-con{
+    padding: 20rpx;
+}
+.input-item{
+    background: white;
+    margin-bottom: 20rpx;
+    font-size: 34rpx;
+    height: 96rpx;
+    line-height: 96rpx;
+    padding-left: 20rpx;
+}
+.input-item input{
+    height: 96rpx;
+    line-height: 96rpx;
+    vertical-align: middle;
+    font-size: 32rpx;
+    background: transparent;
+    position: relative;
+    top:-2rpx;
+}
+.item-note{
+    width: 70%;
+    display: inline-block;
+    float: right;
+}
+.item-note .input{
+    display: inline-block;
+    width: calc(100% - 80rpx);
+    text-align: right;
+    margin-right: 20rpx;
+    vertical-align: middle;
+}
+.item-des{
+    padding-right: 20rpx;
+}
+.price-diff{
+    text-align: center;
+    font-size: 40rpx;
+    padding: 20rpx;
+}
+.price-diff view{
+    display: inline-block;
+}
+.price-diff .price{
+    font-size: 100rpx;
+    vertical-align: top;
+}
+.crrency{
+    vertical-align: top;
+    padding-top: 20rpx;
+}
+.btn-green{
+    height: 88rpx;
+    line-height: 88rpx;
+}
+.bottom{
+    position: fixed;
+    bottom: 50rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #888;
+    width: 100%;
+    line-height: 180%;
+}
+.bottom view{
+        color: #888;
+}
+.cs-server{
+    color: #55B737 !important;
+    display: inline-block;
+    font-size: 28rpx;
+    padding-left: 0;
+    line-height: 100%;
+}

@@ -1,0 +1,40 @@
+<template name="toast" data="{{showTips,tipsInfo,toastType}}">
+    <view wx:if="{{showTips}}" class="show-tips">
+        <image src="../../images/info@2x.png" wx:if="{{!toastType}}"></image>
+        <view>{{tipsInfo}}</view>
+    </view>
+</template>
+<template name="product">
+    <view class="recommend rec-tit">
+        <navigator  wx:for="{{recommendList}}" wx:key="{{ idx }}" wx:for-index="idx" wx:for-item="item" url="/pages/paint-detail/paint-detail?prodId={{item.id}}" open-type="navigate" hover-class="none">
+            <view class="recommend-item">
+                <view class="type">
+                    {{item.prodStyle}}
+                    <view/>
+                </view>
+                <image src="{{item.imageUrls+getImgMid}}" alt=""/>
+                <view class="right">
+                    <view class="des">
+                        {{item.content}}
+                    </view>
+                    <view class="price">
+                        ¥{{item.price}}
+                    </view>
+                </view>
+                <button type="button" name="button">立即订购</button>
+                <!-- <button type="button" name="button" class="sale-out" wx:else="{{idx%2}}">已售罄</button> -->
+            </view>
+        </navigator>
+    </view>
+</template>
+<template name="blank">
+    <view class="blank-con">
+        <icon type="info" size="60" color="#b3b3b3"/>
+        <view class="tip">
+            暂无数据
+        </view>
+    </view>
+</template>
+<template name="gotopbtn" data="{{ gotopHidden }}">
+    <image hidden='{{ gotopHidden }}' class='gotopicon' src='../../images/goTop.png' bindtap='bindGotopTap'></image>
+</template>

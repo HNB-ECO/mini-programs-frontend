@@ -1,0 +1,52 @@
+<import src="../template/template.wxml" />
+<view class="container bg-default">
+    <view class="profile">
+        <image src="{{userInfo.avatar}}" alt="" mode="aspectFill" wx:if="{{userInfo.avatar}}"/>
+        <image src="../../images/avatar_default@2x.png" alt="" mode="aspectFill" wx:if="{{!userInfo.avatar}}" />
+        <view class="info">
+            {{userInfo.nickname||'未登录'}}
+            <!-- <view>账号：123456789</view> -->
+        </view>
+        <button class="btn-login" wx:if="{{!userInfo}}" bindtap="login">登录</button>
+    </view>
+    <view wx:if="{{userInfo}}">
+        <view class="item" bindtap="navToOrder" data-status="0">
+            我的订单
+            <view class="item-note">
+                查看更多订单
+                <image src="../../images/right.png" alt="" />
+            </view>
+        </view>
+        <view class="order-type">
+            <view class="type-item" wx:for="{{navList}}" bindtap="navToOrder" data-status="{{item.status}}">
+                <image src="{{item.img}}" alt="" />
+                <text class="circle">{{item.total}}</text>
+                <view>{{item.des}}</view>
+            </view>
+        </view>
+        <view class="latest-message" bindtap="goLatest" wx:if="{{latestOrder}}">
+            <view class="left">
+                最新状态
+                <!-- <view>&nbsp;</view> -->
+                <text>●</text>
+            </view>
+            <image src="{{latestOrder.sourceImageUrl}}" alt="" />
+            <view class="right">
+                <view class="status" wx:if="{{latestOrder.status==1}}">待支付</view>
+                <view class="status" wx:if="{{latestOrder.status==2}}">待接单</view>
+                <view class="status" wx:if="{{latestOrder.status==3}}">待确认</view>
+                <view class="status" wx:if="{{latestOrder.status==4}}">待评价</view>
+                <view class="status" wx:if="{{latestOrder.status==5}}">已评价</view>
+                <view>{{latestOrder.size.name}}，{{latestOrder.paintStyle.name}}，人数x{{latestOrder.numOfPeople}}</view>
+            </view>
+        </view>
+        <view class="copoun-nav" bindtap="coupon">
+            <image src="../../images/my_icon_oupon@2x.png" alt="" class="coupon" />
+            <text>优惠券</text>
+            <image src="../../images/right.png" alt="" class="right" />
+        </view>
+    </view>
+</view>
+<template is="toast" data="{{showTips,tipsInfo}}">
+
+</template>

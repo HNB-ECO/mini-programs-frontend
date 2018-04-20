@@ -1,0 +1,163 @@
+/**index.wxss**/
+page{
+    height: 100%;
+    position: relative;
+}
+.bg-default {
+    background-color: white;
+}
+view, text {
+    color: #333;
+    /*background: white;*/
+}
+.container{
+    height: 100%;
+}
+.classify-nav{
+    height: 80rpx;
+    position: fixed;
+    top:150rpx;
+    white-space: nowrap; 
+    font-size: 41rpx;
+}
+.nav-item{
+    display: inline-block;
+    margin: 0 20rpx;
+    border-bottom: 6rpx solid transparent;
+    position: relative;
+    top:2rpx;
+    height: 76rpx;
+    line-height: 70rpx;
+    color: rgba(255,255,255,0.4);
+    box-sizing: border-box;
+}
+.item-select{
+    color: white;
+}
+.item-select-first {
+    color: black;
+}
+.item-first {
+    color: #CCC;
+}
+.classify-content{
+    height: calc(100% - 80rpx);
+    position: fixed;
+    bottom: -150rpx;
+}
+.classify-content .more-paint{
+    padding: 0 50rpx 150rpx;
+}
+
+.more-paint view{
+    background: white;
+}
+.more-paint .item {
+    border-style: none;
+    box-shadow: rgba(0,0,0,0.04) 0px 0px 20rpx 1rpx;
+    border-radius: 0;
+}
+.more-paint .item .browse-num{
+    height: 130rpx;
+    line-height: 130rpx;
+    color: #999999;
+    font-size: 36rpx;
+    padding-left: 30rpx;
+}
+.more-paint .item image {
+    border-radius: 0;
+}
+
+/* .index-scroll{
+    height: 100%;
+}
+.index-top {
+    height: 330rpx;
+    position: relative
+}
+
+.index-top .content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    text-align: center
+}
+
+.index-top .content .logo {
+    width: 200rpx;
+    height: 67rpx;
+    margin-top: 60rpx
+}
+
+.index-top .content .tit {
+    font-size: 28rpx;
+    color: white
+}
+
+.index-top .content .input-con {
+    width: 90%;
+    margin: 0 auto;
+    height: 80rpx;
+    margin-top: 52rpx
+}
+
+.index-top .content .input-con input {
+    height: 100%;
+    border-radius: 50rpx
+}
+
+.index-top .bg {
+    height: 100%;
+    width: 100%
+}
+
+.index-nav {
+    background: white;
+    height: 200rpx
+}
+
+.index-nav .nav-item {
+    display: inline-block;
+    width: 33.3%;
+    text-align: center;
+    margin-top: 50rpx;
+    position:relative;
+}
+.nav-item button{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top:0;
+    opacity: 0;
+}
+.index-nav .nav-item image {
+    width: 55rpx;
+    height: 55rpx
+}
+
+.index-nav .nav-item view {
+    font-size: 26rpx;
+    color: #666;
+    margin-top: 10rpx
+}
+
+.input-con-re {
+    background: white;
+    border-radius: 50rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #ccc;
+    line-height: 80rpx;
+}
+.input-con-re image{
+    width: 43rpx;
+    height: 43rpx;
+    vertical-align: middle;
+    margin-right: 10rpx;
+}
+.rec-tit{
+    margin-top: 0 !important;
+} */

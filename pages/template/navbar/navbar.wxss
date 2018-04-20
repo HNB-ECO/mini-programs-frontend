@@ -1,0 +1,41 @@
+/* templates/navbar/navbar.wxss */
+
+.navbar-view {
+    width: 100%;
+    height: 150rpx;
+    position: fixed;
+    top: 0;
+    z-index: 999999999;
+}
+.navbar-view .title-view {
+    margin-top: 40rpx;
+    width: 100%;
+    height: 88rpx;
+    line-height: 88rpx;
+    padding: 10rpx 0;
+    text-align: center;
+}
+.navbar-view .search-icon {
+    width: 44rpx;
+    height: 44rpx;
+    margin-left: 60rpx;
+    margin-top: 10rpx;
+    position: absolute;
+    left: 0;
+}
+.navbar-view .goback-icon {
+    width: 44rpx;
+    height: 44rpx;
+    position: absolute;
+    left: 30rpx;
+    margin-top: 22rpx;
+}
+.navbar-view .center-icon {
+    width: 134rpx;
+    height: 64rpx;
+    margin: auto;
+    display: block;
+}
+.bgcolor-white {
+    background-color: white;
+}

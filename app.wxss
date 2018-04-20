@@ -1,0 +1,299 @@
+/**app.wxss**/
+
+page {
+    background-color: #f6f6f6;
+    font-family: -apple-system-font, 'Helvetica Neue', Helvetica, 'Microsoft YaHei', sans-serif
+}
+
+.container {
+    box-sizing: border-box;
+}
+
+wx-input, wx-navigator, wx-textarea {
+    box-sizing: border-box
+}
+
+input {
+    background: white;
+    font-size: 28rpx;
+    color: #666
+}
+
+.bg-default {
+    background: #f6f6f6;
+    padding-top: 150rpx;
+}
+
+button::after {
+    border: none
+}
+
+.has-footer {
+    padding-bottom: 160rpx;
+}
+
+.draw-footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 100rpx;
+    background: none;
+    margin-bottom: 30rpx;
+}
+
+.show-tips {
+    position: fixed;
+    width: 240rpx;
+    min-height: 240rpx;
+    border-radius: 10rpx;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 26rpx;
+    text-align: center;
+    bottom: 50%;
+    left: calc(50% - 120rpx);
+    z-index: 9999999;
+}
+
+.show-tips image {
+    width: 80rpx;
+    height: 80rpx;
+    margin: 40rpx;
+}
+.show-tips view{
+    margin-top: -20rpx;
+    line-height: 150%;
+    color: white;
+}
+.item-note{
+    float: right;
+    display: inline-block;
+}
+
+.item-note image{
+    width: 22rpx;
+    height: 22rpx;
+}
+.recommend {
+    background: white;
+    margin-top: 20rpx;
+    padding-bottom: 20rpx
+}
+
+.recommend .tit {
+    font-size: 34rpx;
+    text-align: center;
+    padding: 20rpx
+}
+
+.recommend .recommend-item {
+    width: 85%;
+    margin: 0 auto;
+    box-shadow: 0 0 20rpx rgba(120, 134, 250, 0.3);
+    padding: 20rpx 20rpx 0 20rpx;
+    position: relative;
+    height: 240rpx;
+    margin-bottom: 20rpx
+}
+
+.recommend .recommend-item image {
+    width: 220rpx;
+    height: 220rpx;
+    border: 2rpx solid #e8e8e8;
+}
+
+.recommend .recommend-item .type {
+    position: absolute;
+    left: -7rpx;
+    top: 20rpx;
+    background: black;
+    width: 110rpx;
+    height: 35rpx;
+    color: white;
+    font-size: 22rpx;
+    text-align: center;
+    border-radius: 15rpx 50rpx 50rpx 0
+}
+
+.recommend .recommend-item .type view {
+    display: inline-block;
+    width: 7rpx;
+    height: 17rpx;
+    border-radius: 0 0 0 20rpx;
+    background: black;
+    position: absolute;
+    left: 0;
+    bottom: -5rpx
+}
+
+.recommend .recommend-item button {
+    width: 160rpx;
+    height: 50rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: white;
+    line-height: 50rpx;
+    background: -webkit-linear-gradient(left, #49B5FE, #9C60F6);
+    border: none;
+    padding: 0;
+    position: absolute;
+    bottom: 20rpx;
+    left: 260rpx;
+    margin-left: 20rpx;
+}
+
+.recommend .recommend-item .sale-out {
+    background: #D7D7D7;
+    border-color: #D7D7D7 !important
+}
+
+.recommend .recommend-item .right {
+    position: absolute;
+    left: 0;
+    top: 0;
+    float: left;
+    display: inline-block;
+    margin-left: 260rpx;
+    margin-top: 20rpx;
+    margin-right: 20rpx;
+    height: 100%;
+    padding-left: 20rpx;
+}
+
+.recommend .recommend-item .right .des {
+    font-size: 28rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-height: 1.5
+}
+
+.recommend .recommend-item .right .price {
+    font-size: 34rpx;
+    color: #8597fd;
+    margin-top: 10rpx
+}
+.more-paint {
+    background: white;
+    padding: 0 10rpx 160rpx;
+}
+.more-paint .item {
+    display: inline-block;
+    margin: 10rpx;
+    box-sizing:border-box;
+    box-shadow:0 0 20rpx rgba(0,0,0,0.07);
+    padding-bottom:10rpx;
+}
+
+.more-paint .item image {
+    width: 100%;
+    border-radius: 10rpx;
+    /*border-bottom: 2rpx solid #e8e8e8;*/
+}
+
+.more-paint .item .tit {
+    font-size: 30rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 10rpx 20rpx;
+}
+
+.more-paint .item .price {
+    font-size: 36rpx;
+    color: #8597fd;
+    padding: 10rpx 20rpx;
+}
+.more-paint .item .painttag {
+    float: right;
+    font-size: 33rpx;
+    margin-right: 32rpx;
+}
+.btn-green{
+    background: #55B737;
+    color: white;
+}
+.btn-update{
+    background: -webkit-linear-gradient(left, #49B5FE, #9C60F6);
+    color: white;
+    margin: 30rpx;
+    border-radius: 0    ;
+}
+/*搜索框样式*/
+.search-con {
+    height: 98rpx;
+    padding: 20rpx;
+    border-bottom: 1px solid #D6D6DB;
+    box-sizing: border-box;
+}
+
+.search-con .left {
+    width: calc(100% - 100rpx);
+    background: #EFEFF4;
+    border-radius: 50rpx;
+    height: 56rpx;
+    display: inline-block;
+    line-height: 56rpx;
+    position: relative;
+    /*overflow: hidden;*/
+}
+
+.search-con .left view {
+    display: inline-block;
+    width: calc(100% - 120rpx);
+    vertical-align: middle;
+    margin-top: -4rpx;
+}
+
+.search-con input {
+    width: 100%;
+    background: none;
+    font-size: 26rpx;
+}
+
+.search-con image {
+    width: 25rpx;
+    height: 25rpx;
+    margin: 0 20rpx;
+}
+
+.search-con .right {
+    display: inline-block;
+    width: 98rpx;
+    font-size: 32rpx;
+    color: #00C203;
+    text-align: center;
+}
+.blank-con{
+    width: 100%;
+    text-align: center;
+    margin-top: 400rpx;
+    position: absolute;
+    left: 0;
+    top:0;
+    background: transparent !important;
+}
+.blank-con view{
+    color: #b3b3b3;
+    background: transparent !important;
+}
+.blank-con .tip{
+    margin-top: 30rpx;
+    background: transparent !important;
+}
+.clear-icon{
+    position: absolute;
+    right: 0;
+    top:10rpx;
+    right: 10rpx;
+}
+
+.gotopicon {
+    width: 100rpx;
+    height: 100rpx;
+    position: absolute;
+    bottom: 30rpx;
+    right: 30rpx;
+}

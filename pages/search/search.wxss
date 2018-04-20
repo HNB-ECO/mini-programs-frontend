@@ -1,0 +1,36 @@
+page {
+    height: 100%;
+    position: relative;
+    background: white;
+}
+
+view, text {
+    color: #333;
+}
+
+.search-tab .tit {
+    font-size: 28rpx;
+    padding-left: 20rpx;
+    height: 90rpx;
+    line-height: 90rpx;
+    position: relative;
+
+}
+
+.search-tab .item-note {
+    color: #8597FD;
+    font-size: 26rpx;
+    padding-right: 20rpx;
+}
+.tabs-item{
+    width:calc(25% - 24rpx);
+    margin:10rpx 12rpx;
+    background: #F6F6F6;
+    border-radius: 50rpx;
+    height: 56rpx;
+    display: inline-block;
+    text-align: center;
+    font-size: 26rpx;
+    line-height: 56rpx;
+    overflow: hidden;
+}
