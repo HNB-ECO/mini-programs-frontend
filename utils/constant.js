@@ -1,6 +1,6 @@
 // const ENV = 'DEV';
 const ENV='PROD';
-const DEV_API_URL = 'http://121.41.90.22:11902/api';
+const DEV_API_URL = 'http://47.97.126.79:8800/api';
 // const DEV_API_URL = 'http://192.168.1.150:11902/api';
 const PROD_API_URL = 'https://service.weapp.wohoney.com/api';
 

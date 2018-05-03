@@ -1,56 +1,76 @@
 <import src="../template/template.wxml" />
-<view class="container bg-default">
+
+<!-- <navbar navbar-title="{{ navbarTitle }}" /> -->
+
+<view class="container bg-default {{ isIphoneX ? 'fix-iphonex-navbar' : '' }}">
     <view class="tp-tit">
-        收货人：{{order.contactor}} {{order.phone}}
+        <text>请填写收货地址：{{order.contactor}} {{order.phone}}</text>
+        <view class='tp-tit-bottom-border'></view>
     </view>
     <view class="order-detail">
-        <image src="{{paint.imageUrls+getImgMid}}" alt="" mode="aspectFill" />
-        <view class="right">
-            <view class="des">
-                画师：{{paint.artistProfile.nickname}}
+        <view class='top'>
+            <image class='artistlogo' src='../../images/hnlogo_p.png'></image>
+            <view>画你官方直营{{paint.artistProfile.nickname}}</view>
+        </view>
+        <view class='bottom weui-flex'>
+            <view><image class='mainImg' src="{{paint.imageUrls}}" alt="" mode="aspectFill" /></view>
+            <view class="right weui-flex__item">
+                <view class="des">
+                    范冰冰同款OPPO R11手机壳范冰冰同款OPPO R11手机壳范冰冰同款OPPO R11手机壳{{paint.artistProfile.nickname}}
+                </view>
+                <view class="options">颜色分类：R11 巴巴爸爸 送挂绳 {{paint.prodStyle}}{{order.numOfPeople}}</view>
+                <view class="price"> <text class='hnb-text'><text>233</text>HNB </text> / 240RMG </view>
+                <view class='numb'>x1</view>
             </view>
-            <view class="options">{{order.paintSizeName}}，{{order.paintStyleName||paint.prodStyle}}，人数x{{order.numOfPeople}}</view>
-            <view class="price">¥{{order.paintPrice}}</view>
         </view>
     </view>
     <view class="item-contain">
         <view class="more-item">
-            给画家留言
-            <view class="item-input">
-                <input type="text" placeholder="选填：你想对画家说的话..." placeholder-style="color:#ccc" value="{{order.leaveMessage}}" bindblur="setFrom" data-name="leaveMessage"/>
+            购买数量
+            <view class="right">
+                <image src="../../images/add@2x.png" alt="" bindtap="btnHover" data-type="minusBtnImg" />
+                <input type="number" value="1" bindblur="setFrom" data-name="numOfPeople" disabled/>
+                <image src="../../images/min@2x.png" alt="" bindtap="btnHover" data-type="plusBtnImg" />
             </view>
         </view>
-        <view class="more-item relative">
-            <image src="../../images/urgent@2x.png" alt="" class="img-left"/>
-            <view class="top">
-                加急催稿
-                <text class="day">(预计提前3天完成)</text>
-                <text class="price">+￥{{paintPrice.quickPrice}}</text>
+        <view class="more-item weui-flex">
+            <view>买家留言</view>
+            <view class="item-input weui-flex__item">
+                <input type="text" placeholder="选填 填写内容已和卖家协商确认" placeholder-style="color:#ccc" value="{{order.leaveMessage}}" bindblur="setFrom" data-name="leaveMessage"/>
             </view>
-            <view class="bottom">购买加急催稿，我们会第一时间通知画师为您作画。</view>
-            <switch bindchange="quickChange" color="#8597FD" />
         </view>
-        <view class="more-item relative" bindtap="chooseCoupon">
-            <image src="../../images/coupon@2x.png" alt="" class="img-left"/>
-            优惠券
+        <view class="more-item" bindtap="chooseCoupon">
+            配送方式
             <view class="item-note">
                 <text wx:if="{{order.couponId&&order.couponType&&paintPrice.use}}">-￥{{order.couponMinus}}</text>
-                <text wx:if="{{order.couponId&&!order.couponType}}">免单券</text>
+                <text wx:if="{{order.couponId&&!order.couponType}}">快递 免邮</text>
                 <image src="../../images/right.png" alt="" class="right-icon" />
             </view>
         </view>
+        <!-- <view class='read-protocol-view'>
+          <text style='color:#999999' bindtap='bindReadProtocolTap'>阅读并同意 <text style='color:#8597FD'>《用户购买须知及销售协议》</text> </text>
+          <image class='right-icon' src='{{ isReadProtocol ? "../../images/checked@2x.png" : "../../images/check@2x.png" }}' bindtap='bindCheckReadProtocolTap'></image>
+        </view> -->
         <view class="total">
-            实付金额
-            <!-- <text class="price" wx:if="{{!(order.couponId&&!order.couponType)}}">￥{{order.paintPrice+(order.isQuick?paintPrice.quickPrice:0)-(order.couponId?order.couponMinus:0)}}</text>
-            <text class="price" wx:if="{{order.couponId&&!order.couponType}}">￥0</text> -->
-            <text class="pirce">￥{{paintPrice.totalPrice}}</text>
+            共1件商品 小计：
+            <view class="price"> <text class='hnb-text'><text>233</text>HNB </text> / 240RMG </view>
+        </view>
+
+        <view class='pay-title'>支付方式</view>
+        <view class='weui-flex pay-item' wx:for='{{ payList }}' wx:key='{{ index }}'>
+          <view><image class='left-icon' src='../../images/{{ item.selected ? "select" : "unselect" }}.png'></image></view>
+          <view class='weui-flex__item'>
+            <view class='name'>{{ item.name }}</view>
+          </view>
+          <view class='pay-btn' wx:if='{{ index == 0 }}'>充值</view>
         </view>
     </view>
 
 </view>
-<view class="draw-footer">
-    <view class="order-confirm" bindtap="orderConfirm">
-        确认支付
+<view class="draw-footer {{ isIphoneX ? 'draw-footer-fix-iphonex' : '' }}">
+    <view class="order-confirm weui-flex {{ isIphoneX ? 'confirm-btn-fix-iphonex' : '' }}" bindtap="orderConfirm">
+        <view class='left-btn weui-flex__item'> <text>免运费</text> 合计 233HNCS</view>
+        <view class='pay-now-btn'>立即支付</view>
     </view>
 </view>
 <template is="toast" data="{{showTips,tipsInfo}}">

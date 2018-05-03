@@ -1,5 +1,8 @@
 <import src="../template/template.wxml" />
-<view class="container">
+
+<!-- <navbar navbar-title="{{ navbarTitle }}" /> -->
+
+<view class="container {{ isIphoneX ? 'container-fix-iphonex' : '' }}">
     <view class="star">
         <view wx:for="{{[1,2,3,4,5]}}" class="img">
             <image src="{{index<=comment.score?'../../images/star@2x.png':'../../images/star-nor@2x.png'}}" alt="" bindtap="chooseStar" data-index="{{index}}" />

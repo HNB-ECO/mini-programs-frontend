@@ -1,8 +1,35 @@
 /**app.wxss**/
-
+@import 'utils/weui.wxss';
 page {
     background-color: #f6f6f6;
-    font-family: -apple-system-font, 'Helvetica Neue', Helvetica, 'Microsoft YaHei', sans-serif
+    font-family: -apple-system-font, 'Helvetica Neue', Helvetica, 'Microsoft YaHei', sans-serif;
+}
+
+/* 红 #fe2741 */
+
+.fs30 {
+    font-size: 30rpx;
+}
+.fs25 {
+    font-size: 25rpx;
+}
+.txtCenter {
+    text-align: center;
+}
+.txtLeft {
+    text-align: left;
+}
+.txtRight {
+    text-align: right;
+}
+.color999 {
+    color: #999999;
+}
+.lineClamp2 {
+    overflow:hidden;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
 }
 
 .container {
@@ -21,7 +48,11 @@ input {
 
 .bg-default {
     background: #f6f6f6;
-    padding-top: 150rpx;
+    /* padding-top: 64px; */
+}
+
+.fix-iphonex-navbar {
+    padding-top: 108px!important;
 }
 
 button::after {
@@ -38,7 +69,20 @@ button::after {
     width: 100%;
     height: 100rpx;
     background: none;
-    margin-bottom: 30rpx;
+    /* margin-bottom: 30rpx; */
+}
+.draw-footer-fix-iphonex {
+    height: 140rpx;
+}
+.draw-footer .confirm-btn {
+    background: -webkit-linear-gradient(left, #49B5FE, #9C60F6);
+    color: white;
+    font-size: 36rpx;
+    text-align: center;
+    line-height: 100rpx;
+}
+.draw-footer .confirm-btn-fix-iphonex {
+    line-height: 140rpx;
 }
 
 .show-tips {
@@ -189,16 +233,18 @@ button::after {
 
 .more-paint .item image {
     width: 100%;
-    border-radius: 10rpx;
-    /*border-bottom: 2rpx solid #e8e8e8;*/
+    border-radius: 5rpx;
+    border-bottom: 1rpx #f2f2f2 solid;
+    border-top: 1rpx #f2f2f2 solid;
 }
 
 .more-paint .item .tit {
-    font-size: 30rpx;
+    font-size: 36rpx;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     padding: 10rpx 20rpx;
+    font-weight: 700;
 }
 
 .more-paint .item .price {
@@ -209,6 +255,7 @@ button::after {
 .more-paint .item .painttag {
     float: right;
     font-size: 33rpx;
+    font-weight: 700;
     margin-right: 32rpx;
 }
 .btn-green{
@@ -296,4 +343,22 @@ button::after {
     position: absolute;
     bottom: 30rpx;
     right: 30rpx;
+}
+
+.read-protocol-view {
+    background-color:rgb(249,250,251);
+    height:80rpx;
+    line-height:80rpx;
+    font-size:25rpx;
+    padding:0 20rpx;
+    color: #999999;
+}
+.read-protocol-view view {
+    display: inline-block;
+}
+.read-protocol-view .right-icon {
+    width: 44rpx;
+    height: 44rpx;
+    float: right;
+    margin-top: 18rpx;
 }

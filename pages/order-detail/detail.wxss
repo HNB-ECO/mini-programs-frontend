@@ -6,6 +6,10 @@
   padding:30rpx 20rpx 40rpx 20rpx;
   color:#333;
   line-height: 2;
+  margin-top: 64px;
+}
+.order-attach-fix-iphonex {
+  margin-top: 108px;
 }
 
 .order-attach .header {

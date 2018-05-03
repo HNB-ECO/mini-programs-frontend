@@ -5,6 +5,8 @@ let that, app = getApp();
 
 Page({
     data: {
+        navbarTitle: '补差价',
+        isIphoneX: app.getSystemModelIPhoneX(),
         order: {
             price: 0.0,
             remark: ''

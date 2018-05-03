@@ -8,9 +8,11 @@ var pageData = new applyApi.splitPage();
 Page({
 
   data: {
-      naveList:['全部订单','待支付','待接单','待确认','待评分'],
+      navbarTitle: '我的订单',
+      naveList:['全部','待付款','待发货','待收获'],
       currentTab:0,
-      getImgMid:app.getImgMid()
+      getImgMid:app.getImgMid(),
+      isIphoneX: app.getSystemModelIPhoneX()
   },
 
   onLoad: function (options) {

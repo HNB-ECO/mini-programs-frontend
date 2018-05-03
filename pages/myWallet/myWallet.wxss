@@ -1,0 +1,83 @@
+/* pages/myWallet/myWallet.wxss */
+
+
+.title-alert-view {
+    background-color: #FFE4E6;
+    color: #FE3144;
+    padding:20rpx 20rpx;
+    font-size: 27rpx;
+    line-height:130%;
+}
+.title-alert-view image {
+    width:40rpx;
+    height:40rpx;
+    margin-top:10rpx;
+    margin-right: 10rpx;
+}
+.my-price-item {
+    text-align:center;
+    padding:50rpx 0;
+    background-color:white;
+    border-bottom:1px #e8e8e8 solid;
+    font-size: 32rpx;
+}
+.my-price-item .hnb text{
+    font-size:55rpx;
+    font-weight:500;
+    margin-right:5rpx;
+}
+.my-price-item .hnb-address {
+    color:#333333;
+    font-size:30rpx;
+    padding-top:10px;
+}
+.price-item-view {
+    padding:10rpx;
+    text-align:center;
+    background-color: white;
+}
+.price-item-view .title {
+    text-align:left;
+    padding:20rpx;
+    font-size:35rpx;
+    color:#999999;
+}
+.price-item {
+    border:2rpx #FE2B40 solid;
+    text-align:center;
+    display:inline-block;
+    margin:10rpx;
+    border-radius:5rpx;
+    line-height:124%;
+    padding:20rpx 0;
+}
+.price-active {
+    background-color: #FE2B40;
+}
+.price-item .bigTxt {
+    color: #FE2B40;
+}
+.txt-active {
+    color: #fff;
+}
+.price-item .litTxt {
+    color: #FEA9AF;
+    font-size: 30rpx;
+}
+.price-item-view .comft-btn {
+    padding: 20rpx;
+    margin: 60rpx 20rpx;
+    background-color: #FE2B40;
+    border-radius: 5rpx;
+    color: white;
+    font-size: 35rpx;
+}
+.remind-txt-view {
+    padding:10rpx 20rpx;
+    color:#999;
+    font-size:27rpx;
+    text-align: left;
+}
+.remind-txt-view view {
+    margin-bottom: 30rpx;
+}

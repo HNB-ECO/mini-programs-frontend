@@ -3,12 +3,29 @@ const verify = require('../../utils/verify.js');
 const orderApply = require('../../utils/order.js');
 var that, order, prodId, artistId;
 var app = getApp();
+
 Page({
     data: {
         getImgMid: app.getImgMid(),
+        navbarTitle: '确认订单',
+        isIphoneX: app.getSystemModelIPhoneX(),
+        isReadProtocol: false,
+        paint: {
+          imageUrls: 'https://pic.xiami.net/images/album/img77/593402077/5237927551426732043.jpg?x-oss-process=image/resize,limit_0,m_pad,w_185,h_185',
+        },
+        payList: [
+          {
+            name: '画你钱包余额',
+            selected: true
+          },
+          {
+            name: '微信支付 (支付升级中)',
+            selected: false
+          }
+        ]
     },
     onShow(e) {
-        that.getPaintingPrice();
+        // that.getPaintingPrice();
     },
     onLoad: function() {
         that = this;
@@ -19,8 +36,8 @@ Page({
             that.setData({
                 order: order
             });
-            that.getPaintInfo();
-            that.getPaintingPrice();
+            // that.getPaintInfo();
+            // that.getPaintingPrice();
         }
     },
     chooseCoupon(e) {
@@ -87,24 +104,48 @@ Page({
         })
     },
     orderConfirm(e) {
+
+      if (that.data.isReadProtocol) {
         that.data.order.price = that.data.paintPrice.totalPrice;
         that.data.order.paintDesignRequireId = 0;
         console.log('orderParam', that.data.order);
-        applyApi.postByToken('order/make-order', that.data.order, function(res) {
-            console.log('make-order', res);
-            orderApply.pay(res.data, function() {
-                wx.setStorageSync('honey-order-status', 2);
-                wx.switchTab({
-                    url: `../order/order`
-                })
-            }, function() {
-                wx.setStorageSync('honey-order-status', 1);
-                wx.switchTab({
-                    url: `../order/order`
-                })
+        applyApi.postByToken('order/make-order', that.data.order, function (res) {
+          console.log('make-order', res);
+          orderApply.pay(res.data, function () {
+            wx.setStorageSync('honey-order-status', 2);
+            wx.navigateTo({
+              url: `../order/order`
             })
+          }, function () {
+            wx.setStorageSync('honey-order-status', 1);
+            wx.navigateTo({
+              url: `../order/order`
+            })
+          })
 
         })
+      } else {
+        that.setData({
+          showTips: true,
+          tipsInfo: '请同意用户协议'
+        })
+        setTimeout(function () {
+          that.setData({
+            showTips: false,
+          })
+        }, 1500)
+      }
+    },
+    bindCheckReadProtocolTap(e) {
+      let isReadProtocol = that.data.isReadProtocol;
+      that.setData({
+        isReadProtocol: !isReadProtocol
+      })
+    },
+    bindReadProtocolTap(e) {
+      wx.navigateTo({
+        url: '../protocol/protocol',
+      })
     }
 
 })

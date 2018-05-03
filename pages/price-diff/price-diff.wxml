@@ -1,5 +1,8 @@
 <import src="../template/template.wxml" />
-<view class="container bg-default diff-con">
+
+<!-- <navbar navbar-title="{{ navbarTitle }}" /> -->
+
+<view class="container bg-default diff-con {{ isIphoneX ? 'container-fix-iphonex' : '' }}">
     <view class="input-item">
         差价金额:
         <view class="item-note">

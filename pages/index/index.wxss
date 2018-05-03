@@ -1,4 +1,4 @@
-/**index.wxss**/
+classify-nav/**index.wxss**/
 page{
     height: 100%;
     position: relative;
@@ -6,19 +6,18 @@ page{
 .bg-default {
     background-color: white;
 }
-view, text {
-    color: #333;
-    /*background: white;*/
-}
+
 .container{
     height: 100%;
 }
 .classify-nav{
     height: 80rpx;
     position: fixed;
-    top:150rpx;
+    top: 64px;
     white-space: nowrap; 
     font-size: 41rpx;
+    font-weight: 500;
+    background-color: white;
 }
 .nav-item{
     display: inline-block;
@@ -43,19 +42,17 @@ view, text {
 .classify-content{
     height: calc(100% - 80rpx);
     position: fixed;
-    bottom: -150rpx;
+    bottom: -64px;
 }
 .classify-content .more-paint{
-    padding: 0 50rpx 150rpx;
+    padding: 15rpx 50rpx 150rpx;
 }
 
 .more-paint view{
     background: white;
 }
 .more-paint .item {
-    border-style: none;
-    box-shadow: rgba(0,0,0,0.04) 0px 0px 20rpx 1rpx;
-    border-radius: 0;
+    margin: 15rpx 10rpx;
 }
 .more-paint .item .browse-num{
     height: 130rpx;
@@ -66,6 +63,85 @@ view, text {
 }
 .more-paint .item image {
     border-radius: 0;
+}
+
+.content-scrolls {
+    background-color: white;
+}
+.content-scrolls .title {
+    padding: 20rpx;
+    text-align: center;
+}
+.content-scrolls .tit-icon {
+    width: 36rpx;
+    height: 36rpx;
+    display: inline-block;
+}
+.content-scrolls .tit-icon image {
+    width: 100%;
+    height: 100%;
+    float: left;
+    margin-top: 4rpx;
+}
+
+.content-scrolls .x-item {
+    width: 325rpx;
+    display: inline-block;
+    margin: 0 15rpx;
+}
+.content-scrolls scroll-view {
+    width: 96%;
+    padding: 0 2%;
+    white-space:nowrap;
+    /* height: 636rpx; */
+}
+.content-scrolls .x-item .img-view {
+    height: 488rpx;
+    width: 325rpx;
+    background-color: pink;
+    display: inline-block;
+    border-radius: 10rpx;
+    background-position:center;
+    background-repeat:no-repeat;
+    /* background-attachment:fixed; */
+}
+.content-scrolls .x-item .name {
+    position: absolute;
+    top: 360rpx;
+    width: 325rpx;
+    text-align: center;
+    color: white;
+}
+.content-scrolls .x-item .name .types {
+    display: inline-block;
+    background-color: white;
+    color: black;
+    font-size: 22rpx;
+    padding:5rpx 10rpx;
+    border-radius:8rpx;
+}
+.content-scrolls .x-item .des-view {
+    width: 325rpx;
+}
+.content-scrolls .x-item .des-view .des {
+    font-size: 30rpx;
+    width: 325rpx;
+    overflow:hidden;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
+    line-height: 120%;
+    white-space:normal;
+}
+.x-item .des-view .price {
+    font-size:38rpx;
+    color:#FD2841;
+}
+.x-item .des-view .bz {
+    color: #999999;
+    font-size: 22rpx;
+    text-align: right;
+    line-height: 60rpx;
 }
 
 /* .index-scroll{

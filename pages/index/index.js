@@ -18,10 +18,102 @@ Page({
   data: {
     selectTab: 0,
     getImgMid: app.getImgMid(),
-    navbarBgColor: '',
+    navbarBgColor: '#FFFFFF',
     scrollIntoView: '',
     gotopHidden: true,
-    indexPage: true
+    indexPage: true,
+    isIphoneX: app.getSystemModelIPhoneX(),
+
+    imgUrls: ['http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg'],
+    xItems: [
+      {
+        title: '范冰冰同款',
+        list: [
+          {
+            tit: '范冰冰专属手机壳',
+            types: '手机壳',
+            des: '可爱苹果7plus/8/X手机壳个性iphone6s挂钩',
+            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+            hnb: '233HNB',
+            rmb: 0,
+            note: '仅限HNB支付'
+          },
+          {
+            tit: '范冰冰专属手机壳',
+            types: '手机壳',
+            des: '可爱苹果7plus/8/X手机壳个性iphone6s挂钩个性iphone6s挂钩',
+            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+            hnb: '233HNB',
+            rmb: 0,
+            note: '仅限HNB支付'
+          },
+          {
+            tit: '范冰冰专属手机壳',
+            types: '手机壳',
+            des: '可爱苹果7plus/8/X手机壳个性iphone6s挂钩个性iphone6s挂钩',
+            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+            hnb: '233HNB',
+            rmb: 0,
+            note: '仅限HNB支付'
+          }
+        ]
+      },
+      {
+        title: '范冰冰签名照',
+        list: [
+          {
+            id: 0,
+            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+          },
+          {
+            id: 0,
+            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+          },
+          {
+            id: 0,
+            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+          }
+        ]
+      },
+      {
+        title: '范冰冰周边',
+        types: 'wide',
+        list: [
+          {
+            id: 0,
+            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+          },
+          {
+            id: 0,
+            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+          },
+          {
+            id: 0,
+            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+          }
+        ]
+      },
+      {
+        title: '范冰冰代言',
+        types: 'wide',
+        list: [
+          {
+            id: 0,
+            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+          },
+          {
+            id: 0,
+            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+          },
+          {
+            id: 0,
+            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+          }
+        ]
+      }
+    ]
   },
   onLoad: function () {
     that = this;
@@ -32,7 +124,7 @@ Page({
       that.setData({
         navList: res.data.styleTags
       })
-      console.log('styleTags == ' + JSON.stringify(res.data.styleTags));
+      // console.log('styleTags == ' + JSON.stringify(res.data.styleTags));
       that.getPaintList(true);
     });
   },
@@ -49,7 +141,7 @@ Page({
       value: 10
     }];
     pageData.getData('userAction/gallerySort', function (dataList, isLoadAll) {
-      console.log('gallerySort', JSON.stringify(dataList));
+      // console.log('gallerySort', JSON.stringify(dataList));
       that.setData({
         paintList: dataList,
         isLoadAll: isLoadAll,
@@ -59,18 +151,17 @@ Page({
   selectTab(e) {
     var index = e.currentTarget.dataset.index;
     var name = e.currentTarget.dataset.name;
-    console.log('idid =' + e.currentTarget.id);
     if (index - that.data.selectTab) {
       that.setData({
         selectTab: index,
-        navbarBgColor: formatNavbarColor[name]
+        navbarBgColor: that.data.navList[index].color
       })
       if (index == that.data.navList.length-1) {
         that.setData({
           scrollIntoView: e.currentTarget.id
         })
       }
-      if (that.data.navbarBgColor != '') {
+      if (that.data.navbarBgColor != '#FFFFFF') {
         wx.setNavigationBarColor({
           frontColor: '#ffffff',
           backgroundColor: '#000000',

@@ -8,9 +8,11 @@ let second_time, countDown;
 Page({
 
     data: {
-        naveList: ['全部订单', '待支付', '待接单', '待确认', '待评分'],
-        currentTab: 0,
-        getImgMid: app.getImgMid()
+      navbarTitle: '订单详情',
+      isIphoneX: app.getSystemModelIPhoneX(),
+      naveList: ['全部订单', '待支付', '待接单', '待确认', '待评分'],
+      currentTab: 0,
+      getImgMid: app.getImgMid()
     },
 
     onLoad: function(options) {

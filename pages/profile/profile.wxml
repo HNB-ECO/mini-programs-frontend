@@ -1,16 +1,26 @@
 <import src="../template/template.wxml" />
-<view class="container bg-default">
+
+<!-- <navbar bg-color="{{ navbarBgColor }}" navbar-title="{{ navbarTitle }}" />  -->
+
+<view class="container bg-default {{ isIphoneX ? 'fix-iphonex-navbar' : '' }}">
     <view class="profile">
-        <image src="{{userInfo.avatar}}" alt="" mode="aspectFill" wx:if="{{userInfo.avatar}}"/>
-        <image src="../../images/avatar_default@2x.png" alt="" mode="aspectFill" wx:if="{{!userInfo.avatar}}" />
+        <image class='avatar' src="{{userInfo.avatar}}" alt="" mode="aspectFill" wx:if="{{userInfo.avatar}}"/>
+        <image class='avatar' src="../../images/avatar_default@2x.png" alt="" mode="aspectFill" wx:if="{{!userInfo.avatar}}" />
         <view class="info">
-            {{userInfo.nickname||'未登录'}}
-            <!-- <view>账号：123456789</view> -->
+            <view>{{userInfo.nickname||'未登录'}}</view>
+            <view class='sex-view'><image src='../../images/boy_b.png'></image></view>
         </view>
         <button class="btn-login" wx:if="{{!userInfo}}" bindtap="login">登录</button>
+        <view class='mywallet-view weui-flex' bindtap='bindMywalletTap'>
+          <view class='left-icon'><image src='../../images/mywallet.png'></image></view> 
+          <view class='right-item weui-flex__item'>
+            <view>HNB地址 XXXXX</view>
+            <view>余额 999</view>
+          </view>
+        </view>
     </view>
     <view wx:if="{{userInfo}}">
-        <view class="item" bindtap="navToOrder" data-status="0">
+         <!-- <view class="item" bindtap="navToOrder" data-status="0">
             我的订单
             <view class="item-note">
                 查看更多订单
@@ -18,16 +28,16 @@
             </view>
         </view>
         <view class="order-type">
-            <view class="type-item" wx:for="{{navList}}" bindtap="navToOrder" data-status="{{item.status}}">
+            <view class="type-item" wx:for="{{navList}}" wx:key="{{ index }}" bindtap="navToOrder" data-status="{{item.status}}">
                 <image src="{{item.img}}" alt="" />
-                <text class="circle">{{item.total}}</text>
+                <text class="circle" wx:if='{{ item.total != 0 }}'>{{item.total}}</text>
                 <view>{{item.des}}</view>
             </view>
         </view>
         <view class="latest-message" bindtap="goLatest" wx:if="{{latestOrder}}">
             <view class="left">
                 最新状态
-                <!-- <view>&nbsp;</view> -->
+                 <view>&nbsp;</view> 
                 <text>●</text>
             </view>
             <image src="{{latestOrder.sourceImageUrl}}" alt="" />
@@ -39,11 +49,21 @@
                 <view class="status" wx:if="{{latestOrder.status==5}}">已评价</view>
                 <view>{{latestOrder.size.name}}，{{latestOrder.paintStyle.name}}，人数x{{latestOrder.numOfPeople}}</view>
             </view>
-        </view>
-        <view class="copoun-nav" bindtap="coupon">
-            <image src="../../images/my_icon_oupon@2x.png" alt="" class="coupon" />
-            <text>优惠券</text>
+        </view>  -->
+        <view class="copoun-nav" bindtap="myaddress">
+            <image src="../../images/address_g.png" alt="" class="coupon" />
+            <text>我的收货地址</text>
             <image src="../../images/right.png" alt="" class="right" />
+        </view>
+        
+        <button class="copoun-nav customer-nav" open-type="contact" >
+            <image src="../../images/customerService_pe.png" alt="" class="coupon" />
+            <text>联系客服</text>
+            <image src="../../images/right.png" alt="" class="right" />
+        </button>
+
+        <view class="copoun-nav changeid" bindtap="">
+          <text>切换账号</text>
         </view>
     </view>
 </view>

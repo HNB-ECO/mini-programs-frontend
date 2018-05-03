@@ -1,52 +1,41 @@
 <import src="../template/template.wxml" />
-<template is="blank" wx:if="{{!orderList.length}}"></template>
-<view class="order-category">
-    <view class="item {{currentTab==index?'active':''}}" wx:for="{{naveList}}" bindtap="chooseTab" data-index="{{index}}">
-        <text class="text">{{item}}</text>
+<!-- <template is="blank" wx:if="{{!orderList.length}}"></template> -->
+
+<!-- <navbar navbar-title="{{ navbarTitle }}" /> -->
+
+<view class="order-category {{ isIphoneX ? 'order-category-fix-iphonex' : '' }}">
+    <view class="item {{ currentTab==index?'active':'' }}" wx:for="{{ naveList }}" wx:key="{{ index }}" bindtap="chooseTab" data-index="{{ index }}">
+        <text class="text">{{ item }}</text>
     </view>
 </view>
-<scroll-view class='order-list' scroll-y="true" bindscrolltolower="handleLoadMore" lower-threshold="100" scroll-into-view="{{pageTop}}">
+<scroll-view class='order-list {{ isIphoneX ? "order-list-fix-iphonex" : "" }}' scroll-y="true" bindscrolltolower="handleLoadMore" lower-threshold="100" scroll-into-view="{{pageTop}}">
     <!-- 第一个订单 -->
-    <view class='item' wx:for="{{orderList}}" wx:if="{{item.type==0}}">
-        <view class='header'>
-            <view class='half left'>
-                状态：
-                <text class='status' wx:if="{{item.status==1}}">等待买家付款</text>
-                <text class='status' wx:if="{{item.status==2}}">等待画家接单</text>
-                <text class='status' wx:if="{{item.status==3}}">等待买家确认</text>
-                <text class='status' wx:if="{{item.status==4}}">等待买家评价</text>
-                <text class='status' wx:if="{{item.status==5}}">已完成</text>
-                <text class='status' wx:if="{{item.status==6}}">已取消</text>
+    <view class='item' wx:for="{{orderList}}" wx:key="{{ index }}" wx:if="{{item.type==0}}">
+        <!-- <view class='header'>
+            <image class='left-iconimg' src='https://images.wohoney.com/dbmci5jlop7?imageView2/1/w/375/h/375'></image>
+            <text>画你官方直营</text>
+            <text class='right-txt'>待付款</text>
+        </view> -->
+        <view class="order-detail">
+            <view class='top'>
+                <image class='artistlogo' src='../../images/hnlogo_p.png'></image>
+                <view>画你官方直营{{paint.artistProfile.nickname}}</view>
+                <view class='right-txt'>待付款</view>
             </view>
-            <view class='half right' wx:if="{{item.status==1}}">
-                <button class='btn btn-outline btn-pay' bindtap="pay" data-id="{{item.id}}">去支付</button>
-            </view>
-            <view class='half right' wx:if="{{item.status==2}}">
-                等待画师接单
-            </view>
-            <view class='half right' wx:if="{{item.status==3&&!item.completeImageBig}}">
-                画师正在奋笔疾书中
-            </view>
-            <view class='half right' wx:if="{{item.status==3&&item.completeImageBig}}">
-                <button class='btn btn-nomal' bindtap="preview" data-src="{{item.completeImageBig}}">查看作品</button>
-            </view>
-            <view class='half right' wx:if="{{item.status==4}}">
-                <button class='btn btn-outline' bindtap="comment" data-orderid="{{item.id}}">去评分</button>
-            </view>
-            <view class='half right' wx:if="{{item.status==5}}">
-                订单已完成
-            </view>
-        </view>
-        <navigator url="{{'/pages/order-detail/detail?orderId='+item.id}}" hover-class="none">
-            <view class='body'>
-                <image src='{{item.sourceImageUrl+getImgMid}}' class='img' />
-                <view class='info'>
-                    <view class='title'>画师：{{item.artistName}}
+            <view class='bottom weui-flex'>
+                <view><image class='mainImg' src="{{paint.imageUrls}}" alt="" mode="aspectFill" /></view>
+                <view class="right weui-flex__item">
+                    <view class="des">
+                        范冰冰同款OPPO R11手机壳范冰冰同款OPPO R11手机壳范冰冰同款OPPO R11手机壳{{paint.artistProfile.nickname}}
                     </view>
-                    <view class='attach'>{{item.paintSize}}，{{item.paintStyle}}，人数x{{item.numOfPeople}}</view>
-                    <view class='price'>¥ {{item.price}}</view>
+                    <view class="options">颜色分类：R11 巴巴爸爸 送挂绳 {{paint.prodStyle}}{{order.numOfPeople}}</view>
+                    <view class="price"> <text class='hnb-text'><text>233</text>HNB </text> / 240RMG </view>
+                    <view class='numb'>x1</view>
                 </view>
             </view>
-        </navigator>
+        </view>
+        <view class='count'>
+          共1件商品 合计： <text>233</text>HNB（含运费0.00）
+        </view>
     </view>
 </scroll-view>

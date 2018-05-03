@@ -1,42 +1,73 @@
 const applyApi = require('../../utils/applyApi.js');
 const verify = require('../../utils/verify.js');
+import { Base64 } from '../../utils/urlsafe-base64';
 
 let that, prevPage, order, paintPrice, totalPrice, pageType;
 let app = getApp();
 Page({
-    data: {},
+    data: {
+      navbarTitle: '收货地址',
+      isIphoneX: app.getSystemModelIPhoneX(),
+      addressList: [{
+          name: 'jerry',
+          phonecall: '18136449610',
+          address: '江苏省苏州市吴中区',
+          addDetail: '隆江南路松泽家园6栋605',
+          selected: true
+        },{
+          name: 'jerry',
+          phonecall: '18136449610',
+          address: '江苏省苏州市吴中区隆江南路松泽家园6栋605',
+          addDetail: '隆江南路松泽家园6栋605',
+          selected: false
+        }
+      ]
+    },
     onLoad: function(options) {
         that = this;
         pageType = options.from;
-        if (pageType == 'profile') {
-            wx.setNavigationBarTitle({
-                title: '优惠券'
-            })
-            that.setData({
-                pageType: pageType
-            })
-        } else {
-            prevPage = app.getPages(1); //上一个页面
-            order = prevPage.data.order;
-            paintPrice = prevPage.data.paintPrice;
-            totalPrice = order.paintPrice + (order.isQuick ? paintPrice.quickPrice : 0);
-            that.setData({
-                totalPrice: totalPrice
-            })
-        }
-        that.getCouponList();
+        // if (pageType == 'profile') {
+        //     wx.setNavigationBarTitle({
+        //         title: '优惠券'
+        //     })
+        //     that.setData({
+        //         pageType: pageType
+        //     })
+        // } else {
+        //     prevPage = app.getPages(1); //上一个页面
+        //     order = prevPage.data.order;
+        //     paintPrice = prevPage.data.paintPrice;
+        //     totalPrice = order.paintPrice + (order.isQuick ? paintPrice.quickPrice : 0);
+        //     that.setData({
+        //         totalPrice: totalPrice
+        //     })
+        // }
+        // that.getCouponList();
 
     },
+    bindAddNewAddressTap() {
+      wx.navigateTo({
+        url: '../newaddress-edit/newaddress-edit?types=add',
+      })
+    },
+    bindEditAddressTap(e) {
+      let qsFiles = Base64.encodeURI(JSON.stringify(this.data.addressList[e.currentTarget.id]));
+      wx.navigateTo({
+        url: '../newaddress-edit/newaddress-edit?types=edit&addDetail=' + qsFiles,
+      })
+    },
+
+
     getCouponList() {
         applyApi.postByToken('me/queryCoupon', {
             size: 1000
         }, function(res) {
-            console.log('queryCoupon', res);
+          console.log('queryCoupon', JSON.stringify(res));
             var couponLen = 0;
             var list = res.data.list;
             for (var i in list) {
                 list[i].endTime = applyApi.getDate(list[i].endTime);
-                list[i].dateDiff = applyApi.dateDiff(list[i].endTime);
+                list[i].dateDiff = applyApi.momentDiff(list[i].endTime);
                 if (pageType != 'profile') {
                     if (!list[i].standardValue || list[i].standardValue <= totalPrice) {
                         list[i].canUse = true;

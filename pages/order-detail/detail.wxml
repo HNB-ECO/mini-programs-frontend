@@ -1,5 +1,8 @@
 <!--pages/order-detail/detail.wxml  订单详情页面-->
-<view class='order-attach'>
+
+<!-- <navbar navbar-title="{{ navbarTitle }}" /> -->
+
+<view class='order-attach {{ isIphoneX ? "order-attach-fix-iphonex" : "" }}'>
     <view class='header'>
         <view class='title' wx:if="{{orderInfo.status==1}}">等待买家支付...</view>
         <view class='title' wx:if="{{orderInfo.status==2}}">等待画师接单...</view>

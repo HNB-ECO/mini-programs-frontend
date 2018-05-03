@@ -1,15 +1,15 @@
 <!--templates/navbar/navbar.wxml-->
 
-<view wx:if='{{ indexPage }}' class='navbar-view' style='background-color:{{ bgColor }};'>
-  <view class='title-view'>
-    <image class='search-icon' src='../../../images/{{ bgColor != "" ? "search_w.png" : "search_b.png" }}'></image>
-    <image class='center-icon' src='../../../images/appTitle.png'></image>
+<view wx:if='{{ indexPage }}' class='navbar-view' style='background-color:{{ bgColor }};{{ isIPhoneX ? "height:108px;" : "" }}'>
+  <view class='title' style='{{ isIPhoneX ? "margin-top:44px;" : "" }}'>
+    <image class='search-icon' src='../../../images/{{ bgColor != "#FFFFFF" ? "search_w.png" : "search_b.png" }}' bindtap='bindSearchTap'></image>
+    <image class='center-icon' src='../../../images/{{ bgColor != "#FFFFFF" ? "appTitle_w" : "appTitle" }}.png'></image>
   </view>
 </view>
 
-<view wx:else class='navbar-view bgcolor-white' >
-  <view class='title-view'>
-    <image class='goback-icon' src='../../../images/search_b.png' bindtap='bindGoBackTap'></image>
+<view wx:else class='navbar-view title-view' style='{{ isIPhoneX ? "height:108px;" : "" }}background-color:{{ bgColor }};'>
+  <view class='title' style='{{ isIPhoneX ? "margin-top:44px;" : "" }}'>
+    <image hidden='{{ navbarTitle == "我的" }}' class='goback-icon' src='../../../images/goback.png' bindtap='bindGoBackTap'></image>
     {{ navbarTitle }}
   </view>
 </view>

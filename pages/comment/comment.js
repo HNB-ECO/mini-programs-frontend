@@ -6,6 +6,8 @@ let that, app = getApp();
 
 Page({
     data: {
+        navbarTitle: '评价',
+        isIphoneX: app.getSystemModelIPhoneX(),
         comment: {
             score: 4,
             isAnonymous: 1, //0:公开 1:匿名

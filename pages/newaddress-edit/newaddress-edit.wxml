@@ -1,0 +1,26 @@
+<!--pages/newaddress-add/newaddress-add.wxml-->
+<import src="../template/template.wxml" />
+
+<!-- <navbar navbar-title="{{ navbarTitle }}" /> -->
+
+<view class="container bg-default {{ isIphoneX ? 'fix-iphonex-navbar' : '' }}">
+  <view class='text-input-item weui-flex' wx:for='{{ navlist }}' wx:key='{{ index }}'>
+    <view class='text'>{{ item.title }}</view>
+    <view class='input weui-flex__item' >
+      <input wx:if='{{ !item.righticon }}' placeholder="{{ item.inputpla }}" id='{{ index }}' bindinput="bindKeyInput" value='{{ item.inputvalue }}'/>
+      <picker wx:else mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+        <view class="picker">
+          {{region[0]}}  {{region[1]}}  {{region[2]}}
+        </view>
+      </picker>
+    </view>
+    <view hidden='{{ !item.righticon }}'><image class='right-icon' src='../../images/right.png'></image></view>
+  </view>
+</view>
+
+<view class='btn-view weui-flex'>
+  <view class='left-btn weui-flex__item'>删除</view>
+  <view class='right-btn weui-flex__item'>确定</view>
+</view>
+
+<template is="toast" data="{{showTips,tipsInfo}}"></template> 

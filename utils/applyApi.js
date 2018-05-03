@@ -1,6 +1,8 @@
 import {
     configApi
 } from './constant';
+import moment from './moment';
+
 const verify = require('./verify.js');
 var canLoad = true;
 var errorCallBack = function(error) {
@@ -265,6 +267,10 @@ var dateDiff = function(sDate1, sDate2) { //sDate1和sDate2是2006-12-18格式
     iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24) //把相差的毫秒数转换为天数
     return iDays
 }
+var momentDiff = function (sDate) {
+    let a = moment(), b = moment(sDate);
+    return b.diff(a, 'days');
+}
 module.exports = {
     get,
     post,
@@ -276,5 +282,6 @@ module.exports = {
     formatTime,
     getDate,
     getTime,
-    dateDiff
+    dateDiff,
+    momentDiff
 }

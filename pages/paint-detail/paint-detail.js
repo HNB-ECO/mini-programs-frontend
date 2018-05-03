@@ -19,6 +19,7 @@ var minusBtnImg = {
 Page({
     data: {
         navbarTitle: '画作详情',
+        isIphoneX: app.getSystemModelIPhoneX(),
         windowWidth: '',
         windowHeight: '',
         showOrderPanel: false,
@@ -33,15 +34,76 @@ Page({
             contactor:configApi.ENV=='DEV'?'wendy':'',
             phone:configApi.ENV=='DEV'?18551587968:'',
         },
-        sourceImageUrl:configApi.ENV=='DEV'?'http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg':''
+        sourceImageUrl:configApi.ENV=='DEV'?'http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg':'',
+        paint: {
+          imageUrls: ['http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg', 'http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg','http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg'],
+          content: '可爱苹果手机壳7plus/8/x手机壳个性挂钩',
+          title: '范冰冰专属手机壳iphone手机壳',
+          rmbPrice: 240,
+          hnbPrice: 233,
+          isShipping: true,
+          people: 999,
+          numbs: 999,
+          address: '苏州',
+          paintSizes: [
+            {
+              name: 'R11 巴巴爸爸 送挂绳',
+              isSelect: false,
+            },
+            {
+              name: 'R11 巴巴爸爸 送挂绳',
+              isSelect: false,
+            },
+            {
+              name: 'R11 巴巴爸爸 送挂绳',
+              isSelect: false,
+            },
+            {
+              name: 'R11 巴巴爸爸 送挂绳',
+              isSelect: false,
+            },
+            {
+              name: 'R11 巴巴爸爸 送挂绳',
+              isSelect: false,
+            },
+            {
+              name: 'R11 巴巴爸爸 送挂绳',
+              isSelect: false,
+            },
+            {
+              name: 'R11 巴巴爸爸 送挂绳',
+              isSelect: false,
+            },
+            {
+              name: 'R11 巴巴爸爸 送挂绳',
+              isSelect: false,
+            },
+            {
+              name: 'R11 巴巴爸爸 送挂绳',
+              isSelect: false,
+            },
+            {
+              name: 'R11 巴巴爸爸 送挂绳',
+              isSelect: false,
+            },
+            {
+              name: 'R11 巴巴爸爸 送挂绳',
+              isSelect: false,
+            },
+            {
+              name: 'R11 巴巴爸爸 送挂绳',
+              isSelect: false,
+            }
+          ]
+        }
     },
     onLoad: function(options) {
         that = this;
         that.setData({
             windowWidth: app.data.systemInfo.windowWidth
         });
-        prodId = options.prodId || 890;
-        that.getPaintInfo();
+        // prodId = options.prodId || 890;
+        // that.getPaintInfo();
 
     },
     bindGoTopTap() {
@@ -51,13 +113,16 @@ Page({
     },
     makeOrder(e) {
         console.log('makeOrder');
-        app.openSetting(function(){
-            that.getPainterInfo(artistId,prodId,function(){
-                that.setData({
-                    showOrderPanel: true
-                })
-            });
+        that.setData({
+            showOrderPanel: true
         })
+        // app.openSetting(function(){
+        //     that.getPainterInfo(artistId,prodId,function(){
+        //         that.setData({
+        //             showOrderPanel: true
+        //         })
+        //     });
+        // })
     },
     // 获取作品信息
     getPaintInfo(callback) {
@@ -160,8 +225,7 @@ Page({
         })
     },
     selectTab(e) {
-        var listname = e.currentTarget.dataset.type;
-        var list = that.data[listname];
+        var list = that.data.paint.paintSizes;
         var index = e.currentTarget.dataset.index;
         for (var i in list) {
             if (i - index) {
@@ -170,16 +234,9 @@ Page({
                 list[i].isSelect = true;
             }
         }
-        if (listname == 'paintSizes') {
-            paintSizeId = list[index].id;
-            that.data.order.paintSizeName=list[index].name;
-            // that.getPaintStyleBySize(artistId, paintSizeId, prodId);
-        } else {
-            paintStyleId = list[index].id;
-        }
-        that.getPaintingPrice();
+        // that.getPaintingPrice();
         that.setData({
-            [listname]: list
+          'paint.paintSizes': list
         })
     },
     btnHover(e) {

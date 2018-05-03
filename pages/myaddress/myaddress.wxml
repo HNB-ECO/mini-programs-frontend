@@ -1,0 +1,37 @@
+<import src="../template/template.wxml" />
+
+<!-- <template is="blank" wx:if="{{!couponList.length}}"></template> -->
+
+<!-- <navbar bg-color="{{ navbarBgColor }}" navbar-title="{{ navbarTitle }}" /> -->
+
+<view class="container bg-default {{ isIphoneX ? 'fix-iphonex-navbar' : '' }}">
+
+<!-- list -->
+<view class='address-view'>
+  <view class='weui-flex address-item' wx:for='{{ addressList }}' wx:key='{{ index }}'>
+    <view><image class='left-icon' src='../../images/{{ item.selected ? "select" : "unselect" }}.png'></image></view>
+    <view class='w2eui-flex__item'>
+      <view class='name'>{{ item.name }}<text>{{ item.phonecall }}</text></view>
+      <view class='content'>{{ item.address }}</view>
+    </view>
+    <view><image class='right-icon' src='../../images/edit_g.png' id='{{ index }}' bindtap='bindEditAddressTap'></image></view>
+  </view>
+</view> 
+
+
+<!-- none -->
+<view class='none-view' wx:if="{{!addressList.length}}">
+  <image src='../../images/addressnone.png'></image>
+  <view>您还没有地址，可以点击底部按钮新建地址</view>
+</view>
+
+<!-- footer -->
+  <view class='draw-footer'>
+    <view class='add-btn' bindtap='bindAddNewAddressTap'>
+      <image src='../../images/add_r.png'></image> 新增地址
+    </view>
+  </view>
+
+
+</view>
+<template is="toast" data="{{showTips,tipsInfo}}"></template> 

@@ -1,113 +1,102 @@
 <import src="../template/template.wxml" />
 
-<navbar bg-color="{{ navbarBgColor }}" navbar-title="{{ navbarTitle }}" />
+<!-- <navbar bg-color="{{ navbarBgColor }}" navbar-title="{{ navbarTitle }}" /> -->
 
-<view class="container bg-default {{showOrderPanel?'no-scroll':''}}">  
+<view class="container bg-default {{showOrderPanel?'no-scroll':''}} {{ isIphoneX ? 'fix-iphonex-navbar' : '' }}">  
     <view class="top-img">
-        <image src="{{paint.imageUrls+getImgBig}}" alt="" mode="aspectFill" style="height:{{windowWidth}}px" />
-        <view class="img-mask" wx:if="{{showOrderPanel}}" bindtap="closePanel" ></view>
+         <!-- <image src="{{paint.imageUrls+getImgBig}}" alt="" mode="aspectFill" style="height:{{windowWidth}}px" /> -->
+         <view class="img-mask" wx:if="{{ showOrderPanel }}" bindtap="closePanel" ></view>  
+      <swiper indicator-dots="true" style='width:{{ windowWidth }}px;height:{{ windowWidth }}px;' >
+        <block wx:for="{{ paint.imageUrls }}" wx:key='{{ index }}'>
+          <swiper-item>
+            <image src="{{ item }}" class="slide-image" style='width:{{ windowWidth }}px;height:{{ windowWidth }}px;' />
+          </swiper-item>
+        </block>
+      </swiper>
     </view>
     <view class="detail-info">
         
-        <view class="des">{{paint.content}}</view>
+        <view class='tit'>{{ paint.title }}</view>
+        <view class="des">{{ paint.content }}</view>
         <view class="price-info">
-            <text class="price">¥{{paint.price}}</text>
-            <text class="preprice">¥{{paint.price}}</text>
-            <text class="style">#{{paint.prodStyle}}</text>
+            <text class="hnbprice">{{ paint.hnbPrice }}<text>HNB</text></text>
+            <text class="rmbprice">/ {{ paint.rmbPrice }}RMB</text>
+            <text class="style">{{ paint.isShipping ? "包邮" : "" }}</text>
         </view>
-        <view class="count">{{paint.viewCount}}人浏览</view>
-        <!-- <view class="love-avatar">
-            <image src="{{item+getImgMid}}" alt="" mode="aspectFill" wx:for="{{paint.loveAvatars}}" wx:if="{{showMoreLovers||index<4}}" />
-            <image src="../../images/morehead@2x.png" alt="" mode="aspectFill" wx:if="{{paint.loveAvatars.length>5}}" bindtap="showMore" />
-        </view> -->
-    </view>
+        <view class="weui-flex fs30 color999">
+          <view class='weui-flex__item txtLeft'>{{ paint.people }}人已付款</view>
+          <view class='weui-flex__item txtCenter'>{{ paint.numbs }}库存</view>
+          <view class='weui-flex__item txtRight'>{{ paint.address }}</view>
+        </view>
+    </view> 
     <view class="more-paint">
-        <view class="title">
-            猜你喜欢
-        </view>
-        <view class="item" style="width:{{windowWidth/2-15}}px;" wx:for="{{recommendList}}" bindtap="paintDetail" data-id="{{item.prod.id}}">
-            <image src="{{item.prod.imageUrls+getImgMid}}" alt="" mode="aspectFill" style="height:{{windowWidth/2-15}}px" />
-            <view class="tit">
-                {{item.prod.content}}
-            </view>
-            <view class="price">
-                ¥{{item.minPrice||0}}
-            </view>
-        </view>
-    </view>
-    <view style="clear:both"></view>
+        <view class="title">宝贝详情</view>
+        <view></view>
+    </view> 
 </view>
 <!-- 下单 footer -->
-<view class="draw-footer">
-    <view wx:if="{{!showOrderPanel}}">
-        <view class="contract-text" open-type="contact">
-          <image class='customerService-icon' src="../../images/customerService.png" alt="" />
-        </view>
-        <contact-button size="6" class="content-button" type="default-light">
-          
-        </contact-button>
-        <view class="right" bindtap="makeOrder">立即下单</view>
-        <image class='gotop-icon' bindtap='bindGoTopTap' src='../../images/goTop.png'></image>
+<view class="draw-footer {{ isIphoneX ? 'draw-footer-fix-iphonex' : '' }} {{ showOrderPanel ? 'draw-footer-confirm' : '' }}">
+     <view wx:if="{{ !showOrderPanel }}">
+        <contact-button size="6" class="content-button" type="default-light"></contact-button>
+        <view class="btn" bindtap="makeOrder">立即购买</view>
     </view>
-    <view wx:if="{{showOrderPanel}}" class="order-confirm" bindtap="orderConfirm">
+    <view wx:if="{{ showOrderPanel }}" class="order-confirm {{ isIphoneX ? 'order-confirm-fix-iphoneX' : '' }}" bindtap="orderConfirm">
         确定
-    </view>
+    </view> 
 </view>
 <!-- 订单弹框 -->
-<view class="order-panel" wx:if="{{showOrderPanel}}">
+<view class="order-panel {{ isIphoneX ? 'order-panel-fix-iphonex' : '' }}" wx:if="{{ showOrderPanel }}" >
     <view class="close-panal-btn">
         <image src="../../images/popup_button_close@2x.png" bindtap="closePanel"></image>
     </view>
 
-    <view class="top">
+    <view class="top weui-flex">
         <view class="left">
-            <view class="img-con">
-                <image src="{{paint.imageUrls+getImgBig}}" alt="" mode="aspectFill" />
-            </view>
+            <image src="{{ paint.imageUrls[0] }}" alt="" mode="aspectFill" />
         </view>
-        <view class="prod-info">
-            <view class="price">
-                ￥{{paintPrice.totalPrice}}
-            </view>
-            <view class="style">
-                {{paint.prodStyle}}
-            </view>
+        <view class="weui-flex__item">
+          <view class='price-info'> 
+            <text class="hnbprice">{{ paint.hnbPrice }}<text>HNB</text></text>
+            <text class="rmbprice">/ {{ paint.rmbPrice }}RMB</text>
+            <view class='fs30 lineClamp2'>{{ paint.title }}</view>
+            <view class='fs30'>选择 颜色分类</view>
+          </view> 
         </view>
     </view>
     <view class="panel-scroll">
         <view class="size-pick">
-            <view class="title" style="border-top:1px solid #f5f5f5">尺寸分类</view>
-            <text wx:for="{{paintSizes}}" wx:item="{{item}}" class="{{item.isSelect?'size-select':''}}" bindtap="selectTab" data-index="{{index}}" data-type="paintSizes">{{item.name}}</text>
+            <view class="title" style="border-top:1px solid #f5f5f5">颜色分类</view>
+            <text wx:for="{{ paint.paintSizes }}" wx:key='{{ index }}' wx:item="{{ item }}" class="{{ item.isSelect?'size-select':''}}" bindtap="selectTab" data-index="{{ index }}" >{{ item.name }}</text>
         </view>
-        <view class="size-pick">
+        <!-- <view class="size-pick">
             <view class="title">绘画风格</view>
-            <text wx:for="{{paintStyleList}}" wx:item="{{item}}" class="{{item.isSelect?'size-select':''}}" bindtap="selectTab" data-index="{{index}}" data-type="paintStyleList">{{item.name}}</text>
-        </view>
+            <text wx:for="{{paintStyleList}}" wx:key='{{ index }}' wx:item="{{item}}" class="{{item.isSelect?'size-select':''}}" bindtap="selectTab" data-index="{{index}}" data-type="paintStyleList">{{item.name}}</text>
+        </view> -->
         <view class="order-item">
-            <text>照片人数</text>
+            <text>购买数量</text>
             <view class="right">
-                <image src="{{minusBtnImg}}" alt="" bindtap="btnHover" data-type="minusBtnImg" />
-                <input type="number" value="{{order.numOfPeople}}" bindblur="setFrom" data-name="numOfPeople" disabled/>
-                <image src="{{plusBtnImg}}" alt="" bindtap="btnHover" data-type="plusBtnImg" />
+                <image src="{{ minusBtnImg }}" alt="" bindtap="btnHover" data-type="minusBtnImg" />
+                <input type="number" value="{{ order.numOfPeople }}" bindblur="setFrom" data-name="numOfPeople" disabled/>
+                <image src="{{ plusBtnImg }}" alt="" bindtap="btnHover" data-type="plusBtnImg" />
             </view>
-        </view>
-        <view class="order-item order-item-input">
+        </view> 
+        <!-- <view class="order-item order-item-input">
             <text>姓名</text>
             <view class="input-right">
                 <input type="text" placeholder="必填：收货人姓名" placeholder-style="color:#ccc" value="{{order.contactor}}" bindblur="setFrom" data-name="contactor"/>
             </view>
-        </view>
-        <view class="order-item order-item-input">
+        </view> -->
+        <!-- <view class="order-item order-item-input">
             <text>手机</text>
             <view class="input-right">
                 <input type="text" placeholder="必填：收货人电话" placeholder-style="color:#ccc" value="{{order.phone}}" bindblur="setFrom" data-name="phone"/>
             </view>
-        </view>
-        <view class="order-upload">
+        </view> -->
+        <!-- <view class="order-upload">
             <text>上传照片</text>
             <image src="../../images/add-pic@2x.png" alt="" wx:if="{{!sourceImageUrl}}" bindtap="uploadImg" />
             <image src="{{sourceImageUrl}}" alt="" wx:if="{{sourceImageUrl}}" bindtap="uploadImg" />
-        </view>
+        </view> -->
     </view>
 </view>
 <template is="toast" data="{{showTips,tipsInfo}}"></template>

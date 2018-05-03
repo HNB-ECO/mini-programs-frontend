@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "补差价"
+  "navigationBarTitleText": "补差价",
+  "usingComponents": {
+    "navbar": "../template/navbar/navbar"
+  }
 }

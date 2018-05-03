@@ -71,7 +71,7 @@ view, text {
     line-height: 180%;
 }
 .bottom view{
-        color: #888;
+    color: #888;
 }
 .cs-server{
     color: #55B737 !important;
@@ -79,4 +79,7 @@ view, text {
     font-size: 28rpx;
     padding-left: 0;
     line-height: 100%;
+}
+.container-fix-iphonex {
+    padding-top: 128px;
 }

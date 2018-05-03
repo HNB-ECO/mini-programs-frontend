@@ -1,0 +1,15 @@
+<!--pages/protocol/protocol.wxml-->
+
+<navbar navbar-title="{{ navbarTitle }}" />
+
+
+<view class="container bg-default {{ isIphoneX ? 'fix-iphonex-navbar' : '' }}">
+
+  <view class='protocol-view' wx:for='{{ proList }}' wx:for-item='pro' wx:key='{{ index }}'>
+    <view class='title'>{{ pro.title }}</view>
+    <view class='content' wx:for='{{ pro.content }}' wx:key='{{ index }}'>
+      {{ item }}
+    </view>
+  </view>
+
+</view>

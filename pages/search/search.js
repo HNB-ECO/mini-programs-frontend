@@ -6,6 +6,8 @@ let pageData = new applyApi.splitPage();
 let app=getApp();
 Page({
     data: {
+        navbarTitle: '搜索',
+        isIphoneX: app.getSystemModelIPhoneX(),
         getImgMid:app.getImgMid()
     },
     onLoad: function() {

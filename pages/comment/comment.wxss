@@ -8,6 +8,14 @@ view, text {
     color: #333;
 }
 
+.container {
+    padding-top: 64px;
+}
+
+.container-fix-iphonex {
+    padding-top: 108px;
+}
+
 .star {
     background: white;
     height: 220rpx;

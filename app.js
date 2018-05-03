@@ -6,11 +6,20 @@ const applyApi = require('./utils/applyApi.js');
 let that;
 App({
     data: {
-        systemInfo: wx.getSystemInfoSync(),
+        systemInfo: wx.getSystemInfoSync()
     },
     onLaunch: function() {
         that = this;
         this.getImgMid();
+    },
+    getSystemModelIPhoneX() {
+      var model = this.data.systemInfo.model;
+      let models = model.split('(');
+      if (models[0] == 'iPhone X ') {
+        return true;
+      } else {
+        return false;
+      }
     },
     getImgMid: function() {
         var width = this.data.systemInfo.windowWidth;

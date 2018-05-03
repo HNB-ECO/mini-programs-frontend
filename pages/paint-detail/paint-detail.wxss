@@ -2,7 +2,9 @@ page {
     height: 100%;
     position: relative
 }
-
+.bg-default {
+    padding-bottom:100rpx;
+}
 .no-scroll {
     height: 100%;
     overflow: hidden;
@@ -27,29 +29,48 @@ page {
 }
 
 .detail-info .price-info {
-    padding: 60rpx 0;
+    padding: 30rpx 0;
 }
-.detail-info .price-info .price {
-    color: #8597fd;
-    font-size: 40rpx;
-    margin-right: 20rpx;
+.detail-info .price-info .hnbprice {
+    color: #FD2743;
+    font-size: 44rpx;
+    margin-right: 15rpx;
 }
-.detail-info .price-info .preprice {
-    font-size: 33rpx;
+.detail-info .price-info .hnbprice text {
+    font-size: 30rpx;
+}
+.detail-info .price-info .rmbprice {
+    font-size: 30rpx;
     color: #999;
-    text-decoration: line-through
 }
 
 .detail-info .price-info .style {
-    float: right;
-    font-size: 33rpx;
+    font-size:32rpx;
+    background-color:#ffb318;
+    color:white;
+    padding:5rpx 15rpx;
+    border-radius:10rpx;
+    margin-left:40rpx;
 }
 
-.detail-info .des {
+.detail-info .tit {
     font-size: 36rpx;
     color: #333;
     line-height: 44rpx;
     margin: 10rpx 0 0;
+    font-weight: 600;
+}
+.detail-info .des {
+    width: 400rpx;
+    height: 88rpx;
+    font-size: 28rpx;
+    color: #9A9A9A;
+    line-height: 44rpx;
+    margin: 10rpx 0 0;
+    overflow:hidden;
+    display:-webkit-box;
+    -webkit-box-orient:vertical;
+    -webkit-line-clamp:2;
 }
 
 .detail-info .count {
@@ -75,6 +96,10 @@ page {
     padding: 30rpx 20rpx 20rpx
 }
 
+.more-paint .item .tit {
+    font-size: 30rpx;
+}
+
 .draw-footer .left {
     width: 30%;
     display: inline-block;
@@ -98,6 +123,9 @@ page {
     right: 30rpx;
     bottom: 0;
 }
+.draw-footer .gotop-icon-fix-iphonex {
+    margin-bottom:40rpx;
+}
 
 .draw-footer .contract-text {
     width: 100rpx;
@@ -115,93 +143,83 @@ page {
     left:30rpx;
 }
 
-.draw-footer .right {
-    width: 280rpx;
+
+.draw-footer-confirm {
+    position:fixed;
+    bottom: 0;
+    width: 100%;
+    height: 130rpx;
+    background-color:white;
+    z-index: 10000;
+}
+.draw-footer .btn {
     height: 100rpx;
     line-height: 100rpx;
-    vertical-align: top;
     font-size: 36rpx;
     color: white;
-    background: -webkit-linear-gradient(left, #62b4f8, #9466ef);
+    background-color: #fe2741;
     text-align: center;
-    border-radius: 70rpx;
-    margin: 0 auto 30rpx;
 }
 
 .order-panel {
     position: fixed;
-    bottom: 92rpx;
-    height: 75%;
+    bottom: 130rpx;
+    height: 70%;
     background: white;
     width: 100%;
-    z-index: 999999
+    z-index: 9999;
+    border-radius: 30rpx 30rpx 0 0;
+}
+.order-panel-fix-iphonex {
+    height: 72%;
+    bottom: 141rpx;
 }
 
 .order-panel .top {
-    height: 190rpx;
-}
-
-.order-panel .top .left {
-    width: 222rpx;
-    display: inline-block;
-    position: relative;
-    left: 35rpx;
-    box-shadow: 0 0 60rpx #e8e8e8;
-    box-sizing: border-box;
-    height: 162rpx;
+    padding: 20rpx;
 }
 
 .order-panel .top .left .img-con {
     width: 100%;
     padding-top: 100%;
     position: relative;
-    top: -60rpx;
     overflow: hidden;
-    border-radius: 15rpx;
-    border: 2px solid white;
 }
 
 .order-panel .top .left image {
-    position: absolute;
     width: 222rpx;
     height: 222rpx;
-    left: 0;
-    top: 0;
-    box-sizing: border-box;
-    background: white;
 }
 
-.order-panel .top .prod-info {
-    width: calc(100% - 222rpx);
-    display: inline-block;
-    vertical-align: top;
-    padding-left: 80rpx;
-    box-sizing: border-box;
-    padding-top: 7.5%
+.order-panel .top .price-info {
+    position:relative;
+    top:70rpx;
+    left:20rpx;
 }
-
-.order-panel .top .prod-info .price {
-    font-size: 34rpx;
-    color: #8597fd;
-    line-height: 200%
+.order-panel .price-info .hnbprice {
+    color: #FD2743;
+    font-size: 44rpx;
+    margin-right: 15rpx;
 }
-
-.order-panel .top .prod-info .style {
-    font-size: 28rpx;
-    color: #333;
-    line-height: 150%
+.order-panel .price-info .hnbprice text {
+    font-size: 30rpx;
+}
+.order-panel .price-info .rmbprice {
+    font-size: 30rpx;
+    color: #999;
 }
 
 .order-panel .panel-scroll {
-    height: calc(100% - 190rpx);
+    height: calc(100% - 285rpx);
     overflow-y: scroll;
     overflow-x: hidden;
+    margin-top: 30rpx;
 }
 
 .size-pick {
     margin: 0 15rpx;
     border-bottom: 1px solid #F5F5F5;
-    padding-bottom: 5rpx;
+    padding-bottom: 25rpx;
 }
 
 .size-pick .title {
@@ -212,22 +230,21 @@ page {
 }
 
 .size-pick text {
-    display: inline-block;
-    width: calc(25% - 30rpx);
+    display: inline-block; 
     background: #F6F6F6;
     color: #333333;
     font-size: 26rpx;
     height: 56rpx;
     line-height: 56rpx;
-    margin: 15rpx;
-    margin-top: 0rpx;
     text-align: center;
-    overflow: hidden;
     border-radius: 50rpx;
+    padding: 5rpx 30rpx;
+    margin-right: 30rpx;
+    margin-bottom: 15rpx;
 }
 
 .size-pick .size-select {
-    background: -webkit-linear-gradient(left, #49B5FE, #9C60F6);
+    background-color: #FD2743;
     color: white;
     box-shadow: 0 15rpx 20rpx #e8e8e8;
 }
@@ -302,13 +319,6 @@ page {
     padding-bottom: 30rpx;
 }
 
-.order-confirm {
-    background: -webkit-linear-gradient(left, #49B5FE, #9C60F6);
-    color: white;
-    font-size: 36rpx;
-    text-align: center;
-    line-height: 92rpx;
-}
 .close-panal-btn{
     position: absolute;
     top:30rpx;
@@ -326,4 +336,15 @@ page {
     width: 100%;
     height:100%;
     background: rgba(0,0,0,0.5);
+    z-index: 999;
+}
+
+.order-confirm {
+    height:100rpx;
+    background-color:#fe2741;
+    color:white;
+    text-align:center;
+    line-height:100rpx;
+    border-radius:80rpx;
+    margin: 0 20rpx;
 }

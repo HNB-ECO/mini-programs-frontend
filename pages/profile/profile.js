@@ -18,6 +18,9 @@ Page({
             des: "待评分",
             status: 4
         }],
+        navbarTitle: '我的',
+        navbarBgColor: 'rgba(0,0,0,0)',
+        isIphoneX: app.getSystemModelIPhoneX()
     },
     onShow() {
         for (var i = 0, list = that.data.navList; i < list.length; i++) {
@@ -44,13 +47,13 @@ Page({
     },
     navToOrder(e) {
         wx.setStorageSync('honey-order-status',e.currentTarget.dataset.status);
-        wx.switchTab({
-            url: `../order/order`
+        wx.navigateTo({
+          url: '../order/order',
         })
     },
-    coupon(e) {
+    myaddress(e) {
         wx.navigateTo({
-            url: `../coupon/coupon?from=profile`
+          url: `../myaddress/myaddress?from=profile`
         })
     },
     getLatestOrder() {
@@ -72,5 +75,10 @@ Page({
             that.onShow();
             wx.setStorageSync('honey-order-status','0')
         })
+    },
+    bindMywalletTap() {
+      wx.navigateTo({
+        url: '../myWallet/myWallet',
+      })
     }
 })
