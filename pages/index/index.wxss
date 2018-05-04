@@ -6,7 +6,9 @@ page{
 .bg-default {
     background-color: white;
 }
-
+swiper {
+    padding: 20rpx 0;
+}
 .container{
     height: 100%;
 }
@@ -98,12 +100,11 @@ page{
 .content-scrolls .x-item .img-view {
     height: 488rpx;
     width: 325rpx;
-    background-color: pink;
     display: inline-block;
     border-radius: 10rpx;
     background-position:center;
     background-repeat:no-repeat;
-    /* background-attachment:fixed; */
+    background-size:contain;
 }
 .content-scrolls .x-item .name {
     position: absolute;

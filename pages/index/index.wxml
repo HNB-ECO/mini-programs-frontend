@@ -3,7 +3,7 @@
 
 <!-- <navbar bg-color="{{ navbarBgColor }}" index-page="{{ indexPage }}" />   -->
 
-<template is="blank" wx:if="{{!paintList.length}}"></template>
+<template is="blank" wx:if="{{ !goodsTypes.length }}"></template> 
 
 <view class="container bg-default">
 
@@ -15,25 +15,25 @@
   </block>
   </swiper> 
 
-  <view class='content-scrolls' wx:for='{{ xItems }}' wx:for-item='bigList' wx:key='{{ index }}'>
+  <view class='content-scrolls' wx:for='{{ goodsTypes }}' wx:for-item='bigList' wx:key='{{ index }}'>
   
     <view class='title'>
       <view class='tit-icon'><image src='../../images/start_tc.png'></image></view>
-      {{ bigList.title }}
+      {{ bigList.goodTypeName }}
     </view>
     <scroll-view scroll-x >
-      <view class='x-item' style='{{ bigList.types == "wide" ? "height:372rpx;width:674rpx;" : "" }}' wx:for='{{ bigList.list }}' wx:key='{{ index }}' bindtap="paintDetail">
-        <view class='img-view' style='{{ "background-image: url(" + item.imgurl + ");" }}{{ bigList.types == "wide" ? "height:372rpx;width:674rpx;" : "" }}'>
+      <view class='x-item' style='{{ bigList.types == "wide" ? "height:372rpx;width:674rpx;" : "" }}' wx:for='{{ bigList.goodsList }}' wx:key='{{ index }}' id='{{ item.id }}' bindtap="bindPaintDetail">
+        <view class='img-view' style='{{ "background-image: url(" + item.urlArray[0] + ");" }}{{ bigList.types == "wide" ? "height:372rpx;width:674rpx;" : "" }}'>
           <view class='name'>
-            <view class='types'>{{ item.types }}</view>
-            <view class='fs30'>{{ item.tit }}</view>
+            <view class='types'>{{ item.shortName }}</view>
+            <view class='fs30'>{{ bigList.goodTypeName }}</view>
           </view>
         </view>
         <view class='des-view'>
-          <view class='des'>{{ item.des }}</view>
+          <view class='des'>{{ item.name }}</view>
           <view class='weui-flex'>
-            <view class='weui-flex__item price'>{{ item.hnb }} <text class='fs25'></text> </view>
-            <view class='weui-flex__item bz'>{{ item.note }}</view>  
+            <view class='weui-flex__item price'>{{ item.coinPrice }} HNB<text class='fs25'></text> </view>
+            <view class='weui-flex__item bz'>{{ item.note }}仅限HNB支付</view>  
           </view>
         </view>
       </view>

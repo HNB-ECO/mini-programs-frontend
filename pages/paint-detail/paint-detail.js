@@ -1,6 +1,7 @@
 const applyApi = require('../../utils/applyApi.js');
 const verify = require('../../utils/verify.js');
 const uploadFile = require('../../utils/uploadFile.js')
+import * as hnbdata from '../..//utils/hbndata-format.js';
 import {
     configApi
 } from '../../utils/constant';
@@ -35,66 +36,67 @@ Page({
             phone:configApi.ENV=='DEV'?18551587968:'',
         },
         sourceImageUrl:configApi.ENV=='DEV'?'http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg':'',
+        paintSelected: {},
         paint: {
-          imageUrls: ['http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg', 'http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg','http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg'],
-          content: '可爱苹果手机壳7plus/8/x手机壳个性挂钩',
-          title: '范冰冰专属手机壳iphone手机壳',
-          rmbPrice: 240,
-          hnbPrice: 233,
-          isShipping: true,
-          people: 999,
-          numbs: 999,
-          address: '苏州',
-          paintSizes: [
-            {
-              name: 'R11 巴巴爸爸 送挂绳',
-              isSelect: false,
-            },
-            {
-              name: 'R11 巴巴爸爸 送挂绳',
-              isSelect: false,
-            },
-            {
-              name: 'R11 巴巴爸爸 送挂绳',
-              isSelect: false,
-            },
-            {
-              name: 'R11 巴巴爸爸 送挂绳',
-              isSelect: false,
-            },
-            {
-              name: 'R11 巴巴爸爸 送挂绳',
-              isSelect: false,
-            },
-            {
-              name: 'R11 巴巴爸爸 送挂绳',
-              isSelect: false,
-            },
-            {
-              name: 'R11 巴巴爸爸 送挂绳',
-              isSelect: false,
-            },
-            {
-              name: 'R11 巴巴爸爸 送挂绳',
-              isSelect: false,
-            },
-            {
-              name: 'R11 巴巴爸爸 送挂绳',
-              isSelect: false,
-            },
-            {
-              name: 'R11 巴巴爸爸 送挂绳',
-              isSelect: false,
-            },
-            {
-              name: 'R11 巴巴爸爸 送挂绳',
-              isSelect: false,
-            },
-            {
-              name: 'R11 巴巴爸爸 送挂绳',
-              isSelect: false,
-            }
-          ]
+          // imageUrls: ['http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg', 'http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg','http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg'],
+          // content: '可爱苹果手机壳7plus/8/x手机壳个性挂钩',
+          // title: '范冰冰专属手机壳iphone手机壳',
+          // rmbPrice: 240,
+          // hnbPrice: 233,
+          // isShipping: true,
+          // people: 999,
+          // numbs: 999,
+          // address: '苏州',
+          // paintSizes: [
+          //   {
+          //     name: 'R11 巴巴爸爸 送挂绳',
+          //     isSelect: false,
+          //   },
+          //   {
+          //     name: 'R11 巴巴爸爸 送挂绳',
+          //     isSelect: false,
+          //   },
+          //   {
+          //     name: 'R11 巴巴爸爸 送挂绳',
+          //     isSelect: false,
+          //   },
+          //   {
+          //     name: 'R11 巴巴爸爸 送挂绳',
+          //     isSelect: false,
+          //   },
+          //   {
+          //     name: 'R11 巴巴爸爸 送挂绳',
+          //     isSelect: false,
+          //   },
+          //   {
+          //     name: 'R11 巴巴爸爸 送挂绳',
+          //     isSelect: false,
+          //   },
+          //   {
+          //     name: 'R11 巴巴爸爸 送挂绳',
+          //     isSelect: false,
+          //   },
+          //   {
+          //     name: 'R11 巴巴爸爸 送挂绳',
+          //     isSelect: false,
+          //   },
+          //   {
+          //     name: 'R11 巴巴爸爸 送挂绳',
+          //     isSelect: false,
+          //   },
+          //   {
+          //     name: 'R11 巴巴爸爸 送挂绳',
+          //     isSelect: false,
+          //   },
+          //   {
+          //     name: 'R11 巴巴爸爸 送挂绳',
+          //     isSelect: false,
+          //   },
+          //   {
+          //     name: 'R11 巴巴爸爸 送挂绳',
+          //     isSelect: false,
+          //   }
+          // ]
         }
     },
     onLoad: function(options) {
@@ -105,6 +107,32 @@ Page({
         // prodId = options.prodId || 890;
         // that.getPaintInfo();
 
+        if (options.goodId) {
+          this.getGoodDetail(options.goodId);
+        }
+
+    },
+    getGoodDetail(goodId) {
+      applyApi.jsonGetRequest('good/getGoodInfo', {
+        goodId: goodId
+      }).then(result => {
+        this.setData({
+          paint: result
+        })
+        console.log(result);
+      }).catch(error => {
+        console.log(error);
+      });
+      applyApi.jsonGetRequest('good/getGoodDetail', {
+        goodId: goodId
+      }).then(result => {
+        this.setData({
+          paintSizes: hnbdata.formatGoodSelectedDetail(result)
+        })
+        console.log(result);
+      }).catch(error => {
+        console.log(error);
+      });
     },
     bindGoTopTap() {
       wx.pageScrollTo({
@@ -202,22 +230,24 @@ Page({
         }
         return list;
     },
-    //计算订画价格
-    getPaintingPrice: function() {
-        var params = {
-            artistId: artistId,
-            paintSizeId: paintSizeId,
-            paintStyleId: paintStyleId,
-            isQuick: that.data.order.isQuick, //0:不急 1:加急
-            peopleNumber: that.data.order.numOfPeople, //画中人数 默认为1
-            couponId: that.data.order.couponId
-        };
-        applyApi.postByToken('order/paint-price', params, function(res) {
-            console.log('计算订画价格', params, res);
-            that.setData({
-                paintPrice: res.data
-            })
-        });
+    //计算 价格
+    getPaintingPrice(index) {
+
+        
+        // var params = {
+        //     artistId: artistId,
+        //     paintSizeId: paintSizeId,
+        //     paintStyleId: paintStyleId,
+        //     isQuick: that.data.order.isQuick, //0:不急 1:加急
+        //     peopleNumber: that.data.order.numOfPeople, //画中人数 默认为1
+        //     couponId: that.data.order.couponId
+        // };
+        // applyApi.postByToken('order/paint-price', params, function(res) {
+        //     console.log('计算订画价格', params, res);
+        //     that.setData({
+        //         paintPrice: res.data
+        //     })
+        // });
     },
     closePanel(e) {
         that.setData({
@@ -225,7 +255,7 @@ Page({
         })
     },
     selectTab(e) {
-        var list = that.data.paint.paintSizes;
+        var list = that.data.paintSizes;
         var index = e.currentTarget.dataset.index;
         for (var i in list) {
             if (i - index) {
@@ -234,9 +264,14 @@ Page({
                 list[i].isSelect = true;
             }
         }
-        // that.getPaintingPrice();
+        that.getPaintingPrice(index);
         that.setData({
-          'paint.paintSizes': list
+          'paintSizes': list,
+          paintSelected: {
+            coinPrice: list[i].coinPrice,
+            price: list[i].price,
+            inventory: list[i].inventory,
+          }
         })
     },
     btnHover(e) {

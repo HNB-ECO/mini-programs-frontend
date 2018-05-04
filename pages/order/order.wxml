@@ -23,7 +23,7 @@
                 <view class='right-txt'>待付款</view>
             </view>
             <view class='bottom weui-flex'>
-                <view><image class='mainImg' src="{{paint.imageUrls}}" alt="" mode="aspectFill" /></view>
+                <view><image class='mainImg' src="https://images.wohoney.com/dbmci5jlop7?imageView2/1/w/375/h/375{{paint.imageUrls}}" alt="" mode="aspectFill" /></view>
                 <view class="right weui-flex__item">
                     <view class="des">
                         范冰冰同款OPPO R11手机壳范冰冰同款OPPO R11手机壳范冰冰同款OPPO R11手机壳{{paint.artistProfile.nickname}}
@@ -36,6 +36,13 @@
         </view>
         <view class='count'>
           共1件商品 合计： <text>233</text>HNB（含运费0.00）
+        </view>
+        <view class='order-btn-view'>
+          <view class='order-btn-red'>取消订单</view>
+          <view >付款</view>
+          <!-- <view>提醒发货</view>
+          <view>查看物流</view>
+          <view>确认收货</view> -->
         </view>
     </view>
 </scroll-view>

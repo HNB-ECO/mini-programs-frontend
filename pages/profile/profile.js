@@ -23,10 +23,10 @@ Page({
         isIphoneX: app.getSystemModelIPhoneX()
     },
     onShow() {
-        for (var i = 0, list = that.data.navList; i < list.length; i++) {
-            that.getOrderList(list[i].status);
-        };
-        that.getLatestOrder();
+        // for (var i = 0, list = that.data.navList; i < list.length; i++) {
+        //     that.getOrderList(list[i].status);
+        // };
+        // that.getLatestOrder();
     },
     onLoad: function() {
         that = this;
@@ -52,8 +52,21 @@ Page({
         })
     },
     myaddress(e) {
-        wx.navigateTo({
-          url: `../myaddress/myaddress?from=profile`
+        // wx.navigateTo({
+        //   url: `../myaddress/myaddress?from=profile`
+        // })
+        // 暂时先用微信的收货地址
+        wx.chooseAddress({
+          success: function (res) {
+            console.log(res.userName)
+            console.log(res.postalCode)
+            console.log(res.provinceName)
+            console.log(res.cityName)
+            console.log(res.countyName)
+            console.log(res.detailInfo)
+            console.log(res.nationalCode)
+            console.log(res.telNumber)
+          }
         })
     },
     getLatestOrder() {

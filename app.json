@@ -1,15 +1,13 @@
 {
   "pages": [
-    "pages/order/order",
-    "pages/index/index",
     "pages/profile/profile",
+    "pages/index/index",
+    
     "pages/order-confirm/order-confirm",
     "pages/myaddress/myaddress",
-    "pages/price-diff/price-diff",
     "pages/comment/comment",
-    "pages/search/search",
-    "pages/classify/classify",
     "pages/order-detail/detail",
+    "pages/order/order",
     "pages/paint-detail/paint-detail",
     "pages/protocol/protocol",
     "pages/myWallet/myWallet",
@@ -19,7 +17,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "画你",
+    "navigationBarTitleText": "画你范冰冰精选",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#f6f6f6"
 

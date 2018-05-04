@@ -218,3 +218,23 @@
     float: right;
     color: #FE2740;
 }
+
+.order-btn-view {
+    text-align: right;
+    padding:20rpx;
+    border-top:1rpx #f5f5f5 solid;
+    line-height:100%;
+}
+.order-btn-view view {
+    display:inline-block;
+    margin:0 10rpx;
+    padding:5rpx 20rpx;
+    border-radius:40rpx;
+    border:1rpx #999 solid;
+    font-size:27rpx;
+    color:#333;
+}
+.order-btn-red .order-btn-view {
+    border:1rpx #FD2B44 solid;
+    color: #FF2642;
+}

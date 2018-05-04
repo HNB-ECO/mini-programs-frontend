@@ -4,24 +4,24 @@ const uploadFile = require('../../utils/uploadFile.js');
 const orderApply = require('../../utils/order.js');
 
 var that,app=getApp();
-var pageData = new applyApi.splitPage();
+// var pageData = new applyApi.splitPage();
 Page({
 
   data: {
       navbarTitle: '我的订单',
       naveList:['全部','待付款','待发货','待收获'],
       currentTab:0,
-      getImgMid:app.getImgMid(),
+      getImgMid: app.getImgMid(),
       isIphoneX: app.getSystemModelIPhoneX()
   },
 
   onLoad: function (options) {
       that=this;
-      that.getOrderListByStatus('onLoad');
+      // that.getOrderListByStatus('onLoad');
   },
 
   onShow: function () {
-      that.getOrderListByStatus('onShow');
+      // that.getOrderListByStatus('onShow');
   },
   onReady:function(){
 
