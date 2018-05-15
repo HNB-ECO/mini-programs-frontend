@@ -152,7 +152,7 @@
     background: white;
 }
 .order-detail .top {
-    padding: 10rpx 20rpx 5rpx;
+    padding: 20rpx 20rpx 0;
 }
 .order-detail .top view {
     margin-left:20rpx;

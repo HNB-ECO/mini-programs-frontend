@@ -38,3 +38,11 @@
 <template name="gotopbtn" data="{{ gotopHidden }}">
     <image hidden='{{ gotopHidden }}' class='gotopicon' src='../../images/goTop.png' bindtap='bindGotopTap'></image>
 </template>
+<template name="noorder">
+    <view class="blank-con">
+        <image src='../../images/noorder.png'></image>
+        <view class="tip">
+            暂时没有订单哦
+        </view>
+    </view>
+</template>

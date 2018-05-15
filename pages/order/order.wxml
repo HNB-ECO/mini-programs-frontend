@@ -1,5 +1,5 @@
 <import src="../template/template.wxml" />
-<!-- <template is="blank" wx:if="{{!orderList.length}}"></template> -->
+<template is="noorder" wx:if="{{!orderList.length}}"></template> 
 
 <!-- <navbar navbar-title="{{ navbarTitle }}" /> -->
 
@@ -10,39 +10,41 @@
 </view>
 <scroll-view class='order-list {{ isIphoneX ? "order-list-fix-iphonex" : "" }}' scroll-y="true" bindscrolltolower="handleLoadMore" lower-threshold="100" scroll-into-view="{{pageTop}}">
     <!-- 第一个订单 -->
-    <view class='item' wx:for="{{orderList}}" wx:key="{{ index }}" wx:if="{{item.type==0}}">
-        <!-- <view class='header'>
-            <image class='left-iconimg' src='https://images.wohoney.com/dbmci5jlop7?imageView2/1/w/375/h/375'></image>
-            <text>画你官方直营</text>
-            <text class='right-txt'>待付款</text>
-        </view> -->
+    <view class='item' wx:for="{{ orderList }}" wx:key="{{ index }}" >
         <view class="order-detail">
             <view class='top'>
                 <image class='artistlogo' src='../../images/hnlogo_p.png'></image>
-                <view>画你官方直营{{paint.artistProfile.nickname}}</view>
-                <view class='right-txt'>待付款</view>
+                <view>画你官方直营</view>
+                <view wx:if='{{ item.orderStatus == 1 }}' class='right-txt'>{{ item.orderStatus == 1 ? "待付款" : "" }}</view>
+                <view wx:if='{{ item.orderStatus == 2 }}' class='right-txt'>{{ item.orderStatus == 2 ? "待发货" : "" }}</view>
+                <view wx:if='{{ item.orderStatus == 3 }}' class='right-txt'>{{ item.orderStatus == 3 ? "待收货" : "" }}</view>
             </view>
-            <view class='bottom weui-flex'>
-                <view><image class='mainImg' src="https://images.wohoney.com/dbmci5jlop7?imageView2/1/w/375/h/375{{paint.imageUrls}}" alt="" mode="aspectFill" /></view>
+            <view class='bottom weui-flex' wx:for='{{ item.workOrders }}' wx:key='{{ index }}'>
+                <view><image class='mainImg' src="{{ item.goodDetail.imageUrl }}" mode="aspectFill" /></view>
                 <view class="right weui-flex__item">
                     <view class="des">
-                        范冰冰同款OPPO R11手机壳范冰冰同款OPPO R11手机壳范冰冰同款OPPO R11手机壳{{paint.artistProfile.nickname}}
+                      {{  item.goods.name }}
                     </view>
-                    <view class="options">颜色分类：R11 巴巴爸爸 送挂绳 {{paint.prodStyle}}{{order.numOfPeople}}</view>
-                    <view class="price"> <text class='hnb-text'><text>233</text>HNB </text> / 240RMG </view>
-                    <view class='numb'>x1</view>
+                    <view class="options">分类：
+                    {{ item.goodDetail.color ? item.goodDetail.color : '' }}
+                    {{ item.goodDetail.volume ? item.goodDetail.volume : '' }} 
+                    {{ item.goodDetail.weight ? item.goodDetail.weight : '' }}
+                    {{ item.goodDetail.sieze ? item.goodDetail.sieze : '' }}</view>
+                    <view class="price"> <text class='hnb-text'><text>{{ item.goodDetail.coinPrice }}</text>积分 </text> / {{ item.goodDetail.price }}RMG </view>
+                    <view class='numb'>x{{ item.amount }}</view>
                 </view>
             </view>
         </view>
         <view class='count'>
-          共1件商品 合计： <text>233</text>HNB（含运费0.00）
+          共{{ item.workOrders[0].amount }}件商品 合计： <text style='font-size:38rpx;'>{{ item.paymentType == "2" ? item.totalPrice : item.totalCoin }}</text>{{ item.paymentType == "2" ? "RMB" : "积分"  }}（含运费0.00）
         </view>
         <view class='order-btn-view'>
           <view class='order-btn-red'>取消订单</view>
-          <view >付款</view>
-          <!-- <view>提醒发货</view>
-          <view>查看物流</view>
-          <view>确认收货</view> -->
+          <view wx:if='{{ item.orderStatus == 1 }}' style='border:1rpx #FD2B44 solid;color: #FF2642;' id='{{ index }}' data-paytypes='{{ item.paymentType }}' bindtap='bindOrderPayTap'>付款</view>
+          <view wx:if='{{ item.orderStatus == 2 }}'>提醒发货</view>
+          <view wx:if='{{ item.orderStatus == 3 }}'>查看物流</view>
+          <view wx:if='{{ item.orderStatus == 3 }}' style='border:1rpx #FD2B44 solid;color: #FF2642;'>确认收货</view> 
         </view>
     </view>
 </scroll-view>
+

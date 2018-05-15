@@ -4,52 +4,22 @@
 
 <view class="container bg-default {{ isIphoneX ? 'fix-iphonex-navbar' : '' }}">
     <view class="profile">
-        <image class='avatar' src="{{userInfo.avatar}}" alt="" mode="aspectFill" wx:if="{{userInfo.avatar}}"/>
-        <image class='avatar' src="../../images/avatar_default@2x.png" alt="" mode="aspectFill" wx:if="{{!userInfo.avatar}}" />
+        <image class='avatar' src="{{ userInfo.avatar ? userInfo.avatar : '../../images/avatar_default.png' }}" alt="" mode="aspectFill" wx:if="{{ userInfo.avatar }}"/>
         <view class="info">
-            <view>{{userInfo.nickname||'未登录'}}</view>
-            <view class='sex-view'><image src='../../images/boy_b.png'></image></view>
+            <view>{{ userInfo.nickName }}</view>
+            <button wx:if='{{ !userInfo }}' open-type="getUserInfo" bindgetuserinfo="bindLoginTap">立即登录</button>
+            <!-- <view wx:if='{{ userInfo }}' class='sex-view'><image src='../../images/boy_b.png'></image></view> -->
         </view>
-        <button class="btn-login" wx:if="{{!userInfo}}" bindtap="login">登录</button>
-        <view class='mywallet-view weui-flex' bindtap='bindMywalletTap'>
+        <button class="btn-login" wx:if="{{ !userInfo }}" bindtap="login">登录</button>
+        <view wx:if='{{ userInfo }}' class='mywallet-view weui-flex' bindtap='bindMywalletTap'>
           <view class='left-icon'><image src='../../images/mywallet.png'></image></view> 
           <view class='right-item weui-flex__item'>
-            <view>HNB地址 XXXXX</view>
-            <view>余额 999</view>
+            <!-- <view>HNB地址 XXXXX</view> -->
+            <view>余额 {{ coinBalance }}</view>
           </view>
         </view>
     </view>
-    <view wx:if="{{userInfo}}">
-         <!-- <view class="item" bindtap="navToOrder" data-status="0">
-            我的订单
-            <view class="item-note">
-                查看更多订单
-                <image src="../../images/right.png" alt="" />
-            </view>
-        </view>
-        <view class="order-type">
-            <view class="type-item" wx:for="{{navList}}" wx:key="{{ index }}" bindtap="navToOrder" data-status="{{item.status}}">
-                <image src="{{item.img}}" alt="" />
-                <text class="circle" wx:if='{{ item.total != 0 }}'>{{item.total}}</text>
-                <view>{{item.des}}</view>
-            </view>
-        </view>
-        <view class="latest-message" bindtap="goLatest" wx:if="{{latestOrder}}">
-            <view class="left">
-                最新状态
-                 <view>&nbsp;</view> 
-                <text>●</text>
-            </view>
-            <image src="{{latestOrder.sourceImageUrl}}" alt="" />
-            <view class="right">
-                <view class="status" wx:if="{{latestOrder.status==1}}">待支付</view>
-                <view class="status" wx:if="{{latestOrder.status==2}}">待接单</view>
-                <view class="status" wx:if="{{latestOrder.status==3}}">待确认</view>
-                <view class="status" wx:if="{{latestOrder.status==4}}">待评价</view>
-                <view class="status" wx:if="{{latestOrder.status==5}}">已评价</view>
-                <view>{{latestOrder.size.name}}，{{latestOrder.paintStyle.name}}，人数x{{latestOrder.numOfPeople}}</view>
-            </view>
-        </view>  -->
+    <view wx:if="{{ userInfo }}">
         <view class="copoun-nav" bindtap="myaddress">
             <image src="../../images/address_g.png" alt="" class="coupon" />
             <text>我的收货地址</text>
@@ -62,9 +32,16 @@
             <image src="../../images/right.png" alt="" class="right" />
         </button>
 
-        <view class="copoun-nav changeid" bindtap="">
+        <!-- <button class="copoun-nav customer-nav" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" >
+            <image src="../../images/customerService_pe.png" alt="" class="coupon" />
+            <text>绑定手机</text>
+            <text class='right-txt'>{{ myphone }}</text>
+            <image src="../../images/right.png" alt="" class="right" />
+        </button> -->
+
+        <!-- <view class="copoun-nav changeid" bindtap="">
           <text>切换账号</text>
-        </view>
+        </view> -->
     </view>
 </view>
 <template is="toast" data="{{showTips,tipsInfo}}">

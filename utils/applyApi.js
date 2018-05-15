@@ -42,6 +42,13 @@ export function wxRequestP(method, url, contentType = 'application/json;charset=
 export function wxJsonBackendRequestP(method, endpoint, data = {}) {
   return wxRequestP(method, configApi.baseUrl + endpoint, 'application/json;charset=utf-8', data)
 }
+export function wxFormBackendRequestP(method, endpoint, data = {}) {
+  return wxRequestP(method, configApi.baseUrl + endpoint, 'application/x-www-form-urlencoded', data)
+}
+
+export function wxFormBackendPostRequestP(endpoint, data) {
+  return wxFormBackendRequestP('POST', endpoint, data)
+}
 
 export function wxJsonBackendGetRequestP(endpoint, data) {
   return wxJsonBackendRequestP('GET', endpoint, data)
@@ -60,6 +67,9 @@ export function wxStaticGetRequestP(url, contentType = 'application/json;charset
 }
 
 
+export function formPostRequest(url, params) {
+  return wxFormBackendPostRequestP(url, params);
+}
 
 export function jsonPostRequest(url, params) {
   return wxJsonBackendPostRequestP(url, params);

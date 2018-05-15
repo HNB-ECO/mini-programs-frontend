@@ -1,5 +1,6 @@
 const applyApi = require('../../utils/applyApi.js');
 const verify = require('../../utils/verify.js');
+import { Base64 } from '../../utils/urlsafe-base64';
 
 let that,app=getApp();
 
@@ -20,20 +21,40 @@ Page({
         }],
         navbarTitle: '我的',
         navbarBgColor: 'rgba(0,0,0,0)',
-        isIphoneX: app.getSystemModelIPhoneX()
+        isIphoneX: app.getSystemModelIPhoneX(),
+        myphone: ''
     },
     onShow() {
-        // for (var i = 0, list = that.data.navList; i < list.length; i++) {
-        //     that.getOrderList(list[i].status);
-        // };
-        // that.getLatestOrder();
+
+
+
     },
     onLoad: function() {
-        that = this;
-        var userInfo=wx.getStorageSync('honey-user');
-        that.setData({
-            userInfo:userInfo.profile
+        // that = this;
+        // var userInfo=wx.getStorageSync('honey-user');
+        // console.log('userinfo .. ' + JSON.stringify(userInfo));
+        // that.setData({
+        //     userInfo:userInfo
+        // })
+        if (wx.getStorageSync('honey-user').id) {
+          this.getPackage();
+        }
+    },
+    getPackage() {
+      applyApi.jsonGetRequest('user/getUserPackage', {
+        userId: wx.getStorageSync('honey-user').id
+      }).then(result => {
+        wx.hideLoading();
+        this.setData({
+          coinBalance: result.coinBalance
         })
+        this.setData({
+          userInfo: wx.getStorageSync('honey-user')
+        })
+        console.log(result);
+      }).catch(error => {
+        console.log(error);
+      });
     },
     getOrderList(status) {
         applyApi.postByToken('order/status-order', {
@@ -93,5 +114,39 @@ Page({
       wx.navigateTo({
         url: '../myWallet/myWallet',
       })
+    },
+    getPhoneNumber: function (e) {
+      // console.log(e.detail.errMsg)
+      // console.log(e.detail.iv)
+      // console.log(Base64.decode(e.detail.encryptedData))
+
+      // var WXBizDataCrypt = require('./WXBizDataCrypt')
+
+      // var appId = 'wx4f4bc4dec97d474b'
+      // var sessionKey = 'tiihtNczf5v6AKRyjwEUhQ=='
+      // var encryptedData = e.detail.encryptedData
+      // var iv = 'r7BXXKkLb8qrSNn05n0qiA=='
+
+      // var pc = new WXBizDataCrypt(appId, sessionKey)
+
+      // var data = pc.decryptData(encryptedData, iv)
+
+      // console.log('解密后 data: ', data)
+
+      // // wx.setStorageSync('myphone', phoneNumber)
+      // this.setData({
+      //   myphone: ''
+      // })
+    } ,
+    bindLoginTap() {
+      wx.showLoading({
+        title: '登录中..',
+      })
+      app.LoggedIn();
+      var that = this;
+      setTimeout(function() {
+        that.getPackage();
+      },1500);
+
     }
 })

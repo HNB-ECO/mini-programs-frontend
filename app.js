@@ -2,8 +2,11 @@
 import {
     configApi
 } from './utils/constant';
+import Promise from './utils/bluebird.min';
 const applyApi = require('./utils/applyApi.js');
 let that;
+// 首次登录 --> 授权 --> 获取用户信息 --> 服务器登录
+// 再次登录 --> 检查本地是否有userinfo --> 有则不用登录
 App({
     data: {
         systemInfo: wx.getSystemInfoSync()
@@ -11,6 +14,10 @@ App({
     onLaunch: function() {
         that = this;
         this.getImgMid();
+        // if (!wx.getStorageSync('honey-user')) {
+        //   // 授权 登录
+        //   this.LoggedIn();
+        // }
     },
     getSystemModelIPhoneX() {
       var model = this.data.systemInfo.model;
@@ -35,80 +42,88 @@ App({
         var pages = getCurrentPages();
         return pages[pages.length - pre - 1]; //上一个页面
     },
-    openSetting: function(callback) {
-        wx.getStorage({
-            key:'honey-token',
-            success:function(res){
-                if(callback){
-                    callback();
+
+    LoggedIn() {
+      return new Promise((resolve, reject) => { 
+        wx.authorize({
+          scope: 'scope.userInfo',
+          success () {
+            // 授权成功
+            return that.wxappLogin();
+          },
+          fail () {
+            // 授权失败 -> 打开设置
+            wx.openSetting({
+              success: (res) => {
+                console.log('openSetting 设置: ', res);
+                if (res.authSetting['scope.userInfo']) {
+                  console.log('开启用户授权');
+                  // 授权成功
+                  return that.wxappLogin();
+                } else {
+                  // 拒绝授权 
+                  
                 }
-            },
-            fail:function(){
-                wx.openSetting({
-                    success: (res) => {
-                        console.log('openSetting设置成功: ', res);
-                        if (res.authSetting['scope.userInfo']) {
-                            console.log('开启用户授权');
-                            that.setUserToken(function(res) {
-                                // 授权成功
-                                if (callback) {
-                                    callback();
-                                }
-                            });
-                        }
-                    },
-                    fail: (res) => {
-                        console.log('设置失败: ', res);
-                    },
-                    complete: (res) => {
-                        console.log('设置完成: ', res);
-
-                    }
-                })
-            }
+              }
+            })
+          }
         })
-
+      })
     },
-    setUserToken: function(callback) {
-        wx.getStorage({
-            key: 'honey-user',
-            success: function(res) {
-                if (callback) {
-                    callback();
-                }
-            },
-            fail: function() {
-                wx.login({
-                    success: function(res) {
-                        var updateParam = {};
-                        applyApi.post('wx/app-auth', {
-                            code: res.code
-                        }, function(res) {
-                            updateParam.openId = res.data.openid;
-                            wx.getUserInfo({
-                                success: function(res) {
-                                    updateParam.nickName = res.userInfo.nickName;
-                                    updateParam.avatarUrl = res.userInfo.avatarUrl;
-                                    applyApi.post('wx/app-login', updateParam, function(res) {
-                                        wx.setStorageSync('honey-user', res.data);
-                                        wx.setStorageSync('honey-token', res.data.token);
-                                        if (callback) {
-                                            callback();
-                                        }
-                                    })
-                                },
-                                fail: function() {
-                                    if (callback) {
-                                        callback();
-                                    }
-                                }
-                            });
-                        })
-                    },
-                    fail: function(err) {}
-                })
-            }
-        })
+    wxappLogin() {
+      return new Promise((resolve, reject) => { 
+        wx.login({
+          success(loginResult) {
+            var code = loginResult.code;
+            console.log('code **', code);
+            applyApi.jsonGetRequest('openId/getOpenId', {
+              code: code
+            }).then(result => {
+              wx.setStorageSync('honey-openId', result.openId);
+              console.log('openId ** ',result);
+            }).catch(error => {
+              console.log(error);
+            });
+            
+            return that.getUserInfo(code);
+          },
+          fail(error) {}
+        });
 
+      })
+    },
+    getUserInfo(code) {
+      return new Promise((resolve, reject) => { 
+        wx.getUserInfo({
+          success (res) {
+            return that.userLogin(code,res);
+          },
+          fail () {
+            if (callback) {
+              callback();
+            }
+          }
+        });
+      })
+    },
+    userLogin(code, res) {
+      return new Promise((resolve, reject) => { 
+        applyApi.formPostRequest('user/userLogin', {
+          platformId: 1,
+          nickName: res.userInfo.nickName,
+          avatar: res.userInfo.avatarUrl,
+          thirdPartId: code,
+          thirdPartType: 'WX'
+        }).then(result => {
+          wx.setStorageSync('honey-user', result);
+          console.log(result);
+          return resolve(result)
+        }).catch(error => {
+          console.log(error);
+          return reject(error)
+        });
+      })
     }
+
+  
 })

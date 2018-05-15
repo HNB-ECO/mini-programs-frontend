@@ -99,6 +99,13 @@ page {
 .more-paint .item .tit {
     font-size: 30rpx;
 }
+.more-paint .detail-img {
+    width: 100%;
+}
+.more-paint .detail-img image {
+    width: 100%;
+    height: 600rpx;
+}
 
 .draw-footer .left {
     width: 30%;
@@ -206,6 +213,10 @@ page {
 }
 .order-panel .price-info .rmbprice {
     font-size: 30rpx;
+    color: #999;
+}
+.order-panel .price-info .kctxt {
+    margin-left: 70rpx;
     color: #999;
 }
 

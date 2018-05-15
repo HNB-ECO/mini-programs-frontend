@@ -23,95 +23,41 @@ Page({
     indexPage: true,
     isIphoneX: app.getSystemModelIPhoneX(),
 
-    imgUrls: ['http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
-      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg'],
+    imgUrls: [],
     xItems: [
-      {
-        title: '范冰冰同款',
-        list: [
-          {
-            tit: '范冰冰专属手机壳',
-            types: '手机壳',
-            des: '可爱苹果7plus/8/X手机壳个性iphone6s挂钩',
-            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-            hnb: '233HNB',
-            rmb: 0,
-            note: '仅限HNB支付'
-          },
-          {
-            tit: '范冰冰专属手机壳',
-            types: '手机壳',
-            des: '可爱苹果7plus/8/X手机壳个性iphone6s挂钩个性iphone6s挂钩',
-            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-            hnb: '233HNB',
-            rmb: 0,
-            note: '仅限HNB支付'
-          },
-          {
-            tit: '范冰冰专属手机壳',
-            types: '手机壳',
-            des: '可爱苹果7plus/8/X手机壳个性iphone6s挂钩个性iphone6s挂钩',
-            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-            hnb: '233HNB',
-            rmb: 0,
-            note: '仅限HNB支付'
-          }
-        ]
-      },
-      {
-        title: '范冰冰签名照',
-        list: [
-          {
-            id: 0,
-            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-          },
-          {
-            id: 0,
-            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-          },
-          {
-            id: 0,
-            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-          }
-        ]
-      },
-      {
-        title: '范冰冰周边',
-        types: 'wide',
-        list: [
-          {
-            id: 0,
-            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-          },
-          {
-            id: 0,
-            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-          },
-          {
-            id: 0,
-            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-          }
-        ]
-      },
-      {
-        title: '范冰冰代言',
-        types: 'wide',
-        list: [
-          {
-            id: 0,
-            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-          },
-          {
-            id: 0,
-            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-          },
-          {
-            id: 0,
-            imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
-          }
-        ]
-      }
+      // {
+      //   title: '范冰冰同款',
+      //   list: [
+      //     {
+      //       tit: '范冰冰专属手机壳',
+      //       types: '手机壳',
+      //       des: '可爱苹果7plus/8/X手机壳个性iphone6s挂钩',
+      //       imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+      //       hnb: '233HNB',
+      //       rmb: 0,
+      //       note: '仅限HNB支付'
+      //     }
+      //   ]
+      // },
+      // {
+      //   title: '范冰冰签名照',
+      //   list: [
+      //     {
+      //       id: 0,
+      //       imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+      //     }
+      //   ]
+      // },
+      // {
+      //   title: '范冰冰周边',
+      //   types: 'wide',
+      //   list: [
+      //     {
+      //       id: 0,
+      //       imgurl: 'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+      //     }
+      //   ]
+      // },
     ]
   },
   onLoad: function () {
@@ -124,7 +70,8 @@ Page({
       platformId: 1
     }).then(result => {
       this.setData({
-        goodsTypes: result.goodsTypes
+        goodsTypes: result.goodsTypes,
+        imgUrls: result.banners
       })
       console.log(result);
     }).catch(error => {
@@ -147,11 +94,6 @@ Page({
         gotopHidden: true
       });
     }
-  },
-  bindGotopTap(e) {
-    that.setData({
-      pageTop: 'pageTop'
-    })
   },
   bindPaintDetail(e) {
     wx.navigateTo({

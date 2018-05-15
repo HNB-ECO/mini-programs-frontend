@@ -322,11 +322,16 @@ button::after {
     top:0;
     background: transparent !important;
 }
+.blank-con image {
+    width: 180rpx;
+    height: 180rpx;
+}
 .blank-con view{
     color: #b3b3b3;
     background: transparent !important;
 }
 .blank-con .tip{
+    font-size: 30rpx;
     margin-top: 30rpx;
     background: transparent !important;
 }

@@ -5,6 +5,7 @@ import * as hnbdata from '../..//utils/hbndata-format.js';
 import {
     configApi
 } from '../../utils/constant';
+import { Base64 } from '../../utils/urlsafe-base64';
 
 var that, prodId, artistId, paintSizeId, paintStyleId;
 
@@ -97,20 +98,28 @@ Page({
           //     isSelect: false,
           //   }
           // ]
-        }
+        },
+        orderDetail: {},
+        theNumber: 1
     },
     onLoad: function(options) {
         that = this;
         that.setData({
             windowWidth: app.data.systemInfo.windowWidth
         });
-        // prodId = options.prodId || 890;
-        // that.getPaintInfo();
 
         if (options.goodId) {
           this.getGoodDetail(options.goodId);
+          this.setData({
+            goodId: options.goodId
+          })
         }
 
+    },
+    onShow() {
+      this.setData({
+        showOrderPanel: false
+      })
     },
     getGoodDetail(goodId) {
       applyApi.jsonGetRequest('good/getGoodInfo', {
@@ -126,8 +135,17 @@ Page({
       applyApi.jsonGetRequest('good/getGoodDetail', {
         goodId: goodId
       }).then(result => {
+        // this.setDefaultSelect(this.data.paintSizes);
+        var paintList = hnbdata.formatGoodSelectedDetail(result);
         this.setData({
-          paintSizes: hnbdata.formatGoodSelectedDetail(result)
+          paintSizes: paintList,
+          orderDetail: paintList[0],
+          paintSelected: {
+            coinPrice: paintList[0].coinPrice,
+            price: paintList[0].price,
+            inventory: paintList[0].inventory,
+            imageUrl: paintList[0].imageUrl
+          }
         })
         console.log(result);
       }).catch(error => {
@@ -140,114 +158,34 @@ Page({
       })
     },
     makeOrder(e) {
-        console.log('makeOrder');
-        that.setData({
-            showOrderPanel: true
-        })
-        // app.openSetting(function(){
-        //     that.getPainterInfo(artistId,prodId,function(){
-        //         that.setData({
-        //             showOrderPanel: true
-        //         })
-        //     });
-        // })
-    },
-    // 获取作品信息
-    getPaintInfo(callback) {
-        applyApi.postByToken('userAction/getProdDetail', {
-            prodId: prodId
-        }, function(res) {
-            console.log('success', res);
-            that.setData({
-                paint: res.data
-            })
-            artistId = res.data.artistId;
-            that.getRecommendList(res.data.paintStyleId);
 
-            if (callback) {
-                callback();
-            }
+      if (wx.getStorageSync('honey-user')) {
+        that.setData({
+          showOrderPanel: true
         })
-    },
-    // 获取猜你喜欢
-    getRecommendList: function(styleId) {
-        applyApi.postByToken('userAction/gallerySort', {
-            page: 1,
-            size: 4,
-            styleId: styleId,
-            sortRule: 4
-        }, function(res) {
-            console.log('getRecommendList', res);
-            that.setData({
-                recommendList: res.data.list
+      } else {
+        wx.showModal({
+          content: '请登录后购买！',
+          success() {
+            wx.switchTab({
+              url: '../profile/profile',
             })
+          }
         })
+      }
+
     },
-    // 获取画师信息
-    getPainterInfo(artistId, prodId,callback) {
-        applyApi.postByToken('artistPage/paintInfo', {
-            artistId: artistId,
-            publishId: prodId
-        }, function(res) {
-            console.log('画师绘画信息', res);
-            var paintSizes = that.setDefaultSelect(res.data.paintSizes);
-            var paintStyleList = that.setDefaultSelect(res.data.paintStyles);
-            paintSizeId = paintSizes[0].id;
-            that.data.order.paintSizeName=paintSizes[0].name;
-            paintStyleId = paintStyleList[0].id;
-            that.data.order.paintStyleName=paintStyleList[0].name;
-            that.setData({
-                paintSizes: paintSizes,
-                paintStyleList: paintStyleList
-            })
-            that.getPaintingPrice();
-            if(callback){
-                callback();
-            }
-        }, function(error) {
-            console.log('fail', error);
-            if(error.data.code==11005){
-                that.setData({
-                    showTips:true,
-                    tipsInfo:error.data.message
-                });
-                setTimeout(function(){
-                    that.setData({
-                        showTips:false,
-                    })
-                },2000)
-            }
-        });
-    },
+
     // 设置默认尺寸和风格
     setDefaultSelect(list) {
         for (var i = 0; i < list.length; i++) {
             if (i == 0) {
-                list[i].isSelect = true;
+                list[i].selected = true;
             } else {
-                list[i].isSelect = false;
+                list[i].selected = false;
             }
         }
         return list;
-    },
-    //计算 价格
-    getPaintingPrice(index) {
-
-        
-        // var params = {
-        //     artistId: artistId,
-        //     paintSizeId: paintSizeId,
-        //     paintStyleId: paintStyleId,
-        //     isQuick: that.data.order.isQuick, //0:不急 1:加急
-        //     peopleNumber: that.data.order.numOfPeople, //画中人数 默认为1
-        //     couponId: that.data.order.couponId
-        // };
-        // applyApi.postByToken('order/paint-price', params, function(res) {
-        //     console.log('计算订画价格', params, res);
-        //     that.setData({
-        //         paintPrice: res.data
-        //     })
-        // });
     },
     closePanel(e) {
         that.setData({
@@ -259,18 +197,20 @@ Page({
         var index = e.currentTarget.dataset.index;
         for (var i in list) {
             if (i - index) {
-                list[i].isSelect = false;
+                list[i].selected = false;
             } else {
-                list[i].isSelect = true;
+                list[i].selected = true;
             }
         }
-        that.getPaintingPrice(index);
-        that.setData({
+        // that.getPaintingPrice(index);
+        this.setData({
           'paintSizes': list,
+          orderDetail: list[index],
           paintSelected: {
-            coinPrice: list[i].coinPrice,
-            price: list[i].price,
-            inventory: list[i].inventory,
+            coinPrice: list[index].coinPrice,
+            price: list[index].price,
+            inventory: list[index].inventory,
+            imageUrl: list[index].imageUrl
           }
         })
     },
@@ -285,53 +225,48 @@ Page({
         setTimeout(function() {
             changeData('basic')
         }, 200)
+        var theNumber = this.data.theNumber;
         if (type == 'minusBtnImg') {
-            if (that.data.order.numOfPeople <= 1) {
+            if (theNumber<= 1) {
                 return
             } else {
-                that.data.order.numOfPeople -= 1;
+              theNumber -= 1;
             }
         } else {
-            that.data.order.numOfPeople += 1;
+            theNumber += 1;
         }
-        console.log('numOfPeople', that.data.order);
-        that.getPaintingPrice();
         that.setData({
-            order: that.data.order
+          theNumber: theNumber
         })
     },
     orderConfirm(e) {
         console.log('orderConfirm');
-        var verifing = [{
-            name: 'isEmpty',
-            content: that.data.order.contactor,
-            tip: '请填写收货人姓名'
-        }, {
-            name: 'isEmpty',
-            content: that.data.order.phone,
-            tip: '请填写收货人电话'
-        }, {
-            name: 'isEmpty',
-            content: that.data.sourceImageUrl,
-            tip: '请上传图片'
-        }];
-        if(verify.verified(verifing,that)){
-            that.data.order.prodId=prodId;
-            that.data.order.contentId=artistId;
-            that.data.order.artistId=artistId;
-            that.data.order.paintSizeId=paintSizeId;
-            that.data.order.paintStyleId=paintStyleId;
-            that.data.order.patternOfPayment='WX_WEAPP';
-            that.data.order.type=0; //订单类型 0:画 1:商品
-            that.data.order.amount=1;
-            that.data.order.isQuick=0;
-            that.data.order.paintPrice=that.data.paintPrice.totalPrice;
-            that.data.order.sourceImageUrl=that.data.sourceImageUrl;
-            wx.setStorageSync('honey-new-order',that.data.order);
-            wx.navigateTo({
-                url: `../order-confirm/order-confirm`
-            });
-        }
+        let qsFiles = Base64.encodeURI(JSON.stringify(this.data.orderDetail));
+        wx.navigateTo({
+          url: '../order-confirm/order-confirm?orderDetail=' + qsFiles + '&goodName=' + this.data.paint.name + '&platformId=' + this.data.paint.platformId + '&theNumber=' + this.data.theNumber,
+        })
+
+        // applyApi.formPostRequest('order/orderPay', {
+        //   orderId: this.data.orderDetail.id,
+        //   openId: wx.getStorageSync('honey-openId'),
+        //   payment_type: '1'
+        // }).then(result => {
+        //   wx.hideLoading();
+        //   wx.showToast({
+        //     title: '支付成功!',
+        //   })
+        //   setTimeout(function () {
+        //     that.getOrderList(that.data.currentTab);
+        //   }, 1000)
+        //   console.log(result);
+        // }).catch(error => {
+        //   wx.hideLoading();
+        //   wx.showToast({
+        //     title: '支付失败!',
+        //   })
+        //   console.log(error);
+        // });
+
     },
     showMore(e) {
         var showMoreLovers = that.data.showMoreLovers || false;

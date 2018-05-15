@@ -1,6 +1,8 @@
 const applyApi = require('../../utils/applyApi.js');
 const verify = require('../../utils/verify.js');
 const orderApply = require('../../utils/order.js');
+import { Base64 } from '../../utils/urlsafe-base64';
+
 var that, order, prodId, artistId;
 var app = getApp();
 
@@ -16,92 +18,53 @@ Page({
         payList: [
           {
             name: '画你钱包余额',
-            selected: true
+            selected: true,
+            value: 1
           },
           {
-            name: '微信支付 (支付升级中)',
-            selected: false
+            name: '微信支付',
+            selected: false,
+            value: 2
           }
-        ]
+        ],
+        paint: {},
+        payTypes: 1 //1是画你钱包 2是微信支付
     },
     onShow(e) {
         // that.getPaintingPrice();
     },
-    onLoad: function() {
+    onLoad: function(options) {
         that = this;
-        order = wx.getStorageSync('honey-new-order');
-        console.log('order', order);
-        if (order) {
-            prodId = order.prodId;
-            that.setData({
-                order: order
-            });
-            // that.getPaintInfo();
-            // that.getPaintingPrice();
-        }
-    },
-    chooseCoupon(e) {
-        wx.navigateTo({
-            url: `../coupon/coupon`
-        });
-    },
-    // 获取作品信息
-    getPaintInfo(callback) {
-        applyApi.postByToken('userAction/getProdDetail', {
-            prodId: prodId
-        }, function(res) {
-            console.log('success', res);
-            that.setData({
-                paint: res.data
+        // order = wx.getStorageSync('honey-new-order');
+        // console.log('order', order);
+        // if (order) {
+        //     prodId = order.prodId;
+        //     that.setData({
+        //         order: order
+        //     });
+        //     // that.getPaintInfo();
+        //     // that.getPaintingPrice();
+        // }
+        if (wx.getStorageSync('myaddress')) {
+            this.setData({
+              myaddress: wx.getStorageSync('myaddress')
             })
-            artistId = res.data.artistId;
-            if (callback) {
-                callback();
-            }
-        }, function(error) {
-            console.log('fail', error);
-        })
-    },
-    //计算订画价格
-    getPaintingPrice: function() {
-        var params = {
-            artistId: that.data.order.artistId,
-            paintSizeId: that.data.order.paintSizeId,
-            paintStyleId: that.data.order.paintStyleId,
-            isQuick: that.data.order.isQuick, //0:不急 1:加急
-            peopleNumber: that.data.order.numOfPeople, //画中人数 默认为1
-            couponId: that.data.order.couponId
-        };
-        applyApi.postByToken('order/paint-price', params, function(res) {
-            console.log('计算订画价格', params, res);
-            that.setData({
-                paintPrice: res.data
-            })
-            if (!that.data.paintPrice.use) {
-                that.data.order.couponId = '';
-            }
-        });
-    },
-    setFrom(e) {
-        console.log('setFrom', e);
-        var name = e.currentTarget.dataset.name;
-        that.data.order[name] = e.detail.value;
-        that.setData({
-            order: that.data.order
-        })
-    },
-    quickChange(e) {
-        console.log('quickChange', e);
-        if (e.detail.value) {
-            that.data.order.isQuick = 1;
-            that.data.order.totalPrice = that.data.order.paintPrice + that.data.paintPrice.paintPrice
-        } else {
-            that.data.order.isQuick = 0;
         }
-        that.getPaintingPrice();
-        that.setData({
-            order: that.data.order
-        })
+        if (options.orderDetail) {
+            this.setData({
+              paint: JSON.parse(Base64.decode(options.orderDetail))
+            })
+        }
+        if (options.platformId) {
+          this.setData({
+            platformId: options.platformId,
+            userId: wx.getStorageSync('honey-user').id,
+            goodName: options.goodName,
+            theNumber: options.theNumber,
+            totalPrice: this.data.paint.price * +options.theNumber,
+            totalCoin: this.data.paint.coinPrice * +options.theNumber
+          })
+        }
     },
     orderConfirm(e) {
 
@@ -136,16 +99,152 @@ Page({
         }, 1500)
       }
     },
-    bindCheckReadProtocolTap(e) {
-      let isReadProtocol = that.data.isReadProtocol;
-      that.setData({
-        isReadProtocol: !isReadProtocol
+
+    bindgetaddresstap(e) {
+      var that = this;
+      wx.chooseAddress({
+        success: function (res) {
+          var address = {
+            userName: res.userName,
+            telNumber: res.telNumber,
+            address: res.provinceName + res.cityName + res.countyName + res.detailInfo
+          }
+          console.log('address' + JSON.stringify(address));
+          wx.setStorageSync('myaddress', address);
+          that.setData({
+            myaddress: address
+          })
+        }
       })
     },
-    bindReadProtocolTap(e) {
+    bindWalletTap() {
       wx.navigateTo({
-        url: '../protocol/protocol',
+        url: '../myWallet/myWallet',
       })
+    },
+    bindCreateOrderTap() {
+
+      if (!this.data.myaddress) {
+          wx.showToast({
+            title: '请选择地址',
+            icon: 'none'
+          })
+      } else {
+
+      var paint = this.data.paint;
+      var orderdata = {
+        totalPrice: this.data.totalPrice,
+        totalCoin: this.data.totalCoin,
+        platformId: this.data.platformId,
+        leaveMessage: '',
+        address: this.data.myaddress.address,
+        userId: this.data.userId,
+        goodId: paint.goodId,
+        goodDetailId: paint.goodDetailId,
+        amount: this.data.theNumber,
+        contactor: this.data.myaddress.userName,
+        phone: this.data.myaddress.telNumber,
+        paymentType: this.data.payTypes
+      }
+      console.log(orderdata);
+      
+      wx.showLoading({
+        title: '订单生成中..',
+      })
+      applyApi.formPostRequest('order/createOrder', orderdata).then(result => {
+        wx.hideLoading();
+        var that = this;
+        wx.showModal({
+          content: '是否确认支付？',
+          success(res) {
+            if (res.confirm) {
+              console.log('用户点击确定');
+              // 调起支付接口
+              that.wxOrderPay(result, that);
+            } else if (res.cancel) {
+              console.log('用户点击取消');
+            }
+          }
+        })
+        console.log(result);
+      }).catch(error => {
+        wx.hideLoading();
+        wx.showToast({
+          title: '订单出错!',
+        })
+        console.log(error);
+      });
+    }
+
+    },
+    wxOrderPay(orderid,that) {
+      wx.showLoading({
+        title: '支付中..',
+      })
+      applyApi.formPostRequest('order/orderPay', {
+        orderId: orderid,
+        openId: wx.getStorageSync('honey-openId'),
+        payment_type: this.data.payTypes
+      }).then(result => {
+
+        if (this.data.payTypes == 2) {
+          // 微信支付
+          wx.requestPayment({
+            'timeStamp': result.timeStamp,
+            'nonceStr': result.nonceStr,
+            'package': 'prepay_id=' + result.prepayId,
+            'signType': 'MD5',
+            'paySign': result.paySign,
+            'success': function (res) {
+                wx.hideLoading();
+                wx.navigateBack({
+                  delta: 1
+                })
+            },
+            'fail': function (res) {
+                wx.showToast({
+                  icon: 'none',
+                  title: '支付失败!'
+                })
+                setTimeout(function() {
+                  wx.navigateBack({
+                    delta: 1
+                  })
+                },1500)
+            }
+          })
+
+        } else {
+          wx.hideLoading();
+          wx.showToast({
+            title: '支付成功!',
+          })
+        }
+        console.log(result);
+      }).catch(error => {
+        wx.hideLoading();
+        wx.showToast({
+          icon: 'none',
+          title: '支付失败!',
+        })
+        console.log(error);
+      });
+    },
+    bindPayTypeSelectTap(e) {
+
+      var index = e.currentTarget.id,
+          payList = this.data.payList;
+      
+      payList.forEach(item => {
+        item.selected = false;
+      })
+      payList[index].selected = true;
+      
+      this.setData({
+        payList: payList,
+        payTypes: payList[index].value
+      })
+      console.log('payTypes..' + this.data.payTypes);
     }
 
 })

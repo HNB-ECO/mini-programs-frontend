@@ -4,24 +4,24 @@
 
 <view class="bg-default {{ isIphoneX ? 'fix-iphonex-navbar' : '' }}">
 
-<view class='title-alert-view weui-flex'>
-  <view class='weui-flex__item'>已成功为您创建HNB钱包 （钱包App即将上线，敬请期待）</view>
-  <view class=''> <image src='../../images/close_r.png'></image> </view>
+<view class='title-alert-view weui-flex' hidden='{{ isRemaidHidden }}'>
+  <view class='weui-flex__item'>已成功为您创建画你钱包 （钱包App即将上线，敬请期待）</view>
+  <view class='' bindtap='bindCloseRemaidTap'> <image src='../../images/close_r.png'></image> </view>
 </view>
 
 <view class='my-price-item'>
-  <view class='hnb'> <text>00.00</text>HNB </view>
-  <view class='hnb-address'>HNB地址 X00000000</view>
+  <view class='hnb'> <text>{{ coinBalance }}</text>画你积分 </view>
+  <!-- <view class='hnb-address'>HNB地址 X00000000</view> -->
 </view>
 
 <view class='price-item-view'>
   <view class='title'>充值</view>
   <view class='price-item {{ item.selected ? "price-active" : "" }}' style='width:{{ (windowWidth-50)/3 }}px;height:{{ (windowWidth-50)/3 }}' wx:for='{{ priceList }}' wx:key='{{ index }}' id='{{ index }}' bindtap='bindSelectPriceTap'>
-    <view class='bigTxt' style='{{ item.selected ? "color:white;" : "" }}'>{{ item.hnbprice }}HBN</view>
+    <view class='bigTxt' style='{{ item.selected ? "color:white;" : "" }}'>{{ item.hnbprice }}积分</view>
     <view class='litTxt'>{{ item.rmbprice }}元</view>
   </view>
 
-  <view class='comft-btn'>确认充值并支付</view>
+  <view class='comft-btn' bindtap='bindComftPayTap'>确认充值并支付</view>
 
   <view class='remind-txt-view'>
     <view wx:for='{{ remindList }}' wx:key='index'>{{ item }}</view>

@@ -19,8 +19,25 @@ page {
     background-color: white;
     padding: 35rpx 0 0;
 }
+.tp-tit .right-icon {
+    width:25rpx;
+    height:25rpx;
+    position:absolute;
+    right:20rpx;
+    top:47rpx;
+}
 .tp-tit text {
     margin-left: 20rpx;
+}
+.tp-tit .address-text {
+    position:absolute;
+    top:60rpx;
+    font-size:28rpx;
+}
+.tp-tit .user-text {
+    position:absolute;
+    top:20rpx;
+    font-size:28rpx;
 }
 .tp-tit-bottom-border {
     background: url('https://images.wohoney.com/syd4fskrvw');
@@ -35,7 +52,7 @@ page {
     background: white;
 }
 .order-detail .top {
-    padding: 10rpx 20rpx 5rpx;
+    padding: 20rpx 20rpx 5rpx;
 }
 .order-detail .top view {
     margin-left:20rpx;
@@ -81,28 +98,40 @@ page {
     line-height: 200%;
     margin-top: 14rpx;
 }
-order-detail .price {
+.order-detail .price {
     font-size: 30rpx;
     color: #999;
     display: inline-block;
-
 }
-order-detail .price .hnb-text {
+.order-detail .price .hnb-text {
     color: #fd2742;
 }
-order-detail .price .hnb-text text{
+.order-detail .price .hnb-text text{
     font-size: 40rpx;
 }
 .order-detail .right .numb {
     color: #333;
     float: right;
     margin-right: 20rpx;
+    font-size:30rpx;
+    margin-top:10rpx;
 }
 
 
 .item-contain{
     background: white;
     /* padding: 0 20rpx; */
+}
+.item-contain .price {
+    display: inline-block;
+    font-size: 30rpx;
+    color: #999;
+}
+.item-contain .price .hnb-text {
+    color: #fd2742;
+}
+.item-contain .price .hnb-text text{
+    font-size: 40rpx;
 }
 .more-item{
     height: 120rpx;
