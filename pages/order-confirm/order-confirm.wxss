@@ -6,7 +6,7 @@ page {
     color:#333;
 } */
 .bg-default {
-    margin-bottom: 200rpx;
+    padding-bottom: 150rpx;
 }
 .tp-tit{
     font-size: 30rpx;
@@ -26,13 +26,13 @@ page {
     right:20rpx;
     top:47rpx;
 }
-.tp-tit text {
-    margin-left: 20rpx;
-}
 .tp-tit .address-text {
     position:absolute;
     top:60rpx;
     font-size:28rpx;
+}
+.tp-tit .tit-name {
+    margin-left: 20rpx;
 }
 .tp-tit .user-text {
     position:absolute;

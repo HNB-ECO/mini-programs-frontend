@@ -10,14 +10,14 @@
 </view>
 
 <view class='my-price-item'>
-  <view class='hnb'> <text>{{ coinBalance }}</text>画你积分 </view>
+  <view class='hnb'> <text>{{ coinBalance }}</text>画呗 </view>
   <!-- <view class='hnb-address'>HNB地址 X00000000</view> -->
 </view>
 
 <view class='price-item-view'>
   <view class='title'>充值</view>
   <view class='price-item {{ item.selected ? "price-active" : "" }}' style='width:{{ (windowWidth-50)/3 }}px;height:{{ (windowWidth-50)/3 }}' wx:for='{{ priceList }}' wx:key='{{ index }}' id='{{ index }}' bindtap='bindSelectPriceTap'>
-    <view class='bigTxt' style='{{ item.selected ? "color:white;" : "" }}'>{{ item.hnbprice }}积分</view>
+    <view class='bigTxt' style='{{ item.selected ? "color:white;" : "" }}'>{{ item.hnbprice }}画呗</view>
     <view class='litTxt'>{{ item.rmbprice }}元</view>
   </view>
 

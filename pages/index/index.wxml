@@ -22,8 +22,8 @@
       {{ bigList.goodTypeName }}
     </view>
     <scroll-view scroll-x >
-      <view class='x-item' style='{{ bigList.types == "wide" ? "height:372rpx;width:674rpx;" : "" }}' wx:for='{{ bigList.goodsList }}' wx:key='{{ index }}' id='{{ item.id }}' bindtap="bindPaintDetail">
-        <view class='img-view' style='{{ "background-image: url(" + item.urlArray[0] + ");" }}{{ bigList.types == "wide" ? "height:372rpx;width:674rpx;" : "" }}'>
+      <view style='{{ bigList.goodsList.length > 2 ? "" : "margin:0 20rpx;" }}' class='x-item' wx:for='{{ bigList.goodsList }}' wx:key='{{ index }}' id='{{ item.id }}' bindtap="bindPaintDetail">
+        <view class='img-view' style='{{ "background-image: url(" + item.imageUrl + ");" }}'>
           <!-- <view class='name'>
             <view class='types'>{{ item.shortName }}</view>
             <view class='fs30'>{{ bigList.goodTypeName }}</view>
@@ -32,8 +32,8 @@
         <view class='des-view'>
           <view class='des'>{{ item.name }}</view>
           <view class='weui-flex'>
-            <view class='weui-flex__item price'>{{ item.coinPrice }} 积分<text class='fs25'></text> </view>
-            <view class='weui-flex__item bz'>{{ item.note }}仅限积分兑换</view>  
+            <view class='weui-flex__item price'>{{ item.coinPrice }} 画呗<text class='fs25'></text> </view>
+            <view class='weui-flex__item bz'>{{ item.note }}仅限画呗兑换</view>  
           </view>
         </view>
       </view>

@@ -12,7 +12,7 @@ const formatorderstatus = {
   5: '已评价',
   6: '已取消'
 }
-// var pageData = new applyApi.splitPage();
+ 
 Page({
 
   data: {
@@ -52,7 +52,7 @@ Page({
     }
     applyApi.jsonGetRequest('order/getOrderByStatus', {
       pageNum: 1,
-      pageSize: 5,
+      pageSize: 15,
       userId: wx.getStorageSync('honey-user').id,
       orderStatus: status
     }).then(result => {
@@ -128,32 +128,32 @@ Page({
       })
       console.log(error);
     });
-    // wx.showLoading({
-    //   title: '支付中..',
-    // })
-    // applyApi.formPostRequest('order/orderPay', {
-    //   orderId: orderList[index].id,
-    //   openId: wx.getStorageSync('honey-openId'),
-    //   payment_type: this.data.payTypes
-    // }).then(result => {
-    //   wx.hideLoading();
-    //   wx.showToast({
-    //     title: '支付成功!',
-    //   })
-    //   setTimeout(function () {
-    //     that.getOrderList(that.data.currentTab);
-    //   }, 1000)
-    //   console.log(result);
-    // }).catch(error => {
-    //   wx.hideLoading();
-    //   wx.showToast({
-    //     title: '支付失败!',
-    //   })
-    //   console.log(error);
-    // });
+
   },
   handleLoadMore() {
 
+  },
+
+  bindCancelOrderTap(e) {
+
+    applyApi.wxFormBackendPostRequestP('order/cancelOrder', {
+      orderId: +e.currentTarget.id
+    }).then(result => {
+      wx.showToast({
+        title: '订单已取消',
+      })
+      this.getOrderList();
+    }).catch(error => {
+      console.log(error);
+    });
+
+  },
+
+  bindShipTap() {
+    wx.showToast({
+      icon: 'none',
+      title: '已提醒~请耐心等待宝贝~',
+    })
   }
 
 })

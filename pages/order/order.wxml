@@ -18,6 +18,7 @@
                 <view wx:if='{{ item.orderStatus == 1 }}' class='right-txt'>{{ item.orderStatus == 1 ? "待付款" : "" }}</view>
                 <view wx:if='{{ item.orderStatus == 2 }}' class='right-txt'>{{ item.orderStatus == 2 ? "待发货" : "" }}</view>
                 <view wx:if='{{ item.orderStatus == 3 }}' class='right-txt'>{{ item.orderStatus == 3 ? "待收货" : "" }}</view>
+                <view wx:if='{{ item.orderStatus == 6 }}' class='right-txt'>{{ item.orderStatus == 6 ? "已取消" : "" }}</view>
             </view>
             <view class='bottom weui-flex' wx:for='{{ item.workOrders }}' wx:key='{{ index }}'>
                 <view><image class='mainImg' src="{{ item.goodDetail.imageUrl }}" mode="aspectFill" /></view>
@@ -30,18 +31,18 @@
                     {{ item.goodDetail.volume ? item.goodDetail.volume : '' }} 
                     {{ item.goodDetail.weight ? item.goodDetail.weight : '' }}
                     {{ item.goodDetail.sieze ? item.goodDetail.sieze : '' }}</view>
-                    <view class="price"> <text class='hnb-text'><text>{{ item.goodDetail.coinPrice }}</text>积分 </text> / {{ item.goodDetail.price }}RMG </view>
+                    <view class="price"> <text class='hnb-text'><text>{{ item.goodDetail.coinPrice }}</text>画呗 </text> / {{ item.goodDetail.price }}RMB </view>
                     <view class='numb'>x{{ item.amount }}</view>
                 </view>
             </view>
         </view>
         <view class='count'>
-          共{{ item.workOrders[0].amount }}件商品 合计： <text style='font-size:38rpx;'>{{ item.paymentType == "2" ? item.totalPrice : item.totalCoin }}</text>{{ item.paymentType == "2" ? "RMB" : "积分"  }}（含运费0.00）
+          共{{ item.workOrders[0].amount }}件商品 合计： <text style='font-size:38rpx;'>{{ item.paymentType == "2" ? item.totalPrice : item.totalCoin }}</text>{{ item.paymentType == "2" ? "RMB" : "画呗"  }}（含运费0.00）
         </view>
         <view class='order-btn-view'>
-          <view class='order-btn-red'>取消订单</view>
+          <view class='order-btn-red' wx:if='{{  item.orderStatus != 6 }}' id='{{ item.id }}' bindtap='bindCancelOrderTap'>取消订单</view>
           <view wx:if='{{ item.orderStatus == 1 }}' style='border:1rpx #FD2B44 solid;color: #FF2642;' id='{{ index }}' data-paytypes='{{ item.paymentType }}' bindtap='bindOrderPayTap'>付款</view>
-          <view wx:if='{{ item.orderStatus == 2 }}'>提醒发货</view>
+          <view bindtap='bindShipTap' wx:if='{{ item.orderStatus == 2 }}'>提醒发货</view>
           <view wx:if='{{ item.orderStatus == 3 }}'>查看物流</view>
           <view wx:if='{{ item.orderStatus == 3 }}' style='border:1rpx #FD2B44 solid;color: #FF2642;'>确认收货</view> 
         </view>

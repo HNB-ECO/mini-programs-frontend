@@ -14,17 +14,19 @@ Page({
         isReadProtocol: false,
         paint: {
           imageUrls: 'https://pic.xiami.net/images/album/img77/593402077/5237927551426732043.jpg?x-oss-process=image/resize,limit_0,m_pad,w_185,h_185',
-        },
+        }, 
         payList: [
           {
             name: '画你钱包余额',
             selected: true,
-            value: 1
+            value: 1,
+            note: ''
           },
           {
             name: '微信支付',
             selected: false,
-            value: 2
+            value: 2,
+            note: ''
           }
         ],
         paint: {},
@@ -65,6 +67,8 @@ Page({
             totalCoin: this.data.paint.coinPrice * +options.theNumber
           })
         }
+
+        this.getPackage();
     },
     orderConfirm(e) {
 
@@ -87,7 +91,7 @@ Page({
           })
 
         })
-      } else {
+      } else { 
         that.setData({
           showTips: true,
           tipsInfo: '请同意用户协议'
@@ -99,7 +103,24 @@ Page({
         }, 1500)
       }
     },
+    getPackage() {
+      applyApi.jsonGetRequest('user/getUserPackage', {
+        userId: wx.getStorageSync('honey-user').id
+      }).then(result => {
+        this.setData({
+          coinBalance: result.coinBalance
+        })
+        var payList = this.data.payList;
+        payList[0].note = result.coinBalance + '画呗';
 
+        this.setData({
+          payList: payList
+        })
+        console.log(result);
+      }).catch(error => {
+        console.log(error);
+      });
+    },
     bindgetaddresstap(e) {
       var that = this;
       wx.chooseAddress({
@@ -124,15 +145,28 @@ Page({
     },
     bindCreateOrderTap() {
 
-      if (!this.data.myaddress) {
-          wx.showToast({
-            title: '请选择地址',
-            icon: 'none'
-          })
+      if (this.data.totalCoin > this.data.coinBalance) {
+        wx.showToast({
+          title: '余额不足！',
+        })
       } else {
+        if (!this.data.myaddress) {
+            wx.showToast({
+              title: '请选择地址',
+              icon: 'none'
+            })
+        } else {
+          this.makeOrder();
+        }
+      }
 
+    },
+    makeOrder() {
       var paint = this.data.paint;
-      var orderdata = {
+      wx.showLoading({
+        title: '订单生成中..',
+      })
+      applyApi.formPostRequest('order/createOrder', {
         totalPrice: this.data.totalPrice,
         totalCoin: this.data.totalCoin,
         platformId: this.data.platformId,
@@ -145,13 +179,7 @@ Page({
         contactor: this.data.myaddress.userName,
         phone: this.data.myaddress.telNumber,
         paymentType: this.data.payTypes
-      }
-      console.log(orderdata);
-      
-      wx.showLoading({
-        title: '订单生成中..',
-      })
-      applyApi.formPostRequest('order/createOrder', orderdata).then(result => {
+      }).then(result => {
         wx.hideLoading();
         var that = this;
         wx.showModal({
@@ -166,7 +194,6 @@ Page({
             }
           }
         })
-        console.log(result);
       }).catch(error => {
         wx.hideLoading();
         wx.showToast({
@@ -174,8 +201,6 @@ Page({
         })
         console.log(error);
       });
-    }
-
     },
     wxOrderPay(orderid,that) {
       wx.showLoading({
@@ -219,6 +244,11 @@ Page({
           wx.showToast({
             title: '支付成功!',
           })
+          setTimeout(function () {
+            wx.navigateBack({
+              delta: 1
+            })
+          }, 1500)
         }
         console.log(result);
       }).catch(error => {
@@ -245,6 +275,7 @@ Page({
         payTypes: payList[index].value
       })
       console.log('payTypes..' + this.data.payTypes);
+      
     }
 
 })

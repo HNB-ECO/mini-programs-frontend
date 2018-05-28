@@ -1,15 +1,6 @@
 // //index.js
 
 const applyApi = require('../../utils/applyApi.js');
-const verify = require('../../utils/verify.js');
-
-const formatNavbarColor = {
-  '全部': '',
-  'Q版漫画': '#E9C981',
-  '日系漫画': '#EAD2C1',
-  '其他': '#B6D7B3',
-  '日本画师': '#AAB3B8',
-}
 
 var that;
 var app = getApp();

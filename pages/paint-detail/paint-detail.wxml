@@ -19,7 +19,7 @@
         <view class='tit'>{{ paint.name }}</view>
         <view class="des">{{ paint.shortName }}</view>
         <view class="price-info">
-            <text class="hnbprice">{{ paint.coinPrice }}<text>积分</text></text>
+            <text class="hnbprice">{{ paint.coinPrice }}<text>画呗</text></text>
             <text class="rmbprice">/ {{ paint.price }}RMB</text>
             <text class="style">包邮{{ paint.isShipping ? "包邮" : "" }}</text>
         </view>
@@ -32,7 +32,7 @@
     <view class="more-paint">
         <view class="title">宝贝详情</view>
         <view class='detail-img'>
-          <image mode='aspectFit' src='{{ paint.infoUrl }}'></image>
+          <image mode='widthFix' src='{{ paint.infoUrl }}'></image>
         </view>
     </view> 
 </view>
@@ -58,7 +58,7 @@
         </view>
         <view class="weui-flex__item">
           <view class='price-info'> 
-            <text class="hnbprice">{{ paintSelected.coinPrice }}<text>积分</text></text>
+            <text class="hnbprice">{{ paintSelected.coinPrice }}<text>画呗</text></text>
             <text class="rmbprice">/ {{ paintSelected.price }}RMB</text>
             <view class='fs30 lineClamp2'>{{ paint.name }}</view>
             <view class='fs30'>

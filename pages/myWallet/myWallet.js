@@ -45,8 +45,8 @@ Page({
       }
     ],
     remindList:['1.因Apple政策原因，充值仅限Apple指定价格',
-    '2.画你积分可用于直接购买小程序内虚拟内容(包含实物产品、虚拟产品、兑换码)',
-    '3.画你积分为虚拟货币，充值后的积分不会过期，但无法提现或转赠他人。']
+    '2.画呗可用于直接购买小程序内虚拟内容(包含实物产品、虚拟产品、兑换码)',
+    '3.画呗为虚拟货币，充值后的画呗不会过期，但无法提现或转赠他人。']
   },
 
   /**
@@ -90,14 +90,6 @@ Page({
       price: this.data.selectPrice
     }).then(result => {
       wx.hideLoading();
-      // wx.showToast({
-      //   title: '充值成功',
-      // })
-      // setTimeout(function(){
-      //   wx.navigateBack({
-      //     delta: 1
-      //   })
-      // },1000)
 
       // 微信支付
       wx.requestPayment({
@@ -109,7 +101,7 @@ Page({
         'success': function (res) {
           wx.hideLoading();
           wx.showToast({
-            title: '充值成功',
+            title: '充值成功!',
           })
           setTimeout(function () {
             wx.navigateBack({
@@ -120,7 +112,7 @@ Page({
         'fail': function (res) {
           wx.showToast({
             icon: 'none',
-            title: '支付失败!'
+            title: '充值失败!'
           })
         }
       })

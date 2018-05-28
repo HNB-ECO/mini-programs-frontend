@@ -91,9 +91,9 @@ swiper {
 }
 
 .content-scrolls .x-item {
-    width: 325rpx;
+    width: 320rpx;
     display: inline-block;
-    margin: 0 15rpx;
+    margin: 0 10rpx;
 }
 .content-scrolls scroll-view {
     width: 96%;
@@ -103,7 +103,7 @@ swiper {
 }
 .content-scrolls .x-item .img-view {
     height: 488rpx;
-    width: 325rpx;
+    width: 320rpx;
     display: inline-block;
     border-radius: 10rpx;
     background-position:center;
@@ -113,7 +113,7 @@ swiper {
 .content-scrolls .x-item .name {
     position: absolute;
     top: 360rpx;
-    width: 325rpx;
+    width: 320rpx;
     text-align: center;
     color: white;
 }
@@ -126,11 +126,11 @@ swiper {
     border-radius:8rpx;
 }
 .content-scrolls .x-item .des-view {
-    width: 325rpx;
+    width: 320rpx;
 }
 .content-scrolls .x-item .des-view .des {
     font-size: 30rpx;
-    width: 325rpx;
+    width: 320rpx;
     overflow:hidden;
     display:-webkit-box;
     -webkit-box-orient:vertical;

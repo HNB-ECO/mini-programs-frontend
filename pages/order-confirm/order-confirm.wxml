@@ -4,7 +4,7 @@
 
 <view class="container bg-default {{ isIphoneX ? 'fix-iphonex-navbar' : '' }}">
     <view class="tp-tit" bindtap='bindgetaddresstap'>
-        <text>收货人：{{ myaddress.address ? "" : "点击获取" }}</text>
+        <text class='tit-name'>收货人：{{ myaddress.address ? "" : "点击获取" }}</text>
         <text class='user-text'>{{ myaddress.userName }} {{ myaddress.telNumber }} </text>
         <text class='address-text'> {{ myaddress.address }} </text>
         <image src="../../images/right.png" alt="" class="right-icon" />
@@ -22,7 +22,7 @@
                     {{ goodName }}
                 </view>
                 <view class="options">分类: {{ paint.color }} {{ paint.volume }} {{ paint.weight }} {{ paint.sieze }}</view>
-                <view class="price"> <text class='hnb-text'><text>{{ paint.coinPrice }}</text>积分 </text> / {{ paint.price }}RMG </view>
+                <view class="price"> <text class='hnb-text'><text>{{ paint.coinPrice }}</text>画呗 </text> / {{ paint.price }}RMB </view>
                 <view class='numb'>x{{ theNumber }}</view>
             </view>
         </view>
@@ -57,24 +57,24 @@
         </view> -->
         <view class="total">
             共{{ theNumber }}件商品 小计：
-            <view class="price"> <text class='hnb-text'><text>{{ totalCoin }}</text>积分 </text> / {{ totalPrice }}RMG </view>
+            <view class="price"> <text class='hnb-text'><text>{{ totalCoin }}</text>画呗 </text> / {{ totalPrice }}RMB </view>
         </view>
 
         <view class='pay-title'>支付方式</view>
         <view class='weui-flex pay-item' wx:for='{{ payList }}' wx:key='{{ index }}' id='{{  index }}' bindtap='bindPayTypeSelectTap'>
           <view><image class='left-icon' src='../../images/{{ item.selected ? "select" : "unselect" }}.png'></image></view>
           <view class='weui-flex__item'>
-            <view class='name'>{{ item.name }}</view>
+            <view class='name'>{{ item.name }} <text>{{ item.note }}</text> </view>
           </view>
           <view class='pay-btn' wx:if='{{ index == 0 }}' bindtap='bindWalletTap'>充值</view>
         </view>
     </view>
-
+ 
 </view>
 
 <view class="draw-footer {{ isIphoneX ? 'draw-footer-fix-iphonex' : '' }}">
     <view class="order-confirm weui-flex {{ isIphoneX ? 'confirm-btn-fix-iphonex' : '' }}" bindtap="">
-        <view class='left-btn weui-flex__item'> <text>免运费</text> 合计 {{ paint.coinPrice }}积分</view>
+        <view class='left-btn weui-flex__item'> <text>免运费</text> 合计 {{ payTypes == 1 ? totalCoin + '画呗' : totalPrice + 'RMB' }}</view>
         <view class='pay-now-btn' bindtap='bindCreateOrderTap'>立即下单</view>
     </view>
 </view>

@@ -26,19 +26,13 @@ Page({
     },
     onShow() {
 
-
+      if (wx.getStorageSync('honey-user').id) {
+        this.getPackage();
+      }
 
     },
     onLoad: function() {
-        // that = this;
-        // var userInfo=wx.getStorageSync('honey-user');
-        // console.log('userinfo .. ' + JSON.stringify(userInfo));
-        // that.setData({
-        //     userInfo:userInfo
-        // })
-        if (wx.getStorageSync('honey-user').id) {
-          this.getPackage();
-        }
+        
     },
     getPackage() {
       applyApi.jsonGetRequest('user/getUserPackage', {
