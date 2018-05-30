@@ -1,7 +1,4 @@
 {
   "navigationBarTitleText": "我",
-  "usingComponents": {
-    "navbar": "../template/navbar/navbar"
-  },
   "navigationBarBackgroundColor": "#FDF9F8"
 }

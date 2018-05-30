@@ -1,6 +1,3 @@
 {
-  "navigationBarTitleText": "确认订单",
-  "usingComponents": {
-    "navbar": "../template/navbar/navbar"
-  }
+  "navigationBarTitleText": "确认订单"
 }

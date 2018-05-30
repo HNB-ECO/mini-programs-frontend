@@ -38,67 +38,7 @@ Page({
         },
         sourceImageUrl:configApi.ENV=='DEV'?'http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg':'',
         paintSelected: {},
-        paint: {
-          // imageUrls: ['http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg', 'http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg','http://ww2.sinaimg.cn/large/005T083dgw1fbsfphqs2yj303o03omx6.jpg'],
-          // content: '可爱苹果手机壳7plus/8/x手机壳个性挂钩',
-          // title: '范冰冰专属手机壳iphone手机壳',
-          // rmbPrice: 240,
-          // hnbPrice: 233,
-          // isShipping: true,
-          // people: 999,
-          // numbs: 999,
-          // address: '苏州',
-          // paintSizes: [
-          //   {
-          //     name: 'R11 巴巴爸爸 送挂绳',
-          //     isSelect: false,
-          //   },
-          //   {
-          //     name: 'R11 巴巴爸爸 送挂绳',
-          //     isSelect: false,
-          //   },
-          //   {
-          //     name: 'R11 巴巴爸爸 送挂绳',
-          //     isSelect: false,
-          //   },
-          //   {
-          //     name: 'R11 巴巴爸爸 送挂绳',
-          //     isSelect: false,
-          //   },
-          //   {
-          //     name: 'R11 巴巴爸爸 送挂绳',
-          //     isSelect: false,
-          //   },
-          //   {
-          //     name: 'R11 巴巴爸爸 送挂绳',
-          //     isSelect: false,
-          //   },
-          //   {
-          //     name: 'R11 巴巴爸爸 送挂绳',
-          //     isSelect: false,
-          //   },
-          //   {
-          //     name: 'R11 巴巴爸爸 送挂绳',
-          //     isSelect: false,
-          //   },
-          //   {
-          //     name: 'R11 巴巴爸爸 送挂绳',
-          //     isSelect: false,
-          //   },
-          //   {
-          //     name: 'R11 巴巴爸爸 送挂绳',
-          //     isSelect: false,
-          //   },
-          //   {
-          //     name: 'R11 巴巴爸爸 送挂绳',
-          //     isSelect: false,
-          //   },
-          //   {
-          //     name: 'R11 巴巴爸爸 送挂绳',
-          //     isSelect: false,
-          //   }
-          // ]
-        },
+        paint: {},
         orderDetail: {},
         theNumber: 1
     },
@@ -241,31 +181,11 @@ Page({
     },
     orderConfirm(e) {
         console.log('orderConfirm');
+
         let qsFiles = Base64.encodeURI(JSON.stringify(this.data.orderDetail));
         wx.navigateTo({
           url: '../order-confirm/order-confirm?orderDetail=' + qsFiles + '&goodName=' + this.data.paint.name + '&platformId=' + this.data.paint.platformId + '&theNumber=' + this.data.theNumber,
         })
-
-        // applyApi.formPostRequest('order/orderPay', {
-        //   orderId: this.data.orderDetail.id,
-        //   openId: wx.getStorageSync('honey-openId'),
-        //   payment_type: '1'
-        // }).then(result => {
-        //   wx.hideLoading();
-        //   wx.showToast({
-        //     title: '支付成功!',
-        //   })
-        //   setTimeout(function () {
-        //     that.getOrderList(that.data.currentTab);
-        //   }, 1000)
-        //   console.log(result);
-        // }).catch(error => {
-        //   wx.hideLoading();
-        //   wx.showToast({
-        //     title: '支付失败!',
-        //   })
-        //   console.log(error);
-        // });
 
     },
     showMore(e) {

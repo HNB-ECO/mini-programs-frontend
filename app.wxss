@@ -337,7 +337,6 @@ button::after {
 }
 .clear-icon{
     position: absolute;
-    right: 0;
     top:10rpx;
     right: 10rpx;
 }
@@ -350,20 +349,3 @@ button::after {
     right: 30rpx;
 }
 
-.read-protocol-view {
-    background-color:rgb(249,250,251);
-    height:80rpx;
-    line-height:80rpx;
-    font-size:25rpx;
-    padding:0 20rpx;
-    color: #999999;
-}
-.read-protocol-view view {
-    display: inline-block;
-}
-.read-protocol-view .right-icon {
-    width: 44rpx;
-    height: 44rpx;
-    float: right;
-    margin-top: 18rpx;
-}

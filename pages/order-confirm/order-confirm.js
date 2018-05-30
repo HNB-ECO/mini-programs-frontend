@@ -32,21 +32,9 @@ Page({
         paint: {},
         payTypes: 1 //1是画你钱包 2是微信支付
     },
-    onShow(e) {
-        // that.getPaintingPrice();
-    },
     onLoad: function(options) {
         that = this;
-        // order = wx.getStorageSync('honey-new-order');
-        // console.log('order', order);
-        // if (order) {
-        //     prodId = order.prodId;
-        //     that.setData({
-        //         order: order
-        //     });
-        //     // that.getPaintInfo();
-        //     // that.getPaintingPrice();
-        // }
+
         if (wx.getStorageSync('myaddress')) {
             this.setData({
               myaddress: wx.getStorageSync('myaddress')
@@ -70,39 +58,39 @@ Page({
 
         this.getPackage();
     },
-    orderConfirm(e) {
+    // orderConfirm(e) {
 
-      if (that.data.isReadProtocol) {
-        that.data.order.price = that.data.paintPrice.totalPrice;
-        that.data.order.paintDesignRequireId = 0;
-        console.log('orderParam', that.data.order);
-        applyApi.postByToken('order/make-order', that.data.order, function (res) {
-          console.log('make-order', res);
-          orderApply.pay(res.data, function () {
-            wx.setStorageSync('honey-order-status', 2);
-            wx.navigateTo({
-              url: `../order/order`
-            })
-          }, function () {
-            wx.setStorageSync('honey-order-status', 1);
-            wx.navigateTo({
-              url: `../order/order`
-            })
-          })
+    //   if (that.data.isReadProtocol) {
+    //     that.data.order.price = that.data.paintPrice.totalPrice;
+    //     that.data.order.paintDesignRequireId = 0;
+    //     console.log('orderParam', that.data.order);
+    //     applyApi.postByToken('order/make-order', that.data.order, function (res) {
+    //       console.log('make-order', res);
+    //       orderApply.pay(res.data, function () {
+    //         wx.setStorageSync('honey-order-status', 2);
+    //         wx.navigateTo({
+    //           url: `../order/order`
+    //         })
+    //       }, function () {
+    //         wx.setStorageSync('honey-order-status', 1);
+    //         wx.navigateTo({
+    //           url: `../order/order`
+    //         })
+    //       })
 
-        })
-      } else { 
-        that.setData({
-          showTips: true,
-          tipsInfo: '请同意用户协议'
-        })
-        setTimeout(function () {
-          that.setData({
-            showTips: false,
-          })
-        }, 1500)
-      }
-    },
+    //     })
+    //   } else { 
+    //     that.setData({
+    //       showTips: true,
+    //       tipsInfo: '请同意用户协议'
+    //     })
+    //     setTimeout(function () {
+    //       that.setData({
+    //         showTips: false,
+    //       })
+    //     }, 1500)
+    //   }
+    // },
     getPackage() {
       applyApi.jsonGetRequest('user/getUserPackage', {
         userId: wx.getStorageSync('honey-user').id

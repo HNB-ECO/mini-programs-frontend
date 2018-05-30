@@ -51,10 +51,7 @@
                 <image src="../../images/right.png" alt="" class="right-icon" />
             </view>
         </view>
-        <!-- <view class='read-protocol-view'>
-          <text style='color:#999999' bindtap='bindReadProtocolTap'>阅读并同意 <text style='color:#8597FD'>《用户购买须知及销售协议》</text> </text>
-          <image class='right-icon' src='{{ isReadProtocol ? "../../images/checked@2x.png" : "../../images/check@2x.png" }}' bindtap='bindCheckReadProtocolTap'></image>
-        </view> -->
+
         <view class="total">
             共{{ theNumber }}件商品 小计：
             <view class="price"> <text class='hnb-text'><text>{{ totalCoin }}</text>画呗 </text> / {{ totalPrice }}RMB </view>
