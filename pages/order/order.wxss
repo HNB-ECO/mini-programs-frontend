@@ -238,3 +238,119 @@
     border:1rpx #FD2B44 solid;
     color: #FF2642;
 }
+
+.modal-mask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.5;
+  overflow: hidden;
+  z-index: 9000;
+  color: #fff;
+}
+
+.modal-dialog {
+  width: 560rpx;
+  overflow: hidden;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  z-index: 9999;
+  background: #f9f9f9;
+  margin: -180rpx 105rpx;
+  border-radius: 36rpx;
+}
+
+.modal-title {
+  padding-top: 50rpx;
+  font-size: 36rpx;
+  color: #030303;
+  text-align: center;
+}
+
+.modal-content {
+  padding: 10rpx 30rpx;
+}
+
+.modal-input {
+  display: flex;
+  background: #fff;
+  border: 2rpx solid #ddd;
+  border-radius: 4rpx;
+  font-size: 28rpx;
+}
+
+.input {
+  width: 100%;
+  height: 160rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+input-holder {
+  color: #666;
+  font-size: 28rpx;
+}
+
+.modal-footer {
+  flex-direction: row;
+  height: 66rpx;
+  font-size: 34rpx;
+  line-height: 66rpx;
+  margin-bottom: 40rpx;
+}
+
+.btn-cancel {
+  color: #666;
+  text-align: center;
+  background: #ccc;
+  border-radius: 10rpx;
+  width: 160rpx;
+  display: inline-block;
+  margin-left: 80rpx;
+}
+
+.btn-confirm {
+  color: #fff;
+  text-align: center;
+  background: #fe2b40;
+  border-radius: 10rpx;
+  width: 160rpx;
+  display: inline-block;
+  margin-left: 60rpx;
+}
+
+
+.my-price-item button {
+  display: inline-block;
+  color: white;
+  font-size: 24rpx;
+  width: 160rpx;
+  background: #fe2a40;
+  margin-left: 40rpx;
+  vertical-align: middle;
+}
+
+
+
+.info-left{
+  float: left;
+  width: 30%;
+  height: 150rpx;
+  border-right: 2rpx solid #ccc;
+  padding-top: 20rpx;
+  font-size: 22rpx;
+  margin-top:6rpx
+}
+.info-right{
+  float: left;
+  margin-left: 2%;
+  width:60%;
+  height: 170rpx;
+  padding-top: 10rpx;
+  font-size: 22rpx;
+  margin-top:6rpx
+}

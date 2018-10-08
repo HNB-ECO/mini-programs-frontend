@@ -33,7 +33,7 @@
           <view class='des'>{{ item.name }}</view>
           <view class='weui-flex'>
             <view class='weui-flex__item price'>{{ item.coinPrice }} 画呗<text class='fs25'></text> </view>
-            <view class='weui-flex__item bz'>{{ item.note }}仅限画呗兑换</view>  
+            <!-- <view class='weui-flex__item bz'>{{ item.note }}仅限画呗兑换</view>   -->
           </view>
         </view>
       </view>

@@ -7,6 +7,9 @@ const applyApi = require('./utils/applyApi.js');
 let that;
 // 首次登录 --> 授权 --> 获取用户信息 --> 服务器登录
 // 再次登录 --> 检查本地是否有userinfo --> 有则不用登录
+var thirdId = ""
+
+
 App({
     data: {
         systemInfo: wx.getSystemInfoSync()
@@ -81,11 +84,13 @@ App({
             }).then(result => {
               wx.setStorageSync('honey-openId', result.openId);
               console.log('openId ** ',result);
+              thirdId = result.openId
+              that.getUserInfo(thirdId);
             }).catch(error => {
               console.log(error);
             });
-            
-            return that.getUserInfo(code);
+            console.log(thirdId)
+            return that.getUserInfo(thirdId);
           },
           fail(error) {}
         });
@@ -124,6 +129,4 @@ App({
         });
       })
     }
-
-  
 })

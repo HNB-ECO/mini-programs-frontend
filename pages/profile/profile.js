@@ -32,15 +32,18 @@ Page({
 
     },
     onLoad: function() {
-        
+      if (wx.getStorageSync('honey-user').id) {
+        this.getPackage();
+      }
     },
     getPackage() {
       applyApi.jsonGetRequest('user/getUserPackage', {
         userId: wx.getStorageSync('honey-user').id
       }).then(result => {
         wx.hideLoading();
+        var coinShow = result.coinBalance - result.blockCoin
         this.setData({
-          coinBalance: result.coinBalance
+          coinBalance: coinShow
         })
         this.setData({
           userInfo: wx.getStorageSync('honey-user')
@@ -139,8 +142,9 @@ Page({
       app.LoggedIn();
       var that = this;
       setTimeout(function() {
+        console.log(wx.getStorageSync('honey-user').id)
         that.getPackage();
-      },1500);
+      },1000);
 
     }
 })

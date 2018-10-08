@@ -4,32 +4,88 @@
 
 <view class="bg-default {{ isIphoneX ? 'fix-iphonex-navbar' : '' }}">
 
-<view class='title-alert-view weui-flex' hidden='{{ isRemaidHidden }}'>
-  <view class='weui-flex__item'>已成功为您创建画你钱包 （钱包App即将上线，敬请期待）</view>
-  <view class='' bindtap='bindCloseRemaidTap'> <image src='../../images/close_r.png'></image> </view>
-</view>
-
-<view class='my-price-item'>
-  <view class='hnb'> <text>{{ coinBalance }}</text>画呗 </view>
-  <!-- <view class='hnb-address'>HNB地址 X00000000</view> -->
-</view>
-
-<view class='price-item-view'>
-  <view class='title'>充值</view>
-  <view class='price-item {{ item.selected ? "price-active" : "" }}' style='width:{{ (windowWidth-50)/3 }}px;height:{{ (windowWidth-50)/3 }}' wx:for='{{ priceList }}' wx:key='{{ index }}' id='{{ index }}' bindtap='bindSelectPriceTap'>
-    <view class='bigTxt' style='{{ item.selected ? "color:white;" : "" }}'>{{ item.hnbprice }}画呗</view>
-    <view class='litTxt'>{{ item.rmbprice }}元</view>
+  <view class='title-alert-view weui-flex' hidden='{{ isRemaidHidden }}'>
+    <view class='weui-flex__item'>已成功为您创建画你钱包 （钱包App即将上线，敬请期待）
+    <text bindtap='clickMore'>点击查看教程</text>
+    </view>
+    <view class='' bindtap='bindCloseRemaidTap'>
+      <image src='../../images/close_r.png'></image>
+    </view>
   </view>
 
-  <view class='comft-btn' bindtap='bindComftPayTap'>确认充值并支付</view>
-
-  <view class='remind-txt-view'>
-    <view wx:for='{{ remindList }}' wx:key='index'>{{ item }}</view>
+  <view class='my-price-item'>
+    <view class='hnb'>
+      <text class='money'>{{ coinBalance }}</text>
+      <text class='title'>画呗</text>
+    </view>
+    <button bindtap='showLimit' >转到钱包</button>
+    <view class='hnb-coin' wx:if="{{blockCoin != 0}}">{{blockCoin}}HNB冻结中</view>
+    <view class='hnb-address'  bindtap='showDialogBtn'>{{hnbAddress}}</view>
   </view>
 
-</view>
+  <view class='price-item-view'>
+    <view class='title'>充值</view>
+    <view class='price-item {{ item.selected ? "price-active" : "" }}' style='width:{{ (windowWidth-50)/3 }}px;height:{{ (windowWidth-50)/3 }}' wx:for='{{ priceList }}' wx:key='{{ index }}' id='{{ index }}' bindtap='bindSelectPriceTap'>
+      <view class='bigTxt' style='{{ item.selected ? "color:white;" : "" }}'>{{ item.hnbprice }}画呗</view>
+      <view class='litTxt'>{{ item.rmbprice }}元</view>
+    </view>
+
+    <view class='comft-btn' bindtap='bindComftPayTap'>确认充值并支付</view>
+
+    <view class='remind-txt-view'>
+      <view wx:for='{{ remindList }}' wx:key='index'>{{ item }}</view>
+    </view>
+
+  </view>
 
 
+
+  <!-- <button class="show-btn" bindtap="showDialogBtn">弹窗</button>
+<button class="show-btn" bindtap="showLimit">弹窗2</button> -->
+
+  <!--地址弹窗-->
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="modal-dialog" wx:if="{{showModal}}">
+    <view class="modal-title">绑定钱包地址</view>
+    <view class="modal-content">
+      <view class="modal-input">
+        <textarea bindblur="inputChange" class="input" placeholder="请输入地址"></textarea>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
+
+  <view class="modal-mask" bindtap="cashideModal" catchtouchmove="cashPreventTouchMove" wx:if="{{cashModal}}"></view>
+  <view class="modal-dialog" wx:if="{{cashModal}}">
+    <view class="modal-title" style='border: 2rpx solid #cccccc'>转到钱包</view>
+    <view class="modal-content">
+      <view>
+        <text class='moneyTitle'>地址</text>
+        <text class='moneyAddress'>{{hnbAddress}}</text>
+      </view>
+      <view style='margin-top:20rpx;'>
+        <view class='moneyTitle' style='display:inline-block'>金额</view>
+  <view style='display:inline-block;border: 2rpx solid #b2b2b2;background:white;padding-top:12rpx;border-radius:10rpx'> <input  bindblur="inputMoney" value='' type='number' placeholder="最多{{coinBalance}}画呗" class='moneyInput' ></input></view>
+      </view>
+    </view>
+    <view class="modal-footer" style='margin-top:40rpx'>
+      <view class="btn-cancel" bindtap="cashCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="cashConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
+
+<!--重新绑定钱包地址  -->
+   <view class="modal-mask" bindtap="reHideModal" catchtouchmove="preventTouchMove" wx:if="{{reShowModal}}"></view>
+  <view class="modal-dialog" wx:if="{{reShowModal}}">
+    <view class="modal-title">是否重新绑定钱包地址</view>
+    <view class="modal-footer" style='margin-top:50rpx'>
+      <view class="btn-cancel" bindtap="reOnCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="reOnConfirm" data-status="confirm">确定</view>
+    </view>
+  </view>
 
 
 </view>

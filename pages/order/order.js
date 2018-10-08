@@ -12,6 +12,7 @@ const formatorderstatus = {
   5: '已评价',
   6: '已取消'
 }
+var workId = ""
  
 Page({
 
@@ -20,9 +21,11 @@ Page({
       naveList:['全部','待付款','待发货','待收货'],
       currentTab:0,
       getImgMid: app.getImgMid(),
+      showModal: false,
+      reShowModal:false,
+      infoList:"",
       isIphoneX: app.getSystemModelIPhoneX(),
       orderList: [],
-
       payTypes: 0
   },
 
@@ -154,6 +157,78 @@ Page({
       icon: 'none',
       title: '已提醒~请耐心等待宝贝~',
     })
-  }
+  },
 
+  // 查看物流
+  logistics:function(e){
+    console.log(e.currentTarget.dataset.id)
+    workId = e.currentTarget.dataset.id
+     this.setData({
+       showModal:true
+     })
+     applyApi.formPostRequest('order/checkExpress', {
+       workOrderId: e.currentTarget.dataset.id
+     }).then(result => {
+       console.log(result);
+       this.setData({
+         expName: result.expName,
+         infoList: result.expressAreaList
+       })
+     }).catch(error => {
+       wx.hideLoading();
+       wx.showToast({
+         icon: 'none',
+         title: error,
+       })
+       console.log(error);
+     });
+  },
+  /**
+  * 弹出框蒙层截断touchmove事件
+  */
+  preventTouchMove: function () {
+  },
+  hideModal: function () {
+    this.setData({
+      showModal: false
+    });
+  
+  },
+
+  // 确认收货
+  confirmGet:function(e){
+    this.setData({
+      reShowModal: true
+    });
+    workId = e.currentTarget.dataset.id
+    console.log(workId)
+  },
+  reOnCancel: function () {
+    this.setData({
+      reShowModal: false
+    })
+  },
+  reOnConfirm: function () {
+    console.log(workId)
+   applyApi.formPostRequest('order/confirmReceive', {
+     workOrderId: workId
+   }).then(result => {
+     console.log(result);
+     wx.showToast({
+       title: "收货成功",
+     })
+     this.setData({
+       reShowModal: false
+     })
+   }).catch(error => {
+     wx.hideLoading();
+     wx.showToast({
+       icon: 'none',
+       title: error,
+     })
+     console.log(error);
+   });
+   this.getOrderList();
+
+  },
 })

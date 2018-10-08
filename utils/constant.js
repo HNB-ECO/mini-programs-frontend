@@ -1,7 +1,8 @@
 // const ENV = 'DEV';
 const ENV='PROD';
-const DEV_API_URL = 'http://47.97.126.79:8800/hnb/webservice/';
-const PROD_API_URL = 'https://hnb.daolema.me/hnb/webservice/';
+const DEV_API_URL = 'http://47.97.126.79:8800/webservice/';
+const PROD_API_URL = 'https://hnb.daolema.me/webservice/';
+//const PROD_API_URL = 'http://192.168.1.190:8080/webservice/';
 
 export const configApi = {
     ENV: ENV,

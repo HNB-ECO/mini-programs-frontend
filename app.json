@@ -1,6 +1,6 @@
 {
   "pages": [
-    
+ 
     "pages/index/index",
     "pages/profile/profile",
     "pages/order-confirm/order-confirm",
@@ -9,7 +9,8 @@
     "pages/order/order",
     "pages/paint-detail/paint-detail",
     "pages/myWallet/myWallet",
-    "pages/newaddress-edit/newaddress-edit"
+    "pages/newaddress-edit/newaddress-edit",
+    "pages/course/course"
     
   ],
   "window": {

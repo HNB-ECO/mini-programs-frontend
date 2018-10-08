@@ -1,51 +1,82 @@
 <import src="../template/template.wxml" />
-<template is="noorder" wx:if="{{!orderList.length}}"></template> 
+<template is="noorder" wx:if="{{!orderList.length}}"></template>
 
 <!-- <navbar navbar-title="{{ navbarTitle }}" /> -->
 
 <view class="order-category {{ isIphoneX ? 'order-category-fix-iphonex' : '' }}">
-    <view class="item {{ currentTab==index?'active':'' }}" wx:for="{{ naveList }}" wx:key="{{ index }}" bindtap="chooseTab" data-index="{{ index }}">
-        <text class="text">{{ item }}</text>
-    </view>
+  <view class="item {{ currentTab==index?'active':'' }}" wx:for="{{ naveList }}" wx:key="{{ index }}" bindtap="chooseTab" data-index="{{ index }}">
+    <text class="text">{{ item }}</text>
+  </view>
 </view>
 <scroll-view class='order-list {{ isIphoneX ? "order-list-fix-iphonex" : "" }}' scroll-y="true" bindscrolltolower="handleLoadMore" lower-threshold="100" scroll-into-view="{{pageTop}}">
-    <!-- 第一个订单 -->
-    <view class='item' wx:for="{{ orderList }}" wx:key="{{ index }}" >
-        <view class="order-detail">
-            <view class='top'>
-                <image class='artistlogo' src='../../images/hnlogo_p.png'></image>
-                <view>画你官方直营</view>
-                <view wx:if='{{ item.orderStatus == 1 }}' class='right-txt'>{{ item.orderStatus == 1 ? "待付款" : "" }}</view>
-                <view wx:if='{{ item.orderStatus == 2 }}' class='right-txt'>{{ item.orderStatus == 2 ? "待发货" : "" }}</view>
-                <view wx:if='{{ item.orderStatus == 3 }}' class='right-txt'>{{ item.orderStatus == 3 ? "待收货" : "" }}</view>
-                <view wx:if='{{ item.orderStatus == 6 }}' class='right-txt'>{{ item.orderStatus == 6 ? "已取消" : "" }}</view>
-            </view>
-            <view class='bottom weui-flex' wx:for='{{ item.workOrders }}' wx:key='{{ index }}'>
-                <view><image class='mainImg' src="{{ item.goodDetail.imageUrl }}" mode="aspectFill" /></view>
-                <view class="right weui-flex__item">
-                    <view class="des">
-                      {{  item.goods.name }}
-                    </view>
-                    <view class="options">分类：
-                    {{ item.goodDetail.color ? item.goodDetail.color : '' }}
-                    {{ item.goodDetail.volume ? item.goodDetail.volume : '' }} 
-                    {{ item.goodDetail.weight ? item.goodDetail.weight : '' }}
-                    {{ item.goodDetail.sieze ? item.goodDetail.sieze : '' }}</view>
-                    <view class="price"> <text class='hnb-text'><text>{{ item.goodDetail.coinPrice }}</text>画呗 </text> / {{ item.goodDetail.price }}RMB </view>
-                    <view class='numb'>x{{ item.amount }}</view>
-                </view>
-            </view>
+  <!-- 第一个订单 -->
+  <view class='item' wx:for="{{ orderList }}" wx:key="{{ index }}">
+    <view class="order-detail">
+      <view class='top'>
+        <!-- <image class='artistlogo'></image> -->
+        <view>官方直营</view>
+        <view wx:if='{{ item.orderStatus == 1 }}' class='right-txt'>{{ item.orderStatus == 1 ? "待付款" : "" }}</view>
+        <view wx:if='{{ item.orderStatus == 2 }}' class='right-txt'>{{ item.orderStatus == 2 ? "待发货" : "" }}</view>
+        <view wx:if='{{ item.orderStatus == 3 }}' class='right-txt'>{{ item.orderStatus == 3 ? "待收货" : "" }}</view>
+        <view wx:if='{{ item.orderStatus == 6 }}' class='right-txt'>{{ item.orderStatus == 6 ? "已取消" : "" }}</view>
+      </view>
+      <view class='bottom weui-flex' wx:for='{{ item.workOrders }}' wx:key='{{ index }}'>
+        <view>
+          <image class='mainImg' src="{{ item.goodDetail.imageUrl }}" mode="aspectFill" />
         </view>
-        <view class='count'>
-          共{{ item.workOrders[0].amount }}件商品 合计： <text style='font-size:38rpx;'>{{ item.paymentType == "2" ? item.totalPrice : item.totalCoin }}</text>{{ item.paymentType == "2" ? "RMB" : "画呗"  }}（含运费0.00）
+        <view class="right weui-flex__item">
+          <view class="des">
+            {{ item.goods.name }}
+          </view>
+          <view class="options">分类： {{ item.goodDetail.color ? item.goodDetail.color : '' }} {{ item.goodDetail.volume ? item.goodDetail.volume : '' }} {{ item.goodDetail.weight ? item.goodDetail.weight : '' }} {{ item.goodDetail.sieze ? item.goodDetail.sieze : '' }}</view>
+          <view class="price">
+            <text class='hnb-text'><text>{{ item.goodDetail.coinPrice }}</text>画呗 </text> / {{ item.goodDetail.price }}RMB </view>
+          <view class='numb'>x{{ item.amount }}</view>
         </view>
-        <view class='order-btn-view'>
-          <view class='order-btn-red' wx:if='{{  item.orderStatus != 6 }}' id='{{ item.id }}' bindtap='bindCancelOrderTap'>取消订单</view>
-          <view wx:if='{{ item.orderStatus == 1 }}' style='border:1rpx #FD2B44 solid;color: #FF2642;' id='{{ index }}' data-paytypes='{{ item.paymentType }}' bindtap='bindOrderPayTap'>付款</view>
-          <view bindtap='bindShipTap' wx:if='{{ item.orderStatus == 2 }}'>提醒发货</view>
-          <view wx:if='{{ item.orderStatus == 3 }}'>查看物流</view>
-          <view wx:if='{{ item.orderStatus == 3 }}' style='border:1rpx #FD2B44 solid;color: #FF2642;'>确认收货</view> 
-        </view>
+      </view>
     </view>
-</scroll-view>
+    <view class='count'>
+      共{{ item.workOrders[0].amount }}件商品 合计：
+      <text style='font-size:38rpx;'>{{ item.paymentType == "2" ? item.totalPrice : item.totalCoin }}</text>{{ item.paymentType == "2" ? "RMB" : "画呗" }}（含运费0.00）
+    </view>
+    <view class='order-btn-view'>
+      <view class='order-btn-red' wx:if='{{  item.orderStatus ==1 || item.orderStatus == 2}}' id='{{ item.id }}' bindtap='bindCancelOrderTap'>取消订单</view>
+      <view wx:if='{{ item.orderStatus == 1 }}' style='border:1rpx #FD2B44 solid;color: #FF2642;' id='{{ index }}' data-paytypes='{{ item.paymentType }}' bindtap='bindOrderPayTap'>付款</view>
+      <view bindtap='bindShipTap' wx:if='{{ item.orderStatus == 2 }}'>提醒发货</view>
+      <view wx:if='{{ item.orderStatus == 3 }}' bindtap='logistics' data-id='{{item.id}}'>查看物流</view>
+      <view wx:if='{{ item.orderStatus == 3 }}' bindtap='confirmGet' data-id='{{item.id}}' style='border:1rpx #FD2B44 solid;color: #FF2642;'>确认收货</view>
+    </view>
 
+
+
+  </view>
+
+  <!--查看物流  -->
+  <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}"></view>
+  <view class="modal-dialog" wx:if="{{showModal}}">
+    <view class="modal-title">{{expName}}物流信息</view>
+    <view class="modal-content">
+      <scroll-view scroll-y="true" style="height: 200px">
+        <view wx:for='{{ infoList }}'>
+          <view class='info-left'>
+            <text>{{item.time}}</text>
+          </view>
+          <view class='info-right'>{{item.status}}</view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+
+  <!--确认收货  -->
+  <view class="modal-mask" bindtap="reHideModal" catchtouchmove="preventTouchMove" wx:if="{{reShowModal}}"></view>
+  <view class="modal-dialog" wx:if="{{reShowModal}}">
+    <view class="modal-title">确定收货吗？</view>
+    <view class="modal-footer" style='margin-top:50rpx'>
+      <view class="btn-cancel" bindtap="reOnCancel" data-status="cancel">取消</view>
+      <view class="btn-confirm" bindtap="reOnConfirm" data-workId='{{item.id}}' data-status="confirm">确定</view>
+    </view>
+  </view>
+
+
+
+</scroll-view>

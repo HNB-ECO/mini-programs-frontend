@@ -12,8 +12,7 @@
     </view>
     <view class="order-detail">
         <view class='top'>
-            <image class='artistlogo' src='../../images/hnlogo_p.png'></image>
-            <view>画你官方直营</view>
+            <view>官方直营</view>
         </view>
         <view class='bottom weui-flex'>
             <view><image class='mainImg' src="{{ paint.imageUrl }}" alt="" mode="aspectFill" /></view>
@@ -39,7 +38,7 @@
         <view class="more-item weui-flex">
             <view>买家留言</view>
             <view class="item-input weui-flex__item">
-                <input type="text" placeholder="选填 填写内容已和卖家协商确认" placeholder-style="color:#ccc" value="{{order.leaveMessage}}" bindblur="setFrom" data-name="leaveMessage"/>
+                <input type="text" placeholder="选填 填写内容已和卖家协商确认" placeholder-style="color:#ccc" value="{{order.leaveMessage}}" bindinput='inputMessage' bindblur="setFrom" data-name="leaveMessage"/>
             </view>
         </view>
         <view class="more-item" bindtap="chooseCoupon">
